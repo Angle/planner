@@ -4,14 +4,87 @@
 @import url('https://fonts.googleapis.com/css?family=Patrick+Hand&subset=latin-ext');
 
 
+// Config
+$block-size: 25px; // note: this should match the current page size
+$page-width-blocks: 45; // about 800 px with block size 18px
+$page-width: $page-width-blocks * $block-size;
+$page-min-height-blocks: 34; // about 600px with block size 18px
+$page-min-height: $page-min-height-blocks * $block-size;
+
+$bullet-blocks: 1; // number of blocks
+$tag-blocks: 5; // number of blocks
+$concept-blocks: $page-width-blocks - $bullet-blocks - $tag-blocks;
+
+// Color pallete: https://encycolorpedia.com/f2eecb
+$color-notebook: #f2eecb;
+$color-text: #282723;
+$color-background: #f1f1f1;
+
+
 html, body {
   height: 100%;
   width: 100%;
   margin: 0;
   padding: 0;
+  background-color: $color-background;
 }
 
 
 body {
   font-family: 'Patrick Hand SC', cursive;
+  //font-family: 'Patrick Hand', cursive;
+  font-size: 1em;
+  color: $color-text;
+}
+
+.wrapper {
+  max-width: $page-width;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+}
+
+// TODO: Migrate to Flexbox, it's 2019 already..
+
+.notebook {
+  width: 100%;
+  background-color: $color-notebook;
+  min-height: $page-min-height;
+  padding: 1 * $block-size;
+
+  .task-list {
+    .task {
+      width: 100%;
+
+      .bullet {
+        display: inline-block;
+        height: $block-size;
+        width: $bullet-blocks * $block-size;
+
+        text-align: center;
+      }
+
+      .tag {
+        display: inline-block;
+        height: $block-size;
+        width: $tag-blocks * $block-size;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .concept {
+        display: inline-block;
+        height: $block-size;
+        padding-left: $block-size;
+        width: $concept-blocks * $block-size;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+    }
+  }
 }

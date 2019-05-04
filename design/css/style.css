@@ -1,0 +1,49 @@
+@import url("https://fonts.googleapis.com/css?family=Patrick+Hand+SC&subset=latin-ext");
+@import url("https://fonts.googleapis.com/css?family=Patrick+Hand&subset=latin-ext");
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #f1f1f1; }
+
+body {
+  font-family: 'Patrick Hand SC', cursive;
+  font-size: 1em;
+  color: #282723; }
+
+.wrapper {
+  max-width: 1125px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0; }
+
+.notebook {
+  width: 100%;
+  background-color: #f2eecb;
+  min-height: 850px;
+  padding: 25px; }
+  .notebook .task-list .task {
+    width: 100%; }
+    .notebook .task-list .task .bullet {
+      display: inline-block;
+      height: 25px;
+      width: 25px;
+      text-align: center; }
+    .notebook .task-list .task .tag {
+      display: inline-block;
+      height: 25px;
+      width: 125px;
+      white-space: nowrap;
+      overflow: hidden;
+      -o-text-overflow: ellipsis;
+      text-overflow: ellipsis; }
+    .notebook .task-list .task .concept {
+      display: inline-block;
+      height: 25px;
+      padding-left: 25px;
+      width: 975px;
+      white-space: nowrap;
+      overflow: hidden;
+      -o-text-overflow: ellipsis;
+      text-overflow: ellipsis; }
