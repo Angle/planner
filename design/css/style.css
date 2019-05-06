@@ -13,7 +13,7 @@ body {
   color: #282723; }
 
 .wrapper {
-  max-width: 1125px;
+  max-width: 90em;
   width: 100%;
   margin: 0 auto;
   padding: 0; }
@@ -21,28 +21,28 @@ body {
 .notebook {
   width: 100%;
   background-color: #f2eecb;
-  min-height: 850px;
-  padding: 25px; }
+  min-height: 68em;
+  padding: 2em; }
   .notebook .task-list .task {
     width: 100%; }
     .notebook .task-list .task .bullet {
       display: inline-block;
-      height: 25px;
-      width: 25px;
+      height: 2em;
+      width: 2em;
       text-align: center; }
     .notebook .task-list .task .tag {
       display: inline-block;
-      height: 25px;
-      width: 125px;
+      height: 2em;
+      width: 10em;
       white-space: nowrap;
       overflow: hidden;
       -o-text-overflow: ellipsis;
       text-overflow: ellipsis; }
     .notebook .task-list .task .concept {
       display: inline-block;
-      height: 25px;
-      padding-left: 25px;
-      width: 975px;
+      height: 2em;
+      padding-left: 2em;
+      width: 78em;
       white-space: nowrap;
       overflow: hidden;
       -o-text-overflow: ellipsis;

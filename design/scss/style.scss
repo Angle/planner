@@ -5,7 +5,7 @@
 
 
 // Config
-$block-size: 25px; // note: this should match the current page size
+$block-size: 2em; // note: this should match the current page size
 $page-width-blocks: 45; // about 800 px with block size 18px
 $page-width: $page-width-blocks * $block-size;
 $page-min-height-blocks: 34; // about 600px with block size 18px
