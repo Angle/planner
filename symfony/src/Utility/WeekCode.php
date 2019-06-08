@@ -67,9 +67,4 @@ class Week
     {
 
     }
-
-    public static function weekCodeFromYearAndWeek(int $year, int $week): string
-    {
-
-    }
 }
