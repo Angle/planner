@@ -9,7 +9,6 @@ html, body {
 
 body {
   font-family: 'Patrick Hand', cursive;
-  font-size: 1em;
   color: #282723; }
 
 h1, h2, h3, h4, h5, h6 {
@@ -40,6 +39,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .notebook {
   width: 100%;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
   background-color: #f2eecb;
   background-image: url("../img/grid-dots-v2.png");
   background-repeat: repeat;
@@ -51,7 +52,9 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0;
     border-collapse: collapse;
     border-spacing: 0;
-    table-layout: fixed; }
+    table-layout: fixed;
+    font-size: 1em;
+    line-height: 1.5em; }
     .notebook .task-list td {
       vertical-align: top;
       padding: 0px 4px;
@@ -63,6 +66,8 @@ h1, h2, h3, h4, h5, h6 {
         height: 1.5em;
         width: 1.5em;
         text-align: center; }
+        .notebook .task-list .task .block.option {
+          cursor: pointer; }
       .notebook .task-list .task .tag {
         height: 1.5em;
         width: 7.5em;
@@ -70,6 +75,8 @@ h1, h2, h3, h4, h5, h6 {
       .notebook .task-list .task .concept {
         height: 1.5em;
         text-align: left; }
+        .notebook .task-list .task .concept.striked {
+          text-decoration: line-through; }
 
 .notebook-input {
   background-color: transparent;
