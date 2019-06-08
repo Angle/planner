@@ -94,7 +94,7 @@ class TaskRepository extends ServiceEntityRepository
         $globalOrX->add($globalCancelTaskAndX);
 
         $qb
-            ->innerJoin('r.notebook', 'n')
+            ->innerJoin('t.notebook', 'n')
             ->where('n.user = :userId')
             ->andWhere($globalOrX)
             ->setParameter('userId', $user->getUserId())
