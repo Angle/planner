@@ -44,7 +44,7 @@ h1, h2, h3, h4, h5, h6 {
     .notebook .header.login {
       margin-top: 96px;
       margin-bottom: 24px;
-      height: auto; }
+      height: 120px; }
       .notebook .header.login .title h1 {
         font-size: 48px; }
     .notebook .header .arrow {
