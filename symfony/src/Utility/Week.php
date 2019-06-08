@@ -74,13 +74,13 @@ class Week
         return $this->year . '-' . $this->week;
     }
 
-    public static function startTimeForWeekCode($weekCode, $timezone)
+    public function getYear(): int
     {
-
+        return $this->year;
     }
 
-    public static function endTimeForWeekCode($weekCode, $timezone)
+    public function getWeek(): int
     {
-
+        return $this->week;
     }
 }
