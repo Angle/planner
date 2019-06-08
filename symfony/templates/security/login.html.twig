@@ -12,10 +12,12 @@
             </div>
 
             <div class="login-box">
-                <form>
-                    <input class="login-control" type="text" name="_username" placeholder="email">
-                    <input class="login-control" type="password" name="_password" placeholder="password">
+                <form method="post">
+                    <input class="login-control" type="email" name="email" placeholder="email" value="{{ last_username }}">
+                    <input class="login-control" type="password" name="password" placeholder="password">
                     <button type="submit" class="login-control">Log in</button>
+
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                 </form>
             </div>
         </div>
