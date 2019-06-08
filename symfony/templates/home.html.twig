@@ -1,0 +1,97 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+
+<div class="wrapper">
+    <div class="notebook">
+        <div class="header">
+            <div class="arrow">
+                &lt;
+            </div>
+            <div class="title">
+                <h1>Week 2019-18</h1>
+                <h3 class="hide-mobile">Mon June 16th, 2019 - Sun June 18th, 2019</h3>
+                <h3 class="mobile-only-inline">June 16th - June 18th</h3>
+            </div>
+            <div class="arrow">
+                &gt;
+            </div>
+        </div>
+        <table class="task-list">
+            <tbody>
+            <tr class="task">
+                <td class="block">·</td>
+                <td class="block">!</td>
+                <td class="tag">Personal</td>
+                <td class="concept">Clean up the garage</td>
+                <td class="block option">X</td>
+                <td class="block option">Y</td>
+                <td class="block option">Z</td>
+            </tr>
+            <tr class="task">
+                <td class="block">-</td>
+                <td class="block">·</td>
+                <td class="tag">Work</td>
+                <td class="concept">Program application ABC</td>
+                <td class="block option">X</td>
+                <td class="block option">Y</td>
+                <td class="block option">Z</td>
+            </tr>
+            <tr class="task">
+                <td class="block">&dash;</td>
+                <td class="block">&gt;</td>
+                <td class="tag">Work</td>
+                <td class="concept">Implement integration XYZ</td>
+                <td class="block option">&odot;</td>
+                <td class="block option">&odash;</td>
+                <td class="block option">&otimes;</td>
+            </tr>
+            <tr class="task">
+                <td class="block">&times;</td>
+                <td class="block">&rightarrow;</td>
+                <td class="tag">Work</td>
+                <td class="concept">Super super super long sentence. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris condimentum felis vel tellus vehicula, at finibus urna fermentum. Duis sed lacus posuere magna tempus accumsan.</td>
+                <td class="block option">&odash;</td>
+                <td class="block option">&check;</td>
+                <td class="block option">&otimes;</td>
+            </tr>
+            <tr class="task">
+                <td class="block">&bull;</td>
+                <td class="block">&bull;</td>
+                <td class="tag">Super long tag name! Even longer and longer!!</td>
+                <td class="concept striked">Keep on working, finish the current sprint.</td>
+                <td class="block option">x</td>
+                <td class="block option">&times;</td>
+                <td class="block option">&otimes;</td>
+            </tr>
+            <tr class="task">
+                <td class="block">&nbsp;</td>
+                <td class="block">&nbsp;</td>
+                <td class="tag">&blacktriangledown;</td>
+                <td class="concept" colspan="4">
+                    <input class="notebook-input" type="text" placeholder="Write new task.." autofocus>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--
+    <div class="sidebar">
+        <h2>Filter</h2>
+        <ul>
+            <li>Option 1</li>
+            <li>Option 2</li>
+            <li>Option 3</li>
+        </ul>
+    </div>
+    -->
+</div>
+
+<footer>
+    <p class="copy">Built with <small>&hearts;</small> by <a href="https://www.angle.mx" target="_blank">Angle</a>.</p>
+    <p class="links">
+        <a href="#">Terms of Use</a> |
+        <a href="#">Privacy Policy</a>
+    </p>
+</footer>
+{% endblock %}

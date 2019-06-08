@@ -11,4 +11,4 @@ app_logout:
 # Homepage
 app_home:
   path: /
-  controller: App\Controller\HomeController::dashboard
+  controller: App\Controller\HomeController:home
