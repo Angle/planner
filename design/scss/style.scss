@@ -11,9 +11,6 @@ $page-width: $page-width-blocks * $block-size;
 $page-min-height-blocks: 34; // about 600px with block size 18px
 $page-min-height: $page-min-height-blocks * $block-size;
 
-$bullet-blocks: 1; // number of blocks
-$tag-blocks: 5; // number of blocks
-
 // Color pallete: https://encycolorpedia.com/f2eecb
 $color-notebook: #f2eecb;
 $color-text: #282723;
@@ -44,7 +41,7 @@ h1, h2, h3, h4, h5, h6 {
   max-width: $page-width;
   width: 100%;
   margin: 0 auto;
-  padding: 0;
+  padding: $block-size 0 0 0; /* responsive, see below */
 }
 
 .header {
@@ -83,10 +80,14 @@ h1, h2, h3, h4, h5, h6 {
   background-image: url('../img/grid-dots-v2.png');
   background-repeat: repeat;
   background-size: $block-size;
+  background-position: top (0.5 * $block-size) left (0.5 * $block-size);
 
   min-height: $page-min-height;
   border-style: hidden;
-  padding: 1 * $block-size;
+  padding: 0.5 * $block-size;
+
+  box-shadow: 0 5px 10px 2px #ddd;
+  border-radius: (0.25 * $block-size);
 
 
   .task-list {
@@ -110,7 +111,7 @@ h1, h2, h3, h4, h5, h6 {
 
       .block {
         height: $block-size;
-        width: $bullet-blocks * $block-size;
+        width: 1 * $block-size;
         text-align: center;
 
         &.option {
@@ -120,7 +121,7 @@ h1, h2, h3, h4, h5, h6 {
 
       .tag {
         height: $block-size;
-        width: $tag-blocks * $block-size;
+        width: 5 * $block-size; /* responsive, see below */
         text-align: left;
 
         //white-space: nowrap;
@@ -144,16 +145,101 @@ h1, h2, h3, h4, h5, h6 {
       }
     }
   }
+
+  .notebook-input {
+    background-color: transparent;
+    border: none;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1em;
+    color: $color-text-lighter;
+
+    &:focus {
+      outline: none;
+    }
+  }
 }
 
-.notebook-input {
-  background-color: transparent;
-  border: none;
-  font-family: 'Patrick Hand', cursive;
-  font-size: 1em;
+/*
+.notebook {
+  margin-right: 10 * $block-size;
+}
+
+.sidebar {
+  margin: 0;
+  padding: 0;
+  width: 10 * $block-size;
+
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+*/
+
+
+
+footer {
+  width: 100%;
+  margin: 30px 0 10px 0;
+
+  text-align: center;
+  font-family: 'Patrick Hand SC', cursive;
+
   color: $color-text-lighter;
 
-  &:focus {
-    outline: none;
+  a {
+    color: $color-text-lighter;
+    text-decoration: none;
+
+    border-bottom: 1px dotted $color-text-lighter;
+  }
+
+  .copy {
+    font-size: 0.9em;
+  }
+
+  .links {
+    font-size: 0.8em;
+    a {
+      margin: 0 5px;
+    }
+  }
+}
+
+
+/* RESPONSIVE */
+
+.mobile-only, .mobile-only-inline {
+  display: none;
+}
+
+@media only screen and (max-width: 420px) {
+  .wrapper {
+    padding: 0;
+  }
+
+  .notebook {
+
+    .task-list {
+      .task {
+        .tag {
+          width: 4 * $block-size;
+        }
+        .option {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .mobile-only {
+    display: block;
+  }
+
+  .mobile-only-inline {
+    display: inline-block;
+  }
+
+  .hide-mobile {
+    display: none;
   }
 }
