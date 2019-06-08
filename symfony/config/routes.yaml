@@ -10,7 +10,7 @@ app_logout:
 
 # Homepage
 app_home:
-  path: /{week}
+  path: /{weekCode}
   controller: App\Controller\AppController:home
   defaults:
-    week: null
+    weekCode: ''

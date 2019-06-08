@@ -52,6 +52,9 @@ h1, h2, h3, h4, h5, h6 {
       font-size: 48px;
       padding: 0 10px;
       height: 100%; }
+      .notebook .header .arrow a, .notebook .header .arrow a:active, .notebook .header .arrow a:hover, .notebook .header .arrow a:visited {
+        color: #282723;
+        text-decoration: none; }
     .notebook .header .title {
       display: inline-block; }
       .notebook .header .title h1 {

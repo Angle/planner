@@ -5,6 +5,8 @@ namespace App\Utility;
 
 class Week
 {
+    const DEFAULT_TIMEZONE = 'America/Monterrey';
+
     /** @var int $year */
     private $year;
 
@@ -69,6 +71,39 @@ class Week
         return $this;
     }
 
+    public function getPreviousWeek(): Week
+    {
+        $date = $this->getStartDay();
+        $date->sub(new \DateInterval('P7D'));
+        return self::newFromDateTime($date);
+    }
+
+    public function getNextWeek(): Week
+    {
+        $date = $this->getStartDay();
+        $date->add(new \DateInterval('P7D'));
+        return self::newFromDateTime($date);
+    }
+
+    /**
+     * Check if THIS week is older than the other given week
+     * @param Week $otherWeek
+     * @return bool
+     */
+    public function isOlderThanWeek(Week $otherWeek): bool
+    {
+        if ($this->year < $otherWeek->getYear()) {
+            return true;
+        } elseif ($this->year == $otherWeek->getYear()) {
+            if ($this->week < $otherWeek->getWeek()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // GETTERS AND SETTERS
     public function getCode(): string
     {
         return $this->year . '-' . $this->week;
@@ -82,5 +117,23 @@ class Week
     public function getWeek(): int
     {
         return $this->week;
+    }
+
+    public function getStartDay(): \DateTime
+    {
+        $tz = new \DateTimeZone(self::DEFAULT_TIMEZONE);
+        // 1 Monday
+        $date = new \DateTime('now', $tz);
+        $date->setISODate($this->year, $this->week, 1);
+        return $date;
+    }
+
+    public function getEndDay(): \DateTime
+    {
+        $tz = new \DateTimeZone(self::DEFAULT_TIMEZONE);
+        // 7 Sunday
+        $date = new \DateTime('now', $tz);
+        $date->setISODate($this->year, $this->week, 7);
+        return $date;
     }
 }

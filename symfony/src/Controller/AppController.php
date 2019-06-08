@@ -32,7 +32,7 @@ class AppController extends AbstractController
         // TODO: Default timezone, this should be later set on the User's preferences
         $tz = new \DateTimeZone('America/Monterrey');
 
-        if (!$weekCode) {
+        if ($weekCode) {
             if (!Week::validateWeekCode($weekCode)) {
                 throw new BadRequestHttpException('Malformed WeekCode');
             }
@@ -42,6 +42,10 @@ class AppController extends AbstractController
             $now = new \DateTime('now', $tz);
             $week = Week::newFromDateTime($now);
         }
+
+        // Build today's current week
+        $now = new \DateTime('now', $tz);
+        $currentWeek = Week::newFromDateTime($now);
 
         /** @var NotebookRepository $notebookRepository */
         $notebookRepository = $this->getDoctrine()->getRepository(Notebook::class);
@@ -54,17 +58,19 @@ class AppController extends AbstractController
 
         // Load notebook first
         /** @var Notebook[] $notebooks */
-        $notebooks = $notebookRepository->findAll();
+        $notebooks = $notebookRepository->findByUser($user);
 
         /** @var Task[] $tasks *
         $tasks = $taskRepository->findByNotebook($notebooks);
          * */
+        //$tasks = $taskRepository->findAllByUserAndWeek($user, $week);
         $tasks = $taskRepository->findAll();
 
         return $this->render('home.html.twig', [
-            'notebooks'  => $notebooks,
+            'notebooks' => $notebooks,
             'tasks'     => $tasks,
-            'week'  => $week,
+            'week'      => $week,
+            'currentWeek' => $currentWeek,
         ]);
     }
 }

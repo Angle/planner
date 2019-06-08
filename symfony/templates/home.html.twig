@@ -6,17 +6,55 @@
     <div class="notebook">
         <div class="header">
             <div class="arrow">
-                &lt;
+                <a href="{{ path('app_home', {'weekCode': week.previousWeek.code}) }}">&lt;</a>
             </div>
             <div class="title">
-                <h1>Week 2019-18</h1>
-                <h3 class="hide-mobile">Mon June 16th, 2019 - Sun June 18th, 2019</h3>
-                <h3 class="mobile-only-inline">June 16th - June 18th</h3>
+                <h1>Week {{ week.code }}</h1>
+                {#<h3 class="hide-mobile">{{ week.startDay|date('D F jS, Y') }} - {{ week.endDay|date('D F jS, Y') }}</h3>#}
+                <h3 class="hide-mobile">{{ week.startDay|date('F jS, Y') }} - {{ week.endDay|date('F jS, Y') }}</h3>
+                <h3 class="mobile-only-inline">{{ week.startDay|date('M jS') }} - {{ week.endDay|date('M jS') }}</h3>
             </div>
             <div class="arrow">
-                &gt;
+                <a href="{{ path('app_home', {'weekCode': week.nextWeek.code}) }}">&gt;</a>
             </div>
         </div>
+
+        <table class="task-list">
+            <tbody>
+            {% for task in tasks %}
+            <tr class="task">
+                <td class="block">
+                    {% if task.isOlderThanWeek(currentWeek) %}
+                        &dash;
+                    {% else %}
+                        &nbsp;
+                    {% endif %}
+                </td>
+                <td class="block">!
+                    {% if task.status == constant('App\\Entity\\Task::STATUS_CLOSED') %}
+                        &times;
+                    {% else %}
+                        {% if task. %}
+                    {% endif %}
+                </td>
+                <td class="tag">{{ task.notebook.name }}</td>
+                <td class="concept">{{ task.concept }}</td>
+                <td class="block option">&odot;</td>
+                <td class="block option">&odash;</td>
+                <td class="block option">&otimes;</td>
+            </tr>
+            {% endfor %}
+            <tr class="task">
+                <td class="block">&nbsp;</td>
+                <td class="block">&nbsp;</td>
+                <td class="tag">&blacktriangledown;</td>
+                <td class="concept" colspan="4">
+                    <input class="notebook-input" type="text" placeholder="Write new task.." autofocus>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
         <table class="task-list">
             <tbody>
             <tr class="task">

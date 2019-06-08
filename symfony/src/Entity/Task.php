@@ -26,6 +26,10 @@ class Task
 
     const CODE_LENGTH = 32;
 
+    const STATUS_OPEN = 1;
+    const STATUS_CLOSED = 2;
+    const STATUS_CANCELLED = 3;
+
 
     #########################
     ##      PROPERTIES     ##
@@ -132,7 +136,7 @@ class Task
         $this->openTimestamp = new DateTime('now');
     }
 
-    public function getOpenWeekCode()
+    public function getOpenWeek(): ?Week
     {
         if ($this->openYearNumber && $this->openWeekNumber) {
             return new Week($this->openYearNumber, $this->openWeekNumber);
@@ -141,7 +145,7 @@ class Task
         }
     }
 
-    public function getCloseWeek()
+    public function getCloseWeek(): ?Week
     {
         if ($this->closeYearNumber && $this->closeWeekNumber) {
             return new Week($this->closeYearNumber, $this->closeWeekNumber);
@@ -157,6 +161,23 @@ class Task
         } else {
             return null;
         }
+    }
+
+    public function getStatus(): int
+    {
+        if (!is_null($this->cancelTimestamp)) {
+            return self::STATUS_CANCELLED;
+        } elseif (!is_null($this->closeTimestamp)) {
+            return self::STATUS_CLOSED;
+        } else {
+            return self::STATUS_OPEN;
+        }
+    }
+
+    public function isOlderThanWeek(Week $comparisonWeek): bool
+    {
+        // Check if the Task's Open Week is older than the comparison week
+        return $this->getOpenWeek()->isOlderThanWeek($comparisonWeek);
     }
 
 
