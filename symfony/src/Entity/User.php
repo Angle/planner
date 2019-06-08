@@ -70,7 +70,7 @@ class User implements UserInterface
     #########################
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Noteebok", mappedBy="user", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Notebook", mappedBy="user", orphanRemoval=true)
      */
     private $notebooks;
 
@@ -78,6 +78,7 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity="App\Entity\ShareMap", mappedBy="user", orphanRemoval=true)
      */
     private $shareMaps;
+
 
     #########################
     ##     CONSTRUCTOR     ##
