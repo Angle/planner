@@ -24,7 +24,8 @@
             {% for task in tasks %}
             <tr class="task">
                 <td class="block">
-                    {% if task.isOlderThanWeek(currentWeek) %}
+                    {% if task.showPulledFlag(week, currentWeek) %}
+                        {# if the task was opened on a week previous than the week we are querying, then mark it with a dash #}
                         &dash;
                     {% else %}
                         &nbsp;
@@ -34,7 +35,12 @@
                     {% if task.status == constant('App\\Entity\\Task::STATUS_CLOSED') %}
                         &times;
                     {% else %}
-                        {% if task. %}
+                        {% if task.showKickedFlag(week, currentWeek) %}
+                            {# if this task was kicked, mark it with > #}
+                            &gt;
+                        {% else %}
+                            &bull;
+                        {% endif %}
                     {% endif %}
                 </td>
                 <td class="tag">{{ task.notebook.name }}</td>

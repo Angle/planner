@@ -180,6 +180,22 @@ class Task
         return $this->getOpenWeek()->isOlderThanWeek($comparisonWeek);
     }
 
+    public function showPulledFlag(Week $queryWeek, Week $currentWeek): bool
+    {
+
+    }
+
+    public function showKickedFlag(Week $queryWeek, Week $currentWeek): bool
+    {
+
+    }
+
+    public function wasKickedOnWeek(Week $queryWeek): bool
+    {
+        // if this is not our current week AND the task was not closed or deleted on this week, mark it wish a > #}
+
+    }
+
 
     #########################
     ## GETTERS AND SETTERS ##

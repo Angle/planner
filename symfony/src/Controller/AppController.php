@@ -63,8 +63,7 @@ class AppController extends AbstractController
         /** @var Task[] $tasks *
         $tasks = $taskRepository->findByNotebook($notebooks);
          * */
-        //$tasks = $taskRepository->findAllByUserAndWeek($user, $week);
-        $tasks = $taskRepository->findAll();
+        $tasks = $taskRepository->findAllByUserAndWeek($user, $week);
 
         return $this->render('home.html.twig', [
             'notebooks' => $notebooks,
