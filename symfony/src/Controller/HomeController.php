@@ -25,6 +25,9 @@ class HomeController extends AbstractController
 
         */
 
+        // TODO: Save the TimeZone _PER USER_
+        $tz = new \DateTimeZone('America/Monterrey');
+
         // TODO: Check User Admin permission
 
         return $this->render('home.html.twig', [
