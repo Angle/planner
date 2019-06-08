@@ -17,6 +17,8 @@ $color-text: #282723;
 $color-text-lighter: #4b4a46;
 $color-background: #f1f1f1;
 
+$sidebar-width-blocks: 8;
+
 
 html, body {
   height: 100%;
@@ -65,152 +67,158 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 5px 10px 2px #ddd;
   border-radius: (0.25 * $block-size);
 
-  .header {
-    text-align: center;
-    height: 3 * $block-size;
-    width: 100%;
-    margin-bottom: 1 * $block-size;
+  position: relative;
 
-    &.login {
-      margin-top: 4 * $block-size;
+  .content {
+
+    padding-right: (1 + $sidebar-width-blocks) * $block-size;
+
+    .header {
+      text-align: center;
+      height: 3 * $block-size;
+      width: 100%;
       margin-bottom: 1 * $block-size;
-      height: 5 * $block-size;
+
+      &.login {
+        margin-top: 4 * $block-size;
+        margin-bottom: 1 * $block-size;
+        height: 5 * $block-size;
+        .title {
+          h1 {
+            font-size: 48px;
+          }
+        }
+      }
+
+      .arrow {
+        display: inline-block;
+        font-size: 48px;
+        padding: 0 10px;
+        height: 100%;
+
+        a, a:active, a:hover, a:visited {
+          color: $color-text;
+          text-decoration: none;
+        }
+      }
+
       .title {
+        display: inline-block;
         h1 {
-          font-size: 48px;
+          margin: 0;
+          //line-height: 2 * $block-size;
+        }
+        h3 {
+          margin: 0;
+          //line-height: 1 * $block-size;
         }
       }
     }
 
-    .arrow {
-      display: inline-block;
-      font-size: 48px;
-      padding: 0 10px;
-      height: 100%;
+    .task-list {
+      margin: 0;
+      border-collapse: collapse;
+      border-spacing: 0;
+      table-layout: fixed;
 
-      a, a:active, a:hover, a:visited {
-        color: $color-text;
-        text-decoration: none;
+      font-size: 16px;
+      line-height: $block-size;
+
+      td {
+        //border: 1px solid black;
+        vertical-align: top;
+        padding: 0px 4px;
+        box-sizing: border-box;
       }
-    }
 
-    .title {
-      display: inline-block;
-      h1 {
-        margin: 0;
-        //line-height: 2 * $block-size;
-      }
-      h3 {
-        margin: 0;
-        //line-height: 1 * $block-size;
-      }
-    }
-  }
+      .task {
+        width: 100%;
 
-  .task-list {
-    margin: 0;
-    border-collapse: collapse;
-    border-spacing: 0;
-    table-layout: fixed;
+        .block {
+          height: $block-size;
+          width: 1 * $block-size;
+          text-align: center;
 
-    font-size: 16px;
-    line-height: $block-size;
-
-    td {
-      //border: 1px solid black;
-      vertical-align: top;
-      padding: 0px 4px;
-      box-sizing: border-box;
-    }
-
-    .task {
-      width: 100%;
-
-      .block {
-        height: $block-size;
-        width: 1 * $block-size;
-        text-align: center;
-
-        &.option {
-          cursor: pointer;
+          &.option {
+            cursor: pointer;
+          }
         }
-      }
 
-      .tag {
-        height: $block-size;
-        width: 5 * $block-size; /* responsive, see below */
-        text-align: left;
+        .tag {
+          height: $block-size;
+          width: 5 * $block-size; /* responsive, see below */
+          text-align: left;
 
-        //white-space: nowrap;
-        //overflow: hidden;
-        //text-overflow: ellipsis;
-      }
+          //white-space: nowrap;
+          //overflow: hidden;
+          //text-overflow: ellipsis;
+        }
 
-      .concept {
-        height: $block-size;
-        //padding-left: $block-size;
-        //width: $concept-blocks * $block-size;
-        text-align: left;
+        .concept {
+          height: $block-size;
+          //padding-left: $block-size;
+          //width: $concept-blocks * $block-size;
+          text-align: left;
 
-        //white-space: nowrap;
-        //overflow: hidden;
-        //text-overflow: ellipsis;
+          //white-space: nowrap;
+          //overflow: hidden;
+          //text-overflow: ellipsis;
 
-        &.striked {
-          text-decoration: line-through;
+          &.striked {
+            text-decoration: line-through;
+          }
         }
       }
     }
-  }
 
-  .notebook-input {
-    background-color: transparent;
-    border: none;
-    font-family: 'Patrick Hand', cursive;
-    font-size: 16px;
-    color: $color-text-lighter;
-
-    &:focus {
-      outline: none;
-    }
-  }
-
-  .login-box {
-    width: 20 * $block-size;
-    margin: 0 auto;
-
-    .login-control {
-      width: 100%;
-      height: 2 * $block-size;
-      margin-bottom: 1 * $block-size;
-
+    .notebook-input {
+      background-color: transparent;
+      border: none;
       font-family: 'Patrick Hand', cursive;
-      font-size: 24px;
-      line-height: 32px;
-      padding: 0 10px;
-      box-sizing: border-box;
-      border: 1px solid $color-text-lighter;
-      border-radius: 10px;
-      background-color: white;
+      font-size: 16px;
+      color: $color-text-lighter;
+
+      &:focus {
+        outline: none;
+      }
     }
+
+    .login-box {
+      width: 20 * $block-size;
+      margin: 0 auto;
+
+      .login-control {
+        width: 100%;
+        height: 2 * $block-size;
+        margin-bottom: 1 * $block-size;
+
+        font-family: 'Patrick Hand', cursive;
+        font-size: 24px;
+        line-height: 32px;
+        padding: 0 10px;
+        box-sizing: border-box;
+        border: 1px solid $color-text-lighter;
+        border-radius: 10px;
+        background-color: white;
+      }
+    }
+  }
+
+  .sidebar {
+    margin: 0;
+    padding: 0;
+    width: $sidebar-width-blocks * $block-size;
+
+    position: absolute;
+    top: 0;
+    right: 0.5 * $block-size;
+    height: 100%;
+    overflow: auto;
   }
 }
 
-/*
-.notebook {
-  margin-right: 10 * $block-size;
-}
 
-.sidebar {
-  margin: 0;
-  padding: 0;
-  width: 10 * $block-size;
 
-  position: fixed;
-  height: 100%;
-  overflow: auto;
-}
-*/
 
 
 
