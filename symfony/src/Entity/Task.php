@@ -2,13 +2,15 @@
 
 namespace App\Entity;
 
-use App\Utility\WeekCode;
 use DateTime;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 use Angle\Common\Utilities\Random\Random;
+
+use App\Utility\Week;
 
 
 /**
@@ -84,17 +86,17 @@ class Task
     /**
      * @ORM\Column(type="datetime")
      */
-    private $cancelTime;
+    private $cancelTimestamp;
 
     /**
      * @ORM\Column(type="smallint")
      */
-    private $cancelWeek;
+    private $cancelWeekNumber;
 
     /**
      * @ORM\Column(type="smallint")
      */
-    private $cancelYear;
+    private $cancelYearNumber;
 
 
     #########################
@@ -140,9 +142,13 @@ class Task
         return $this->closeYear.'-'.WeekCode::strpad($this->closeWeek, 2, '0');
     }
 
-    public function getCancelWeekCode()
+    public function getCancelWeek(): ?Week
     {
-        return $this->cancelYear.'-'.WeekCode::strpad($this->cancelWeek, 2, '0');
+        if ($this->cancelYearNumber && $this->cancelWeekNumber) {
+            return new Week($this->cancelYearNumber, $this->cancelWeekNumber);
+        } else {
+            return null;
+        }
     }
 
 

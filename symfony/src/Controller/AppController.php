@@ -23,14 +23,14 @@ class AppController extends AbstractController
         $tz = new \DateTimeZone('America/Monterrey');
 
         if (!$weekCode) {
-            if (!WeekCode::validateWeekCode($weekCode)) {
+            if (!Week::validateWeekCode($weekCode)) {
                 throw new BadUrlException('Malformed WeekCode');
             }
-            $week = WeekCode::parseWeekCode($weekCode);
+            $week = Week::newFromWeekCode($weekCode);
         } else {
             // Default to today's week
             $now = new \DateTime('now', $tz);
-            $week =
+            $week = Week::newFromDateTime($now);
         }
 
         /** @var NotebookRepository $notebookRepository */

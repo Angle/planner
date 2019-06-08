@@ -11,9 +11,14 @@ class Week
     /** @var int $week */
     private $week;
 
-    public static function validateWeekCode($weekCode): bool
+    public static function validateWeekCode(string $weekCode): bool
     {
-
+        try {
+            $week = self::newFromWeekCode($weekCode));
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 
     /**
@@ -22,7 +27,18 @@ class Week
      */
     public static function newFromWeekCode($weekCode): self
     {
+        $parts = explode('-', $weekCode);
 
+        if (count($parts) != 2) {
+            throw new \RuntimeException('Invalid week code format, expecting YYYY-WW');
+        }
+
+        if (!is_numeric($parts[0]) || !is_numeric($parts[1])) {
+            throw new \RuntimeException('Invalid week code format, expecting YYYY-WW');
+        }
+
+        $week = new self(intval($parts[0]), intval($parts[1]));
+        return $week;
     }
 
     /**
