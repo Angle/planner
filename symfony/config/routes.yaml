@@ -10,5 +10,5 @@ app_logout:
 
 # Homepage
 app_home:
-  path: /
-  controller: App\Controller\HomeController:home
+  path: /{week}
+  controller: App\Controller\AppController:home
