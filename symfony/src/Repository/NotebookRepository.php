@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Notebook;
+use App\Entity\User;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -19,5 +21,37 @@ class NotebookRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Notebook::class);
+    }
+
+    /**
+     * @param User $user
+     * @return Notebook[] Returns an array of Notebook objects
+     */
+    public function findByUser($user)
+    {
+        return $this->createQueryBuilder('n')
+            ->andWhere('n.user = :userId')
+            ->setParameter('userId', $user->getUserId())
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    /**
+     * @param $code
+     * @return Notebook|null
+     */
+    public function findOneByCode($code): ?Notebook
+    {
+        try {
+            return $this->createQueryBuilder('n')
+                ->andWhere('n.code = :code')
+                ->setParameter('code', $code)
+                ->getQuery()
+                ->getOneOrNullResult()
+            ;
+        } catch (NonUniqueResultException $e) {
+            return null;
+        }
     }
 }
