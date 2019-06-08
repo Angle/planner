@@ -2,19 +2,29 @@
 
 namespace App\Controller;
 
-use App\Utility\Week;
-use http\Exception\BadUrlException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
+use App\Utility\Week;
+
+use App\Entity\User;
+
+use App\Repository\NotebookRepository;
+use App\Entity\Notebook;
+
+use App\Repository\TaskRepository;
+use App\Entity\Task;
 
 
 class AppController extends AbstractController
 {
     /**
      * Display the main screen
+     * @param string $weekCode
      * @return Response
      */
     public function home(string $weekCode): Response
@@ -24,7 +34,7 @@ class AppController extends AbstractController
 
         if (!$weekCode) {
             if (!Week::validateWeekCode($weekCode)) {
-                throw new BadUrlException('Malformed WeekCode');
+                throw new BadRequestHttpException('Malformed WeekCode');
             }
             $week = Week::newFromWeekCode($weekCode);
         } else {
@@ -35,22 +45,21 @@ class AppController extends AbstractController
 
         /** @var NotebookRepository $notebookRepository */
         $notebookRepository = $this->getDoctrine()->getRepository(Notebook::class);
+
         /** @var TaskRepository $taskRepository */
         $taskRepository = $this->getDoctrine()->getRepository(Task::class);
+
         /** @var User $user */
         $user = $this->getUser();
 
         // Load notebook first
-        /** @var Notebook $notebook */
-        $notebook = $notebookRepository->findOneByCode($notebookCode);
+        /** @var Notebook[] $notebooks */
+        $notebooks = $notebookRepository->findAll();
 
-        // Validate ownership
-        if ($notebook->getUser()->getUserId() !== $user->getUserId()) {
-            throw new AuthenticationException('Access Denied for this notebook.');
-        }
-
-        /** @var Task[] $tasks */
-        $tasks = $taskRepository->findByNotebook($notebook);
+        /** @var Task[] $tasks *
+        $tasks = $taskRepository->findByNotebook($notebooks);
+         * */
+        $tasks = $taskRepository->findAll();
 
         return $this->render('home.html.twig', [
             'notebooks'  => $notebooks,

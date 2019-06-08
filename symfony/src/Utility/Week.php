@@ -14,7 +14,7 @@ class Week
     public static function validateWeekCode(string $weekCode): bool
     {
         try {
-            $week = self::newFromWeekCode($weekCode));
+            $week = self::newFromWeekCode($weekCode);
             return true;
         } catch (\Exception $e) {
             return false;

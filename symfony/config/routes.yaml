@@ -12,3 +12,5 @@ app_logout:
 app_home:
   path: /{week}
   controller: App\Controller\AppController:home
+  defaults:
+    week: null
