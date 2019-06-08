@@ -29,4 +29,8 @@ abstract class WeekCode
 
     }
 
+    public static function strpad($number, $pad_length, $pad_string) {
+        return str_pad($number, $pad_length, $pad_string, STR_PAD_LEFT);
+    }
+
 }

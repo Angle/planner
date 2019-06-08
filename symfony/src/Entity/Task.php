@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Utility\WeekCode;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -53,7 +54,17 @@ class Task
     /**
      * @ORM\Column(type="datetime")
      */
-    private $creationTime;
+    private $openTime;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $openWeek;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $openYear;
 
     /**
      * @ORM\Column(type="datetime")
@@ -61,9 +72,29 @@ class Task
     private $closeTime;
 
     /**
+     * @ORM\Column(type="smallint")
+     */
+    private $closeWeek;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $closeYear;
+
+    /**
      * @ORM\Column(type="datetime")
      */
-    private $cancelledTime;
+    private $cancelTime;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $cancelWeek;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $cancelYear;
 
 
     #########################
@@ -94,9 +125,24 @@ class Task
     /**
      * @ORM\PrePersist
      */
-    public function setCreationTimeValue()
+    public function setOpenTimeValue()
     {
-        $this->creationTime = new DateTime('now');
+        $this->openTime = new DateTime('now');
+    }
+
+    public function getOpenWeekCode()
+    {
+        return $this->openYear.'-'.WeekCode::strpad($this->openWeek, 2, '0');
+    }
+
+    public function getCloseWeekCode()
+    {
+        return $this->closeYear.'-'.WeekCode::strpad($this->closeWeek, 2, '0');
+    }
+
+    public function getCancelWeekCode()
+    {
+        return $this->cancelYear.'-'.WeekCode::strpad($this->cancelWeek, 2, '0');
     }
 
 
@@ -169,18 +215,54 @@ class Task
     /**
      * @return DateTime|null
      */
-    public function getCreationTime(): ?DateTime
+    public function getOpenTime(): ?DateTime
     {
-        return $this->creationTime;
+        return $this->openTime;
     }
 
     /**
-     * @param DateTime $creationTime
+     * @param DateTime $openTime
      * @return Task
      */
-    public function setCreationTime(DateTime $creationTime): self
+    public function setOpenTime(DateTime $openTime): self
     {
-        $this->creationTime = $creationTime;
+        $this->openTime = $openTime;
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getOpenWeek(): ?int
+    {
+        return $this->openWeek;
+    }
+
+    /**
+     * @param int $openWeek
+     * @return Task
+     */
+    public function setOpenWeek(int $openWeek): self
+    {
+        $this->openWeek = $openWeek;
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getOpenYear(): ?int
+    {
+        return $this->openYear;
+    }
+
+    /**
+     * @param int $openYear
+     * @return Task
+     */
+    public function setOpenYear(int $openYear): self
+    {
+        $this->openYear = $openYear;
         return $this;
     }
 
@@ -203,20 +285,92 @@ class Task
     }
 
     /**
-     * @return DateTime|null
+     * @return int|null
      */
-    public function getCancelledTime(): ?DateTime
+    public function getCloseWeek(): ?int
     {
-        return $this->cancelledTime;
+        return $this->closeWeek;
     }
 
     /**
-     * @param DateTime $cancelledTime
+     * @param int $closeWeek
      * @return Task
      */
-    public function setCancelledTime(DateTime $cancelledTime): self
+    public function setCloseWeek(int $closeWeek): self
     {
-        $this->cancelledTime = $cancelledTime;
+        $this->closeWeek = $closeWeek;
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getCloseYear(): ?int
+    {
+        return $this->closeYear;
+    }
+
+    /**
+     * @param int $closeYear
+     * @return Task
+     */
+    public function setCloseYear(int $closeYear): self
+    {
+        $this->closeYear = $closeYear;
+        return $this;
+    }
+
+    /**
+     * @return DateTime|null
+     */
+    public function getCancelTime(): ?DateTime
+    {
+        return $this->cancelTime;
+    }
+
+    /**
+     * @param DateTime $cancelTime
+     * @return Task
+     */
+    public function setCancelTime(DateTime $cancelTime): self
+    {
+        $this->cancelTime = $cancelTime;
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getCancelWeek(): ?int
+    {
+        return $this->cancelWeek;
+    }
+
+    /**
+     * @param int $cancelWeek
+     * @return Task
+     */
+    public function setCancelWeek(int $cancelWeek): self
+    {
+        $this->cancelWeek = $cancelWeek;
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getCancelYear(): ?int
+    {
+        return $this->cancelYear;
+    }
+
+    /**
+     * @param int $cancelYear
+     * @return Task
+     */
+    public function setCancelYear(int $cancelYear): self
+    {
+        $this->cancelYear = $cancelYear;
         return $this;
     }
 
