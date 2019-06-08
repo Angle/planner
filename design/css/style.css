@@ -8,42 +8,74 @@ html, body {
   background-color: #f1f1f1; }
 
 body {
-  font-family: 'Patrick Hand SC', cursive;
+  font-family: 'Patrick Hand', cursive;
   font-size: 1em;
   color: #282723; }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Patrick Hand SC', cursive; }
+
 .wrapper {
-  max-width: 90em;
+  max-width: 67.5em;
   width: 100%;
   margin: 0 auto;
   padding: 0; }
 
+.header {
+  text-align: center;
+  height: 4.5em;
+  width: 100%;
+  margin-bottom: 1.5em; }
+  .header .arrow {
+    display: inline-block;
+    font-size: 3em;
+    padding: 0 10px;
+    height: 100%; }
+  .header .title {
+    display: inline-block; }
+    .header .title h1 {
+      margin: 0; }
+    .header .title h3 {
+      margin: 0; }
+
 .notebook {
   width: 100%;
   background-color: #f2eecb;
-  min-height: 68em;
-  padding: 2em; }
-  .notebook .task-list .task {
-    width: 100%; }
-    .notebook .task-list .task .bullet {
-      display: inline-block;
-      height: 2em;
-      width: 2em;
-      text-align: center; }
-    .notebook .task-list .task .tag {
-      display: inline-block;
-      height: 2em;
-      width: 10em;
-      white-space: nowrap;
-      overflow: hidden;
-      -o-text-overflow: ellipsis;
-      text-overflow: ellipsis; }
-    .notebook .task-list .task .concept {
-      display: inline-block;
-      height: 2em;
-      padding-left: 2em;
-      width: 78em;
-      white-space: nowrap;
-      overflow: hidden;
-      -o-text-overflow: ellipsis;
-      text-overflow: ellipsis; }
+  background-image: url("../img/grid-dots-v2.png");
+  background-repeat: repeat;
+  background-size: 1.5em;
+  min-height: 51em;
+  border-style: hidden;
+  padding: 1.5em; }
+  .notebook .task-list {
+    margin: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
+    table-layout: fixed; }
+    .notebook .task-list td {
+      vertical-align: top;
+      padding: 0px 4px;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box; }
+    .notebook .task-list .task {
+      width: 100%; }
+      .notebook .task-list .task .block {
+        height: 1.5em;
+        width: 1.5em;
+        text-align: center; }
+      .notebook .task-list .task .tag {
+        height: 1.5em;
+        width: 7.5em;
+        text-align: left; }
+      .notebook .task-list .task .concept {
+        height: 1.5em;
+        text-align: left; }
+
+.notebook-input {
+  background-color: transparent;
+  border: none;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1em;
+  color: #4b4a46; }
+  .notebook-input:focus {
+    outline: none; }

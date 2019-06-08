@@ -5,7 +5,7 @@
 
 
 // Config
-$block-size: 2em; // note: this should match the current page size
+$block-size: 1.5em; // note: this should match the current page size
 $page-width-blocks: 45; // about 800 px with block size 18px
 $page-width: $page-width-blocks * $block-size;
 $page-min-height-blocks: 34; // about 600px with block size 18px
@@ -13,11 +13,11 @@ $page-min-height: $page-min-height-blocks * $block-size;
 
 $bullet-blocks: 1; // number of blocks
 $tag-blocks: 5; // number of blocks
-$concept-blocks: $page-width-blocks - $bullet-blocks - $tag-blocks;
 
 // Color pallete: https://encycolorpedia.com/f2eecb
 $color-notebook: #f2eecb;
 $color-text: #282723;
+$color-text-lighter: #4b4a46;
 $color-background: #f1f1f1;
 
 
@@ -31,10 +31,14 @@ html, body {
 
 
 body {
-  font-family: 'Patrick Hand SC', cursive;
-  //font-family: 'Patrick Hand', cursive;
+  //font-family: 'Patrick Hand SC', cursive;
+  font-family: 'Patrick Hand', cursive;
   font-size: 1em;
   color: $color-text;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Patrick Hand SC', cursive;
 }
 
 .wrapper {
@@ -44,47 +48,97 @@ body {
   padding: 0;
 }
 
+.header {
+  text-align: center;
+  height: 3 * $block-size;
+  width: 100%;
+  margin-bottom: 1 * $block-size;
+
+  .arrow {
+    display: inline-block;
+    font-size: 3em;
+    padding: 0 10px;
+    height: 100%;
+  }
+
+  .title {
+    display: inline-block;
+    h1 {
+      margin: 0;
+    }
+    h3 {
+      margin: 0;
+    }
+  }
+}
+
 // TODO: Migrate to Flexbox, it's 2019 already..
 
 .notebook {
   width: 100%;
   background-color: $color-notebook;
+  background-image: url('../img/grid-dots-v2.png');
+  background-repeat: repeat;
+  background-size: $block-size;
+
   min-height: $page-min-height;
+  border-style: hidden;
   padding: 1 * $block-size;
 
   .task-list {
+    margin: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
+    table-layout: fixed;
+
+    td {
+      //border: 1px solid black;
+      vertical-align: top;
+      padding: 0px 4px;
+      box-sizing: border-box;
+    }
+
     .task {
       width: 100%;
 
-      .bullet {
-        display: inline-block;
+      .block {
         height: $block-size;
         width: $bullet-blocks * $block-size;
-
         text-align: center;
       }
 
       .tag {
-        display: inline-block;
         height: $block-size;
         width: $tag-blocks * $block-size;
+        text-align: left;
 
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        //white-space: nowrap;
+        //overflow: hidden;
+        //text-overflow: ellipsis;
       }
 
       .concept {
-        display: inline-block;
         height: $block-size;
-        padding-left: $block-size;
-        width: $concept-blocks * $block-size;
+        //padding-left: $block-size;
+        //width: $concept-blocks * $block-size;
+        text-align: left;
 
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        //white-space: nowrap;
+        //overflow: hidden;
+        //text-overflow: ellipsis;
       }
-
     }
+  }
+}
+
+.notebook-input {
+  background-color: transparent;
+  border: none;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1em;
+  color: $color-text-lighter;
+
+  &:focus {
+    outline: none;
   }
 }
