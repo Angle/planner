@@ -42,13 +42,13 @@ class ShareMap
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="shareMaps")
-     * @ORM\JoinColumn(referencedColumnName="share_map_id", nullable=false)
+     * @ORM\JoinColumn(referencedColumnName="user_id", nullable=false)
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Notebook", inversedBy="shareMaps")
-     * @ORM\JoinColumn(referencedColumnName="share_map_id", nullable=false)
+     * @ORM\JoinColumn(referencedColumnName="notebook_id", nullable=false)
      */
     private $notebook;
 
