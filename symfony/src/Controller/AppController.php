@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Utility\WeekCode;
+use App\Utility\Week;
 use http\Exception\BadUrlException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
@@ -26,9 +26,11 @@ class AppController extends AbstractController
             if (!WeekCode::validateWeekCode($weekCode)) {
                 throw new BadUrlException('Malformed WeekCode');
             }
+            $week = WeekCode::parseWeekCode($weekCode);
         } else {
             // Default to today's week
             $now = new \DateTime('now', $tz);
+            $week =
         }
 
         /** @var NotebookRepository $notebookRepository */
@@ -51,8 +53,9 @@ class AppController extends AbstractController
         $tasks = $taskRepository->findByNotebook($notebook);
 
         return $this->render('home.html.twig', [
+            'notebooks'  => $notebooks,
             'tasks'     => $tasks,
-            'notebook'  => $notebook,
+            'week'  => $week,
         ]);
     }
 }
