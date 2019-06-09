@@ -8,6 +8,7 @@ use App\Entity\User;
 
 use App\Form\TaskType;
 
+use App\Preset\StatusCode;
 use App\Repository\NotebookRepository;
 use App\Repository\TaskRepository;
 
@@ -78,6 +79,7 @@ class TaskController extends AbstractController
                 $entityManager->flush();
             }catch (\Exception $e) {
                 // TODO WHAT TO DO ON ERROR
+                $this->addFlash(StatusCode::LABEL_ERROR, StatusCode::ERROR_DATABASE_INSERT);
             }
 
             return $this->redirectToRoute('app_home');

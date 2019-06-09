@@ -12,3 +12,7 @@ function loadModal(url) {
         console.log( "Load was performed: " + url );
     });
 }
+
+function dismissAlert(e) {
+    $(e).parent().parent().remove();
+}
