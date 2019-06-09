@@ -56,9 +56,6 @@ class TaskType extends AbstractType
             ->add('concept', TextType::class, [
                 'label' => 'Concept'
             ])
-            ->add('details', TextType::class, [
-                'label' => 'Details'
-            ])
             ->add('save', SubmitType::class, [
                 'label' => 'Save'
             ])
