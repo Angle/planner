@@ -103,6 +103,11 @@ class Week
         return false;
     }
 
+    public function equals(Week $comparisonWeek): bool
+    {
+        return (($this->year == $comparisonWeek->getYear()) && ($this->week == $comparisonWeek->getWeek()));
+    }
+
     // GETTERS AND SETTERS
     public function getCode(): string
     {

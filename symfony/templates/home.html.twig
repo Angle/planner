@@ -28,23 +28,25 @@
                 {% for task in tasks %}
                     <tr class="task">
                         <td class="block">
-                            {% if task.showPulledFlag(week) %}
-                                {# if the task was opened on a week previous than the week we are querying, then mark it with a dash #}
-                                &dash;
-                            {% else %}
+                            {% if task.flag(week, currentWeek) == constant('App\\Entity\\Task::FLAG_NONE') %}
                                 &nbsp;
+                            {% elseif task.flag(week, currentWeek) == constant('App\\Entity\\Task::FLAG_DASH') %}
+                                &dash;
+                            {% elseif task.flag(week, currentWeek) == constant('App\\Entity\\Task::FLAG_UNKNOWN') %}
+                                ?
                             {% endif %}
                         </td>
                         <td class="block">
-                            {% if task.status == constant('App\\Entity\\Task::STATUS_CLOSED') %}
+                            {% if task.bullet(week, currentWeek) == constant('App\\Entity\\Task::BULLET_DOT') %}
+                                &bull;
+                            {% elseif task.bullet(week, currentWeek) == constant('App\\Entity\\Task::BULLET_TIMES') %}
                                 &times;
-                            {% else %}
-                                {% if task.showKickedFlag(week) %}
-                                    {# if this task was kicked, mark it with > #}
-                                    &gt;
-                                {% else %}
-                                    &bull;
-                                {% endif %}
+                            {% elseif task.bullet(week, currentWeek) == constant('App\\Entity\\Task::BULLET_ARROW') %}
+                                &gt;
+                            {% elseif task.bullet(week, currentWeek) == constant('App\\Entity\\Task::BULLET_DASH') %}
+                                &dash;
+                            {% elseif task.bullet(week, currentWeek) == constant('App\\Entity\\Task::BULLET_UNKNOWN') %}
+                                ?
                             {% endif %}
                         </td>
                         <td class="tag">{{ task.notebook.name }}</td>

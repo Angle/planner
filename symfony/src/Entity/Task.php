@@ -28,6 +28,16 @@ class Task
     const STATUS_CLOSED = 2;
     const STATUS_CANCELLED = 3;
 
+    const BULLET_DOT = 1;
+    const BULLET_TIMES = 2;
+    const BULLET_ARROW = 3;
+    const BULLET_DASH = 4;
+    const BULLET_UNKNOWN = 99;
+
+    const FLAG_NONE = 1;
+    const FLAG_DASH = 2;
+    const FLAG_UNKNOWN = 99;
+
 
     #########################
     ##      PROPERTIES     ##
@@ -168,6 +178,55 @@ class Task
         } else {
             return self::STATUS_OPEN;
         }
+    }
+
+    public function getBullet(Week $queryWeek, Week $currentWeek): int
+    {
+        if (!$this->cancelTimestamp && $this->closeTimestamp) {
+            // The task is not yet closed, we have to determine if we show a dot or an arrow
+            if ($queryWeek->equals($currentWeek)) {
+                return self::BULLET_DOT;
+            } else {
+                return self::BULLET_ARROW;
+            }
+        } elseif ($this->closeTimestamp) {
+            // the task has been closed, we have to determine if we show a times or an arrow
+            if ($queryWeek->equals($this->getCloseWeek())) {
+                return self::BULLET_TIMES;
+            } else {
+                return self::BULLET_ARROW;
+            }
+        } elseif ($this->cancelTimestamp) {
+            // the task has been cancelled, we have to determine if we strike if or we show an arrow
+            if ($queryWeek->equals($this->getCancelWeek())) {
+                return self::BULLET_DASH;
+            } else {
+                return self::BULLET_ARROW;
+            }
+        }
+
+        return self::BULLET_UNKNOWN;
+    }
+
+    public function getFlag(Week $queryWeek, Week $currentWeek): int
+    {
+        if ($queryWeek->equals($this->getOpenWeek())) {
+            return self::FLAG_DASH;
+        }
+
+        return self::FLAG_NONE;
+    }
+
+    public function getStrike(Week $queryWeek, Week $currentWeek): bool
+    {
+        // Only strike the text if the task was cancelled on the current week
+        if ($this->cancelTimestamp) {
+            if ($queryWeek->equals($this->getCancelWeek())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function showPulledFlag(Week $queryWeek): bool
