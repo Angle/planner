@@ -39,6 +39,8 @@ h1, h2, h3, h4, h5, h6 {
   position: relative; }
   .notebook .content {
     padding-right: 216px; }
+    .notebook .content.no-sidebar {
+      padding-right: 0; }
     .notebook .content .header {
       text-align: center;
       height: 72px;
@@ -144,6 +146,92 @@ footer {
     font-size: 12px; }
     footer .links a {
       margin: 0 5px; }
+
+.modal-overlay {
+  background: transparent;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 100;
+  /* Embiggen */
+  -webkit-transform: scale(1.5);
+  -ms-transform: scale(1.5);
+  transform: scale(1.5);
+  /* prefix me */
+  /* hidden */
+  opacity: 0;
+  pointer-events: none; }
+  .modal-overlay .modal-wrapper {
+    max-width: 576px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 12px 0 0 0;
+    /* responsive, see below */ }
+    .modal-overlay .modal-wrapper .modal-content {
+      position: relative;
+      padding: 5px 10px;
+      background-color: #f2eecb;
+      border-radius: 6px;
+      -webkit-box-shadow: 0 5px 10px 2px #ddd;
+      box-shadow: 0 5px 10px 2px #ddd;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box; }
+      .modal-overlay .modal-wrapper .modal-content .top-buttons {
+        position: absolute;
+        right: 10px;
+        top: 5px;
+        float: right; }
+        .modal-overlay .modal-wrapper .modal-content .top-buttons a, .modal-overlay .modal-wrapper .modal-content .top-buttons a:hover, .modal-overlay .modal-wrapper .modal-content .top-buttons a:visited, .modal-overlay .modal-wrapper .modal-content .top-buttons a:active {
+          color: #282723;
+          text-decoration: none; }
+      .modal-overlay .modal-wrapper .modal-content .title h3 {
+        margin: 0; }
+      .modal-overlay .modal-wrapper .modal-content .title h2 {
+        margin: 0;
+        margin-bottom: 24px; }
+      .modal-overlay .modal-wrapper .modal-content .action-buttons {
+        width: 100%;
+        text-align: center;
+        padding: 24px 0; }
+
+.open-modal .wrapper {
+  /* Blur and de-color */
+  -webkit-filter: blur(2px) grayscale(75%);
+  filter: blur(2px) grayscale(75%);
+  /* Recede */
+  -webkit-transform: scale(0.95);
+  -ms-transform: scale(0.95);
+  transform: scale(0.95); }
+
+.open-modal .modal-overlay {
+  /* Regular size and visible */
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+  /* prefix me */
+  opacity: 1;
+  /* Clickable */
+  pointer-events: auto; }
+
+.wrapper, .modal-overlay {
+  -webkit-transition: all 0.4s ease;
+  -o-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+  /* prefix me */ }
+
+/* HELPERS */
+.text-center {
+  text-align: center; }
+
+.btn-outline, .btn-outline:hover, .btn-outline:visited, .btn-outline:active {
+  color: #282723;
+  text-decoration: none;
+  border: 1px solid #282723;
+  padding: 4px 8px;
+  border-radius: 6px;
+  margin: 0 10px; }
 
 /* RESPONSIVE */
 .mobile-only, .mobile-only-inline {

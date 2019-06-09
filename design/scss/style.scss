@@ -7,7 +7,9 @@
 // Config
 $block-size: 24px; // note: this should match the current page size
 $page-width-blocks: 45; // about 1080 px with block size 18px
+$modal-width-blocks: 24; // about __ px with block size 18px
 $page-width: $page-width-blocks * $block-size;
+$modal-width: $modal-width-blocks * $block-size;
 $page-min-height-blocks: 34; // about 816px with block size 18px
 $page-min-height: $page-min-height-blocks * $block-size;
 
@@ -72,6 +74,10 @@ h1, h2, h3, h4, h5, h6 {
   .content {
 
     padding-right: (1 + $sidebar-width-blocks) * $block-size;
+
+    &.no-sidebar {
+      padding-right: 0;
+    }
 
     .header {
       text-align: center;
@@ -217,11 +223,6 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-
-
-
-
-
 footer {
   width: 100%;
   margin: 30px 0 10px 0;
@@ -250,6 +251,110 @@ footer {
   }
 }
 
+.modal-overlay {
+  background: transparent;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+
+  z-index: 100;
+
+  /* Embiggen */
+  transform: scale(1.5); /* prefix me */
+
+  /* hidden */
+  opacity: 0;
+  pointer-events: none;
+
+  .modal-wrapper {
+
+    max-width: $modal-width;
+    width: 100%;
+    margin: 0 auto;
+    padding: (0.5*$block-size) 0 0 0; /* responsive, see below */
+
+
+    .modal-content {
+      position: relative;
+      padding: 5px 10px;
+      background-color: $color-notebook;
+      border-radius: 0.25 * $block-size;
+      //border: 1px solid $color-text;
+      box-shadow: 0 5px 10px 2px #ddd;
+      box-sizing: border-box;
+
+      .top-buttons {
+        position: absolute;
+        right: 10px;
+        top: 5px;
+        float: right;
+
+        a, a:hover, a:visited, a:active {
+          color: $color-text;
+          text-decoration: none;
+        }
+      }
+
+      .title {
+        h3 {
+          margin: 0;
+        }
+        h2 {
+          margin: 0;
+          margin-bottom: 1 * $block-size;
+        }
+      }
+
+      .action-buttons {
+        width: 100%;
+        text-align: center;
+        padding: (1 * $block-size) 0;
+      }
+    }
+
+
+  }
+}
+
+.open-modal .wrapper {
+  /* Blur and de-color */
+  //filter: blur(5px) grayscale(50%);
+  filter: blur(2px) grayscale(75%);
+
+  /* Recede */
+  transform: scale(0.95);
+}
+
+.open-modal .modal-overlay {
+  /* Regular size and visible */
+  transform: scale(1); /* prefix me */
+  opacity: 1;
+
+  /* Clickable */
+  pointer-events: auto;
+}
+
+.wrapper, .modal-overlay {
+  transition: all 0.4s ease; /* prefix me */
+}
+
+/* HELPERS */
+.text-center {
+  text-align: center;
+}
+
+.btn-outline {
+  &, &:hover, &:visited, &:active {
+    color: $color-text;
+    text-decoration: none;
+    border: 1px solid $color-text;
+    padding: 4px 8px;
+    border-radius: 0.25 * $block-size;
+    margin: 0 10px;
+  }
+}
 
 /* RESPONSIVE */
 

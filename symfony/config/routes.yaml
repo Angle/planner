@@ -8,6 +8,11 @@ app_logout:
   path: /logout
   methods: GET
 
+# Notebook
+app_notebook_new:
+  path: /notebook/new
+  controller: App\Controller\NotebookController:new
+
 # Homepage
 app_home:
   path: /{weekCode}

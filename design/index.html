@@ -18,7 +18,7 @@
     <![endif]-->
 
 </head>
-<body>
+<body class="open-modal">
 
 <div class="wrapper">
     <div class="notebook">
@@ -105,21 +105,45 @@
         </div>
 
     </div>
-    <!--
 
-    -->
+    <footer>
+        <p class="copy">Built with <small>&hearts;</small> by <a href="https://www.angle.mx" target="_blank">Angle</a>.</p>
+        <p class="links">
+            <a href="#">Terms of Use</a> |
+            <a href="#">Privacy Policy</a>
+        </p>
+    </footer>
 </div>
 
-<footer>
-    <p class="copy">Built with <small>&hearts;</small> by <a href="https://www.angle.mx" target="_blank">Angle</a>.</p>
-    <p class="links">
-        <a href="#">Terms of Use</a> |
-        <a href="#">Privacy Policy</a>
-    </p>
-</footer>
+<div class="modal-overlay">
+    <div class="modal-wrapper">
+        <div class="modal-content">
+            <div class="top-buttons">
+                <a href="#">&times; close</a>
+            </div>
+            <div class="title">
+                <h3>Notebook name</h3>
+                <h2>Task title: do this and that</h2>
+            </div>
+            <div class="details">
+                <p>
+                    lorem ipsum, dolor sunt dolors
+                </p>
+            </div>
+            <div class="metadata">
+                <p>
+                    created on week 2018-12 by Edmundo Fuentes
+                </p>
+            </div>
 
-
-<div class="modal"></div>
+            <div class="action-buttons">
+                <a href="#">&odot; re-open</a>
+                <a href="#">&otimes; complete</a>
+                <a href="#">&odash; cancel</a>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 </body>

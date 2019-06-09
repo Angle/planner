@@ -29,4 +29,15 @@ class NotebookController extends AbstractController
             'notebooks' => $notebooks,
         ]);
     }
+
+
+    /**
+     * @return Response
+     */
+    public function new(): Response
+    {
+        return $this->render('notebook/new.html.twig', [
+            // none.
+        ]);
+    }
 }

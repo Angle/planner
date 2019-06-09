@@ -4,30 +4,36 @@
 
     <div class="wrapper">
         <div class="notebook">
-            <div class="header login">
-                <div class="title">
-                    <h1>Angle Planner</h1>
-                    <h3>Please login</h3>
+            <div class="content no-sidebar">
+
+                <div class="header login">
+                    <div class="title">
+                        <h1>Angle Planner</h1>
+                        <h3>Please login</h3>
+                    </div>
                 </div>
-            </div>
 
-            <div class="login-box">
-                <form method="post">
-                    <input class="login-control" type="email" name="email" placeholder="email" value="{{ last_username }}">
-                    <input class="login-control" type="password" name="password" placeholder="password">
-                    <button type="submit" class="login-control">Log in</button>
+                <div class="login-box">
+                    <form method="post">
+                        <input class="login-control" type="email" name="email" placeholder="email" value="{{ last_username }}">
+                        <input class="login-control" type="password" name="password" placeholder="password">
+                        <button type="submit" class="login-control">Log in</button>
 
-                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-                </form>
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                    </form>
+                </div>
+
             </div>
         </div>
-    </div>
 
-    <footer>
-        <p class="copy">Built with <small>&hearts;</small> by <a href="https://www.angle.mx" target="_blank">Angle</a>.</p>
-        <p class="links">
-            <a href="#">Terms of Use</a> |
-            <a href="#">Privacy Policy</a>
-        </p>
-    </footer>
+
+        <footer>
+            <p class="copy">Built with <small>&hearts;</small> by <a href="https://www.angle.mx" target="_blank">Angle</a>.</p>
+            <p class="links">
+                <a href="#">Terms of Use</a> |
+                <a href="#">Privacy Policy</a>
+            </p>
+        </footer>
+
+    </div>
 {% endblock %}

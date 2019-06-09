@@ -35,102 +35,101 @@ h1, h2, h3, h4, h5, h6 {
   padding: 12px;
   -webkit-box-shadow: 0 5px 10px 2px #ddd;
   box-shadow: 0 5px 10px 2px #ddd;
-  border-radius: 6px; }
-  .notebook .header {
-    text-align: center;
-    height: 72px;
-    width: 100%;
-    margin-bottom: 24px; }
-    .notebook .header.login {
-      margin-top: 96px;
-      margin-bottom: 24px;
-      height: 120px; }
-      .notebook .header.login .title h1 {
-        font-size: 48px; }
-    .notebook .header .arrow {
-      display: inline-block;
-      font-size: 48px;
-      padding: 0 10px;
-      height: 100%; }
-      .notebook .header .arrow a, .notebook .header .arrow a:active, .notebook .header .arrow a:hover, .notebook .header .arrow a:visited {
-        color: #282723;
-        text-decoration: none; }
-    .notebook .header .title {
-      display: inline-block; }
-      .notebook .header .title h1 {
-        margin: 0; }
-      .notebook .header .title h3 {
-        margin: 0; }
-  .notebook .task-list {
-    margin: 0;
-    border-collapse: collapse;
-    border-spacing: 0;
-    table-layout: fixed;
-    font-size: 16px;
-    line-height: 24px; }
-    .notebook .task-list td {
-      vertical-align: top;
-      padding: 0px 4px;
-      -webkit-box-sizing: border-box;
-      box-sizing: border-box; }
-    .notebook .task-list .task {
-      width: 100%; }
-      .notebook .task-list .task .block {
-        height: 24px;
-        width: 24px;
-        text-align: center; }
-        .notebook .task-list .task .block.option {
-          cursor: pointer; }
-      .notebook .task-list .task .tag {
-        height: 24px;
-        width: 120px;
-        /* responsive, see below */
-        text-align: left; }
-      .notebook .task-list .task .concept {
-        height: 24px;
-        text-align: left; }
-        .notebook .task-list .task .concept.striked {
-          text-decoration: line-through; }
-  .notebook .notebook-input {
-    background-color: transparent;
-    border: none;
-    font-family: 'Patrick Hand', cursive;
-    font-size: 16px;
-    color: #4b4a46; }
-    .notebook .notebook-input:focus {
-      outline: none; }
-  .notebook .login-box {
-    width: 480px;
-    margin: 0 auto; }
-    .notebook .login-box .login-control {
+  border-radius: 6px;
+  position: relative; }
+  .notebook .content {
+    padding-right: 216px; }
+    .notebook .content.no-sidebar {
+      padding-right: 0; }
+    .notebook .content .header {
+      text-align: center;
+      height: 72px;
       width: 100%;
-      height: 48px;
-      margin-bottom: 24px;
+      margin-bottom: 24px; }
+      .notebook .content .header.login {
+        margin-top: 96px;
+        margin-bottom: 24px;
+        height: 120px; }
+        .notebook .content .header.login .title h1 {
+          font-size: 48px; }
+      .notebook .content .header .arrow {
+        display: inline-block;
+        font-size: 48px;
+        padding: 0 10px;
+        height: 100%; }
+        .notebook .content .header .arrow a, .notebook .content .header .arrow a:active, .notebook .content .header .arrow a:hover, .notebook .content .header .arrow a:visited {
+          color: #282723;
+          text-decoration: none; }
+      .notebook .content .header .title {
+        display: inline-block; }
+        .notebook .content .header .title h1 {
+          margin: 0; }
+        .notebook .content .header .title h3 {
+          margin: 0; }
+    .notebook .content .task-list {
+      margin: 0;
+      border-collapse: collapse;
+      border-spacing: 0;
+      table-layout: fixed;
+      font-size: 16px;
+      line-height: 24px; }
+      .notebook .content .task-list td {
+        vertical-align: top;
+        padding: 0px 4px;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box; }
+      .notebook .content .task-list .task {
+        width: 100%; }
+        .notebook .content .task-list .task .block {
+          height: 24px;
+          width: 24px;
+          text-align: center; }
+          .notebook .content .task-list .task .block.option {
+            cursor: pointer; }
+        .notebook .content .task-list .task .tag {
+          height: 24px;
+          width: 120px;
+          /* responsive, see below */
+          text-align: left; }
+        .notebook .content .task-list .task .concept {
+          height: 24px;
+          text-align: left; }
+          .notebook .content .task-list .task .concept.striked {
+            text-decoration: line-through; }
+    .notebook .content .notebook-input {
+      background-color: transparent;
+      border: none;
       font-family: 'Patrick Hand', cursive;
-      font-size: 24px;
-      line-height: 32px;
-      padding: 0 10px;
-      -webkit-box-sizing: border-box;
-      box-sizing: border-box;
-      border: 1px solid #4b4a46;
-      border-radius: 10px;
-      background-color: white; }
+      font-size: 16px;
+      color: #4b4a46; }
+      .notebook .content .notebook-input:focus {
+        outline: none; }
+    .notebook .content .login-box {
+      width: 480px;
+      margin: 0 auto; }
+      .notebook .content .login-box .login-control {
+        width: 100%;
+        height: 48px;
+        margin-bottom: 24px;
+        font-family: 'Patrick Hand', cursive;
+        font-size: 24px;
+        line-height: 32px;
+        padding: 0 10px;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        border: 1px solid #4b4a46;
+        border-radius: 10px;
+        background-color: white; }
+  .notebook .sidebar {
+    margin: 0;
+    padding: 0;
+    width: 192px;
+    position: absolute;
+    top: 0;
+    right: 12px;
+    height: 100%;
+    overflow: auto; }
 
-/*
-.notebook {
-  margin-right: 10 * $block-size;
-}
-
-.sidebar {
-  margin: 0;
-  padding: 0;
-  width: 10 * $block-size;
-
-  position: fixed;
-  height: 100%;
-  overflow: auto;
-}
-*/
 footer {
   width: 100%;
   margin: 30px 0 10px 0;
@@ -147,6 +146,92 @@ footer {
     font-size: 12px; }
     footer .links a {
       margin: 0 5px; }
+
+.modal-overlay {
+  background: transparent;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 100;
+  /* Embiggen */
+  -webkit-transform: scale(1.5);
+  -ms-transform: scale(1.5);
+  transform: scale(1.5);
+  /* prefix me */
+  /* hidden */
+  opacity: 0;
+  pointer-events: none; }
+  .modal-overlay .modal-wrapper {
+    max-width: 576px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 12px 0 0 0;
+    /* responsive, see below */ }
+    .modal-overlay .modal-wrapper .modal-content {
+      position: relative;
+      padding: 5px 10px;
+      background-color: #f2eecb;
+      border-radius: 6px;
+      -webkit-box-shadow: 0 5px 10px 2px #ddd;
+      box-shadow: 0 5px 10px 2px #ddd;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box; }
+      .modal-overlay .modal-wrapper .modal-content .top-buttons {
+        position: absolute;
+        right: 10px;
+        top: 5px;
+        float: right; }
+        .modal-overlay .modal-wrapper .modal-content .top-buttons a, .modal-overlay .modal-wrapper .modal-content .top-buttons a:hover, .modal-overlay .modal-wrapper .modal-content .top-buttons a:visited, .modal-overlay .modal-wrapper .modal-content .top-buttons a:active {
+          color: #282723;
+          text-decoration: none; }
+      .modal-overlay .modal-wrapper .modal-content .title h3 {
+        margin: 0; }
+      .modal-overlay .modal-wrapper .modal-content .title h2 {
+        margin: 0;
+        margin-bottom: 24px; }
+      .modal-overlay .modal-wrapper .modal-content .action-buttons {
+        width: 100%;
+        text-align: center;
+        padding: 24px 0; }
+
+.open-modal .wrapper {
+  /* Blur and de-color */
+  -webkit-filter: blur(2px) grayscale(75%);
+  filter: blur(2px) grayscale(75%);
+  /* Recede */
+  -webkit-transform: scale(0.95);
+  -ms-transform: scale(0.95);
+  transform: scale(0.95); }
+
+.open-modal .modal-overlay {
+  /* Regular size and visible */
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+  /* prefix me */
+  opacity: 1;
+  /* Clickable */
+  pointer-events: auto; }
+
+.wrapper, .modal-overlay {
+  -webkit-transition: all 0.4s ease;
+  -o-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+  /* prefix me */ }
+
+/* HELPERS */
+.text-center {
+  text-align: center; }
+
+.btn-outline, .btn-outline:hover, .btn-outline:visited, .btn-outline:active {
+  color: #282723;
+  text-decoration: none;
+  border: 1px solid #282723;
+  padding: 4px 8px;
+  border-radius: 6px;
+  margin: 0 10px; }
 
 /* RESPONSIVE */
 .mobile-only, .mobile-only-inline {
