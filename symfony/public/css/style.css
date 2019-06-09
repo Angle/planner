@@ -129,6 +129,8 @@ h1, h2, h3, h4, h5, h6 {
     right: 12px;
     height: 100%;
     overflow: auto; }
+    .notebook .sidebar .sidebar-content {
+      padding-left: 4px; }
 
 footer {
   width: 100%;
@@ -236,8 +238,12 @@ footer {
   color: #777;
   text-decoration: none; }
 
-.btn-text, .btn-text:hover, .btn-text:visited, .btn-text:active {
+.btn-text-light, .btn-text-light:hover, .btn-text-light:visited, .btn-text-light:active {
   color: #777;
+  text-decoration: none; }
+
+.btn-text, .btn-text:hover, .btn-text:visited, .btn-text:active {
+  color: #282723;
   text-decoration: none; }
 
 /* RESPONSIVE */

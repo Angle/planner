@@ -30,13 +30,22 @@ class NotebookController extends AbstractController
         ]);
     }
 
-
     /**
      * @return Response
      */
     public function new(): Response
     {
         return $this->render('notebook/new.html.twig', [
+            // none.
+        ]);
+    }
+
+    /**
+     * @return Response
+     */
+    public function view(): Response
+    {
+        return $this->render('notebook/view.html.twig', [
             // none.
         ]);
     }

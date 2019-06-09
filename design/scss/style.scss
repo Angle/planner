@@ -221,6 +221,10 @@ h1, h2, h3, h4, h5, h6 {
     right: 0.5 * $block-size;
     height: 100%;
     overflow: auto;
+
+    .sidebar-content {
+      padding-left: 4px;
+    }
   }
 }
 
@@ -361,9 +365,16 @@ footer {
   }
 }
 
-.btn-text {
+.btn-text-light {
   &, &:hover, &:visited, &:active {
     color: $color-text-even-lighter;
+    text-decoration: none;
+  }
+}
+
+.btn-text {
+  &, &:hover, &:visited, &:active {
+    color: $color-text;
     text-decoration: none;
   }
 }

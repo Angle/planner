@@ -124,21 +124,23 @@
         </div> <!-- ./ div.content -->
 
         <div class="sidebar">
-            <h2>My Notebooks</h2>
-            {% if notebooks|length != 0 %}
-            <ul>
-                {% for notebook in notebooks %}
-                <li>{{ notebook.name }}</li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-            <a href="#" class="btn-text" onclick="loadModal('{{ path('app_notebook_new') }}');">&plus; New Notebook</a>
-            <h2>Shared Notebooks</h2>
-            <ul>
-                <li>Option 1</li>
-                <li>Option 2</li>
-                <li>Option 3</li>
-            </ul>
+            <div class="sidebar-content">
+                <h2>My Notebooks</h2>
+                {% if notebooks|length != 0 %}
+                    <ul>
+                        {% for notebook in notebooks %}
+                            <li>{{ notebook.name }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                <a href="#" class="btn-text-light" onclick="loadModal('{{ path('app_notebook_new') }}');">&plus; New Notebook</a>
+                <h2>Shared Notebooks</h2>
+                <ul>
+                    <li>Option 1</li>
+                    <li>Option 2</li>
+                    <li>Option 3</li>
+                </ul>
+            </div>
         </div> <!-- ./ div.sidebar -->
 
     </div> <!-- ./ div.notebook -->
