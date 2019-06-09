@@ -5,9 +5,14 @@ namespace App\Controller;
 use App\Entity\Notebook;
 use App\Entity\User;
 
+use App\Form\NotebookType;
+
 use App\Repository\NotebookRepository;
 
+use Doctrine\ORM\EntityManagerInterface;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class NotebookController extends AbstractController
@@ -31,12 +36,40 @@ class NotebookController extends AbstractController
     }
 
     /**
+     * @param Request $request
      * @return Response
      */
-    public function new(): Response
+    public function new(Request $request): Response
     {
+        /** @var EntityManagerInterface $entityManager */
+        $entityManager = $this->getDoctrine()->getManager();
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $notebook = new Notebook();
+        $notebook->setUser($user);
+
+        $form = $this->createForm(NotebookType::class, $notebook, [
+            'action' => $this->generateUrl('app_notebook_new'),
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $entityManager->persist($notebook);
+
+            try {
+                $entityManager->flush();
+            }catch (\Exception $e) {
+                // TODO WHAT TO DO ON ERROR
+            }
+
+            // TODO WHAT TO DO ON SUCCESS
+        }
+
         return $this->render('notebook/new.html.twig', [
-            // none.
+            'form'  => $form->createView()
         ]);
     }
 
