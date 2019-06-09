@@ -6,10 +6,16 @@ use App\Entity\Notebook;
 use App\Entity\Task;
 use App\Entity\User;
 
+use App\Form\NotebookType;
+
+use App\Form\TaskType;
 use App\Repository\NotebookRepository;
 use App\Repository\TaskRepository;
 
+use Doctrine\ORM\EntityManagerInterface;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PropertyAccess\Exception\AccessException;
 
@@ -48,12 +54,40 @@ class TaskController extends AbstractController
     }
 
     /**
+     * @param Request $request
      * @return Response
      */
-    public function new(): Response
+    public function new(Request $request): Response
     {
+        /** @var EntityManagerInterface $entityManager */
+        $entityManager = $this->getDoctrine()->getManager();
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $task = new Task();
+        // TODO we need to have notebook
+
+        $form = $this->createForm(TaskType::class, $task, [
+            'action' => $this->generateUrl('app_task_new'),
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $entityManager->persist($task);
+
+            try {
+                $entityManager->flush();
+            }catch (\Exception $e) {
+                // TODO WHAT TO DO ON ERROR
+            }
+
+            // TODO WHAT TO DO ON SUCCESS
+        }
+
         return $this->render('task/new.html.twig', [
-            // none.
+            'form'  => $form->createView()
         ]);
     }
 
