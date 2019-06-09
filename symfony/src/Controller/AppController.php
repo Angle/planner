@@ -9,7 +9,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-use App\Utility\Week;
+use App\Util\Week;
 
 use App\Entity\User;
 

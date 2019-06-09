@@ -6,7 +6,7 @@ use App\Entity\Notebook;
 use App\Entity\Task;
 use App\Entity\User;
 
-use App\Utility\Week;
+use App\Util\Week;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 

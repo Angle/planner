@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 use Angle\Common\Utilities\Random\Random;
 
-use App\Utility\Week;
+use App\Util\Week;
 
 
 /**
@@ -66,11 +66,6 @@ class Task
     private $details;
 
     /**
-     * @ORM\Column(type="datetime")
-     */
-    private $openTimestamp;
-
-    /**
      * @ORM\Column(type="smallint")
      */
     private $openWeekNumber;
@@ -81,11 +76,6 @@ class Task
     private $openYearNumber;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $closeTimestamp;
-
-    /**
      * @ORM\Column(type="smallint", nullable=true)
      */
     private $closeWeekNumber;
@@ -94,11 +84,6 @@ class Task
      * @ORM\Column(type="smallint", nullable=true)
      */
     private $closeYearNumber;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $cancelTimestamp;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
@@ -129,12 +114,6 @@ class Task
     public function __construct()
     {
         $this->code = Random::generateString(self::CODE_LENGTH);
-
-        $this->openTimestamp = new DateTime('now');
-
-        $week = Week::newFromDateTime($this->openTimestamp);
-        $this->openWeekNumber = $week->getWeek();
-        $this->openYearNumber = $week->getYear();
     }
 
 
@@ -171,18 +150,20 @@ class Task
 
     public function getStatus(): int
     {
-        if (!is_null($this->cancelTimestamp)) {
-            return self::STATUS_CANCELLED;
-        } elseif (!is_null($this->closeTimestamp)) {
-            return self::STATUS_CLOSED;
-        } else {
+        if (!$this->getCancelWeek() && !$this->getCloseWeek()) {
             return self::STATUS_OPEN;
+        } elseif ($this->getCloseWeek()) {
+            return self::STATUS_CLOSED;
+        } elseif ($this->getCancelWeek()) {
+            return self::STATUS_CANCELLED;
         }
+
+        throw new \RuntimeException('Unknown Task status');
     }
 
     public function getBullet(Week $queryWeek, Week $currentWeek): int
     {
-        if (!$this->cancelTimestamp && !$this->closeTimestamp) {
+        if ($this->getStatus() == self::STATUS_OPEN) {
             // TASK IS STILL OPEN
             // The task is not yet closed, we have to determine if we show a dot or an arrow
             if ($queryWeek->equals($currentWeek) || $queryWeek->isNewerThanWeek($currentWeek)) {
@@ -190,7 +171,7 @@ class Task
             } else {
                 return self::BULLET_ARROW;
             }
-        } elseif ($this->closeTimestamp) {
+        } elseif ($this->getStatus() == self::STATUS_CLOSED) {
             // TASK HAS BEEN CLOSED
             // the task has been closed, we have to determine if we show a times or an arrow
             if ($queryWeek->equals($this->getCloseWeek())) {
@@ -198,7 +179,7 @@ class Task
             } else {
                 return self::BULLET_ARROW;
             }
-        } elseif ($this->cancelTimestamp) {
+        } elseif ($this->getStatus() == self::STATUS_CANCELLED) {
             // TASK HAS BEEN CANCELLED
             // the task has been cancelled, we have to determine if we strike if or we show an arrow
             if ($queryWeek->equals($this->getCancelWeek())) {
@@ -223,7 +204,7 @@ class Task
     public function getStrike(Week $queryWeek, Week $currentWeek): bool
     {
         // Only strike the text if the task was cancelled on the current week
-        if ($this->cancelTimestamp) {
+        if ($this->getStatus() == self::STATUS_CANCELLED) {
             if ($queryWeek->equals($this->getCancelWeek())) {
                 return true;
             }
@@ -232,18 +213,12 @@ class Task
         return false;
     }
 
-    public function showPulledFlag(Week $queryWeek): bool
-    {
-        // Check if the Task's Open Week is older than the query week
-        return $this->getOpenWeek()->isOlderThanWeek($queryWeek);
 
-    }
-
-    public function showKickedFlag(Week $queryWeek): bool
+    public function setOpenWeekFromTimestamp(\DateTime $time)
     {
-        // TODO:
-        // if this is not our current week AND the task was not closed or deleted on this week, mark it wish a > #}
-        return false;
+        $week = Week::newFromDateTime($time);
+        $this->openWeekNumber = $week->getWeek();
+        $this->openYearNumber = $week->getYear();
     }
 
 
@@ -314,24 +289,6 @@ class Task
     }
 
     /**
-     * @return DateTime|null
-     */
-    public function getOpenTimestamp(): ?DateTime
-    {
-        return $this->openTimestamp;
-    }
-
-    /**
-     * @param DateTime $openTimestamp
-     * @return Task
-     */
-    public function setOpenTimestamp(DateTime $openTimestamp): self
-    {
-        $this->openTimestamp = $openTimestamp;
-        return $this;
-    }
-
-    /**
      * @return int|null
      */
     public function getOpenWeekNumber(): ?int
@@ -368,24 +325,6 @@ class Task
     }
 
     /**
-     * @return DateTime|null
-     */
-    public function getCloseTimestamp(): ?DateTime
-    {
-        return $this->closeTimestamp;
-    }
-
-    /**
-     * @param DateTime $closeTimestamp
-     * @return Task
-     */
-    public function setCloseTimestamp(DateTime $closeTimestamp): self
-    {
-        $this->closeTimestamp = $closeTimestamp;
-        return $this;
-    }
-
-    /**
      * @return int|null
      */
     public function getCloseWeekNumber(): ?int
@@ -418,24 +357,6 @@ class Task
     public function setCloseYearNumber(int $closeYearNumber): self
     {
         $this->closeYearNumber = $closeYearNumber;
-        return $this;
-    }
-
-    /**
-     * @return DateTime|null
-     */
-    public function getCancelTimestamp(): ?DateTime
-    {
-        return $this->cancelTimestamp;
-    }
-
-    /**
-     * @param DateTime $cancelTimestamp
-     * @return Task
-     */
-    public function setCancelTimestamp(DateTime $cancelTimestamp): self
-    {
-        $this->cancelTimestamp = $cancelTimestamp;
         return $this;
     }
 

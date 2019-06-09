@@ -121,9 +121,11 @@ h1, h2, h3, h4, h5, h6 {
           line-height: 1 * $block-size;
 
           .present {
-            border: 1px solid $color-text;
-            padding: 0 6px;
-            border-radius: 6px;
+            //border: 1px solid $color-text;
+            //padding: 0 6px;
+            //border-radius: 6px;
+
+            text-decoration: underline;
           }
         }
       }
@@ -231,7 +233,25 @@ h1, h2, h3, h4, h5, h6 {
     overflow: auto;
 
     .sidebar-content {
+      padding-top: 1.5 * $block-size;
       padding-left: 4px;
+
+      h2 {
+        margin: 0;
+        padding: 0;
+        line-height: 1 * $block-size;
+      }
+
+      a {
+        line-height: 1 * $block-size;
+        display: block;
+      }
+
+      .spacer {
+        display:block;
+        height: 1 * $block-size;
+        width: 100%;
+      }
     }
   }
 }

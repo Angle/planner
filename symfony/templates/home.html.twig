@@ -140,16 +140,16 @@
         <div class="sidebar">
             <div class="sidebar-content">
                 <h2>My Notebooks</h2>
-                {% if notebooks|length != 0 %}
-                    <ul>
-                        {% for notebook in notebooks %}
-                            <li>{{ notebook.name }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
+                {% for notebook in notebooks %}
+                <a href="#" class="btn-text" onclick="loadModal('{{ path('app_notebook_view', {'notebookCode': notebook.code}) }}');">
+                    {{ notebook.name }}
+                </a>
+                {% endfor %}
                 <a href="#" class="btn-text-light" onclick="loadModal('{{ path('app_notebook_new') }}');">&plus; New Notebook</a>
+
+                <div class="spacer"></div>
                 <h2>Shared Notebooks</h2>
-                <p><em>Pending.</em></p>
+                <p><em>Pending</em></p>
             </div>
         </div> <!-- ./ div.sidebar -->
 
