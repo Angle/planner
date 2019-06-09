@@ -186,11 +186,10 @@ footer {
         .modal-overlay .modal-wrapper .modal-content .top-buttons a, .modal-overlay .modal-wrapper .modal-content .top-buttons a:hover, .modal-overlay .modal-wrapper .modal-content .top-buttons a:visited, .modal-overlay .modal-wrapper .modal-content .top-buttons a:active {
           color: #282723;
           text-decoration: none; }
-      .modal-overlay .modal-wrapper .modal-content .title h3 {
-        margin: 0; }
-      .modal-overlay .modal-wrapper .modal-content .title h2 {
-        margin: 0;
+      .modal-overlay .modal-wrapper .modal-content .title {
         margin-bottom: 24px; }
+        .modal-overlay .modal-wrapper .modal-content .title h1, .modal-overlay .modal-wrapper .modal-content .title h2, .modal-overlay .modal-wrapper .modal-content .title h3, .modal-overlay .modal-wrapper .modal-content .title h4 {
+          margin: 0; }
       .modal-overlay .modal-wrapper .modal-content .action-buttons {
         width: 100%;
         text-align: center;
@@ -232,6 +231,14 @@ footer {
   padding: 4px 8px;
   border-radius: 6px;
   margin: 0 10px; }
+
+.btn-new-task, .btn-new-task:hover, .btn-new-task:visited, .btn-new-task:active {
+  color: #777;
+  text-decoration: none; }
+
+.btn-text, .btn-text:hover, .btn-text:visited, .btn-text:active {
+  color: #777;
+  text-decoration: none; }
 
 /* RESPONSIVE */
 .mobile-only, .mobile-only-inline {

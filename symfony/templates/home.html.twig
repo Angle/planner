@@ -55,9 +55,10 @@
                 <tr class="task">
                     <td class="block">&nbsp;</td>
                     <td class="block">&nbsp;</td>
-                    <td class="tag">&blacktriangledown;</td>
+                    <td class="tag">&nbsp;</td>
                     <td class="concept" colspan="4">
-                        <input class="notebook-input" type="text" placeholder="Write new task.." autofocus>
+                        <a href="#" class="btn-new-task" onclick="loadModal('{{ path('app_task_new') }}');">Write a new task..</a>
+                        {#<input class="notebook-input" type="text" placeholder="Write new task.." autofocus>#}
                     </td>
                 </tr>
                 </tbody>
@@ -131,7 +132,7 @@
                 {% endfor %}
             </ul>
             {% endif %}
-            <a href="#" onclick="loadModal('{{ path('app_notebook_new') }}');">&plus; New Notebook</a>
+            <a href="#" class="btn-text" onclick="loadModal('{{ path('app_notebook_new') }}');">&plus; New Notebook</a>
             <h2>Shared Notebooks</h2>
             <ul>
                 <li>Option 1</li>

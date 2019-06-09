@@ -17,6 +17,7 @@ $page-min-height: $page-min-height-blocks * $block-size;
 $color-notebook: #f2eecb;
 $color-text: #282723;
 $color-text-lighter: #4b4a46;
+$color-text-even-lighter: #777;
 $color-background: #f1f1f1;
 
 $sidebar-width-blocks: 8;
@@ -298,12 +299,9 @@ footer {
       }
 
       .title {
-        h3 {
+        margin-bottom: 1 * $block-size;
+        h1, h2, h3, h4 {
           margin: 0;
-        }
-        h2 {
-          margin: 0;
-          margin-bottom: 1 * $block-size;
         }
       }
 
@@ -353,6 +351,20 @@ footer {
     padding: 4px 8px;
     border-radius: 0.25 * $block-size;
     margin: 0 10px;
+  }
+}
+
+.btn-new-task {
+  &, &:hover, &:visited, &:active {
+    color: $color-text-even-lighter;
+    text-decoration: none;
+  }
+}
+
+.btn-text {
+  &, &:hover, &:visited, &:active {
+    color: $color-text-even-lighter;
+    text-decoration: none;
   }
 }
 

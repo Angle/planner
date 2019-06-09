@@ -13,6 +13,15 @@ app_notebook_new:
   path: /notebook/new
   controller: App\Controller\NotebookController:new
 
+# Task
+app_task_new:
+  path: /task/new
+  controller: App\Controller\TaskController:new
+
+app_task_view:
+  path: /task/{taskCode}
+  controller: App\Controller\TaskController:view
+
 # Homepage
 app_home:
   path: /{weekCode}

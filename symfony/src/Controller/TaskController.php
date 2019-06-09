@@ -46,4 +46,24 @@ class TaskController extends AbstractController
             'notebook'  => $notebook,
         ]);
     }
+
+    /**
+     * @return Response
+     */
+    public function new(): Response
+    {
+        return $this->render('task/new.html.twig', [
+            // none.
+        ]);
+    }
+
+    /**
+     * @return Response
+     */
+    public function view(string $taskCode): Response
+    {
+        return $this->render('task/view.html.twig', [
+            // none.
+        ]);
+    }
 }
