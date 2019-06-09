@@ -22,6 +22,7 @@ class TaskController extends AbstractController
 {
 
     /**
+     * @deprecated
      * @param string $notebookCode
      * @return Response
      */
