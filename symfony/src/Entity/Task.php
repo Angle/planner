@@ -119,24 +119,18 @@ class Task
     public function __construct()
     {
         $this->code = Random::generateString(self::CODE_LENGTH);
-    }
 
-
-    #########################
-    ##   SPECIAL METHODS   ##
-    #########################
-
-    /**
-     * @ORM\PrePersist
-     */
-    public function setOpenTimestampValue()
-    {
         $this->openTimestamp = new DateTime('now');
 
         $week = Week::newFromDateTime($this->openTimestamp);
         $this->openWeekNumber = $week->getWeek();
         $this->openYearNumber = $week->getYear();
     }
+
+
+    #########################
+    ##   SPECIAL METHODS   ##
+    #########################
 
     public function getOpenWeek(): ?Week
     {
