@@ -14,6 +14,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Security\Core\Security;
 
 
@@ -56,8 +57,11 @@ class TaskType extends AbstractType
             ->add('concept', TextType::class, [
                 'label' => 'Concept'
             ])
-            ->add('details', TextType::class, [
-                'label' => 'Details'
+            ->add('openWeekNumber', IntegerType::class, [
+                'label' => 'Week #'
+            ])
+            ->add('openYearNumber', IntegerType::class, [
+                'label' => 'Year'
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'Save'
