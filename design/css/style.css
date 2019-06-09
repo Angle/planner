@@ -43,7 +43,7 @@ h1, h2, h3, h4, h5, h6 {
       padding-right: 0; }
     .notebook .content .header {
       text-align: center;
-      height: 72px;
+      height: 96px;
       width: 100%;
       margin-bottom: 24px; }
       .notebook .content .header.login {
@@ -63,9 +63,15 @@ h1, h2, h3, h4, h5, h6 {
       .notebook .content .header .title {
         display: inline-block; }
         .notebook .content .header .title h1 {
-          margin: 0; }
+          margin: 0;
+          line-height: 48px; }
         .notebook .content .header .title h3 {
-          margin: 0; }
+          margin: 0;
+          line-height: 24px; }
+          .notebook .content .header .title h3 .present {
+            border: 1px solid #282723;
+            padding: 0 6px;
+            border-radius: 6px; }
     .notebook .content .task-list {
       margin: 0;
       border-collapse: collapse;

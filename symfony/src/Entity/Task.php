@@ -182,14 +182,16 @@ class Task
 
     public function getBullet(Week $queryWeek, Week $currentWeek): int
     {
-        if (!$this->cancelTimestamp && $this->closeTimestamp) {
+        if (!$this->cancelTimestamp && !$this->closeTimestamp) {
+            // TASK IS STILL OPEN
             // The task is not yet closed, we have to determine if we show a dot or an arrow
-            if ($queryWeek->equals($currentWeek)) {
+            if ($queryWeek->equals($currentWeek) || $queryWeek->isNewerThanWeek($currentWeek)) {
                 return self::BULLET_DOT;
             } else {
                 return self::BULLET_ARROW;
             }
         } elseif ($this->closeTimestamp) {
+            // TASK HAS BEEN CLOSED
             // the task has been closed, we have to determine if we show a times or an arrow
             if ($queryWeek->equals($this->getCloseWeek())) {
                 return self::BULLET_TIMES;
@@ -197,6 +199,7 @@ class Task
                 return self::BULLET_ARROW;
             }
         } elseif ($this->cancelTimestamp) {
+            // TASK HAS BEEN CANCELLED
             // the task has been cancelled, we have to determine if we strike if or we show an arrow
             if ($queryWeek->equals($this->getCancelWeek())) {
                 return self::BULLET_DASH;
@@ -210,7 +213,7 @@ class Task
 
     public function getFlag(Week $queryWeek, Week $currentWeek): int
     {
-        if ($queryWeek->equals($this->getOpenWeek())) {
+        if ($this->getOpenWeek()->isOlderThanWeek($queryWeek)) {
             return self::FLAG_DASH;
         }
 

@@ -103,6 +103,24 @@ class Week
         return false;
     }
 
+    /**
+     * Check if THIS week is newer than the other given week
+     * @param Week $otherWeek
+     * @return bool
+     */
+    public function isNewerThanWeek(Week $otherWeek): bool
+    {
+        if ($this->year > $otherWeek->getYear()) {
+            return true;
+        } elseif ($this->year == $otherWeek->getYear()) {
+            if ($this->week > $otherWeek->getWeek()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function equals(Week $comparisonWeek): bool
     {
         return (($this->year == $comparisonWeek->getYear()) && ($this->week == $comparisonWeek->getWeek()));

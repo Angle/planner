@@ -83,7 +83,7 @@ h1, h2, h3, h4, h5, h6 {
 
     .header {
       text-align: center;
-      height: 3 * $block-size;
+      height: 4 * $block-size;
       width: 100%;
       margin-bottom: 1 * $block-size;
 
@@ -114,11 +114,17 @@ h1, h2, h3, h4, h5, h6 {
         display: inline-block;
         h1 {
           margin: 0;
-          //line-height: 2 * $block-size;
+          line-height: 2 * $block-size;
         }
         h3 {
           margin: 0;
-          //line-height: 1 * $block-size;
+          line-height: 1 * $block-size;
+
+          .present {
+            border: 1px solid $color-text;
+            padding: 0 6px;
+            border-radius: 6px;
+          }
         }
       }
     }
