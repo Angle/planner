@@ -65,7 +65,7 @@ class NotebookController extends AbstractController
                 // TODO WHAT TO DO ON ERROR
             }
 
-            // TODO WHAT TO DO ON SUCCESS
+            return $this->redirectToRoute('app_home');
         }
 
         return $this->render('notebook/new.html.twig', [

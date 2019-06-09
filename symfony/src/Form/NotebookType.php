@@ -17,7 +17,7 @@ class NotebookType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Notebook::class,
+            'data_class'    => Notebook::class,
         ]);
     }
 
@@ -25,10 +25,10 @@ class NotebookType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => "Nombre"
+                'label' => "Name"
             ])
             ->add('save', SubmitType::class, [
-                'label' => "Guardar"
+                'label' => "Save"
             ])
         ;
     }

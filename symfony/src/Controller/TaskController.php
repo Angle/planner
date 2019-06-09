@@ -6,9 +6,8 @@ use App\Entity\Notebook;
 use App\Entity\Task;
 use App\Entity\User;
 
-use App\Form\NotebookType;
-
 use App\Form\TaskType;
+
 use App\Repository\NotebookRepository;
 use App\Repository\TaskRepository;
 
@@ -61,14 +60,11 @@ class TaskController extends AbstractController
     {
         /** @var EntityManagerInterface $entityManager */
         $entityManager = $this->getDoctrine()->getManager();
-        /** @var User $user */
-        $user = $this->getUser();
 
         $task = new Task();
-        // TODO we need to have notebook
 
         $form = $this->createForm(TaskType::class, $task, [
-            'action' => $this->generateUrl('app_task_new'),
+            'action'    => $this->generateUrl('app_task_new'),
         ]);
 
         $form->handleRequest($request);
@@ -83,7 +79,7 @@ class TaskController extends AbstractController
                 // TODO WHAT TO DO ON ERROR
             }
 
-            // TODO WHAT TO DO ON SUCCESS
+            return $this->redirectToRoute('app_home');
         }
 
         return $this->render('task/new.html.twig', [
