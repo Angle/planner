@@ -4,8 +4,6 @@ namespace App\Entity;
 
 use DateTime;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 use Angle\Common\Utilities\Random\Random;
@@ -73,32 +71,32 @@ class Task
     private $openYearNumber;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $closeTimestamp;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=true)
      */
     private $closeWeekNumber;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=true)
      */
     private $closeYearNumber;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $cancelTimestamp;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=true)
      */
     private $cancelWeekNumber;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=true)
      */
     private $cancelYearNumber;
 
@@ -131,9 +129,13 @@ class Task
     /**
      * @ORM\PrePersist
      */
-    public function setOpenTimeValue()
+    public function setOpenTimestampValue()
     {
         $this->openTimestamp = new DateTime('now');
+
+        $week = Week::newFromDateTime($this->openTimestamp);
+        $this->openWeekNumber = $week->getWeek();
+        $this->openYearNumber = $week->getYear();
     }
 
     public function getOpenWeek(): ?Week
