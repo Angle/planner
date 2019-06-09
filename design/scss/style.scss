@@ -284,7 +284,13 @@ footer {
     .modal-content {
       position: relative;
       padding: 5px 10px;
+
       background-color: $color-notebook;
+      //background-image: url('../img/grid-dots.png');
+      //background-repeat: repeat;
+      //background-size: $block-size;
+      //background-position: top (0.5 * $block-size) left (0.5 * $block-size);
+
       border-radius: 0.25 * $block-size;
       //border: 1px solid $color-text;
       box-shadow: 0 5px 10px 2px #ddd;
