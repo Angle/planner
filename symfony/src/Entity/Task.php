@@ -170,26 +170,18 @@ class Task
         }
     }
 
-    public function isOlderThanWeek(Week $comparisonWeek): bool
+    public function showPulledFlag(Week $queryWeek): bool
     {
-        // Check if the Task's Open Week is older than the comparison week
-        return $this->getOpenWeek()->isOlderThanWeek($comparisonWeek);
-    }
-
-    public function showPulledFlag(Week $queryWeek, Week $currentWeek): bool
-    {
+        // Check if the Task's Open Week is older than the query week
+        return $this->getOpenWeek()->isOlderThanWeek($queryWeek);
 
     }
 
-    public function showKickedFlag(Week $queryWeek, Week $currentWeek): bool
+    public function showKickedFlag(Week $queryWeek): bool
     {
-
-    }
-
-    public function wasKickedOnWeek(Week $queryWeek): bool
-    {
+        // TODO:
         // if this is not our current week AND the task was not closed or deleted on this week, mark it wish a > #}
-
+        return false;
     }
 
 

@@ -48,6 +48,13 @@ class TaskRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('t');
 
+
+        // Conditions:
+        // 1. The task must have been opened on the same week or before than the query week
+        // 2. The task is NOT closed, or (is closed on the same week or after the query week)
+        // 3. The task is NOT canceled, or (is cancelled on the same week or after the query week)
+
+
         // OpenTask Conditions
         //  (
         //      (t.openYearNumber = queryYearNumber AND t.openWeekNumber <= queryWeekNumber)
@@ -58,45 +65,40 @@ class TaskRepository extends ServiceEntityRepository
         // (t.cancelTimestamp IS NULL)
         // AND
         // (t.closeTimestamp IS NULL)
-        $conditionOneTaskOrX = $qb->expr()->orX();
-        $conditionOneOpenTaskAndX = $qb->expr()->andX();
-        $conditionOneOpenTaskAndX->add('t.openYearNumber = :queryYearNumber');
-        $conditionOneOpenTaskAndX->add('t.openWeekNumber <= :queryWeekNumber');
-        $conditionOneTaskOrX->add($conditionOneOpenTaskAndX);
-        $conditionOneTaskOrX->add('t.openYearNumber < :queryYearNumber');
 
-        // Open Task Consolidate
-        $globalOpenTaskAndX = $qb->expr()->andX();
-        $globalOpenTaskAndX->add('t.cancelTimestamp IS NULL');
-        $globalOpenTaskAndX->add('t.closeTimestamp IS NULL');
-        $globalOpenTaskAndX->add($conditionOneTaskOrX);
 
-        // Close Task Condition
-        // (
-        //      t.closeYearNumber = queryYearNumber AND t.closeWeekNumber = queryWeekNumber
-        // )
-        $globalCloseTaskAndX = $qb->expr()->andX();
-        $globalCloseTaskAndX->add('t.closeYearNumber = :queryYearNumber');
-        $globalCloseTaskAndX->add('t.closeWeekNumber = :queryWeekNumber');
+        $conditionOne = $qb->expr()->orX()
+            ->add($qb->expr()->andX()
+                ->add('t.openYearNumber = :queryYearNumber')
+                ->add('t.openWeekNumber <= :queryWeekNumber'))
+            ->add('t.openYearNumber < :queryYearNumber');
 
-        // Cancel Task Condition
-        // (
-        //      t.cancelYearNumber = queryYearNumber AND t.canceleWeekNumber = queryWeekNumber
-        // )
-        $globalCancelTaskAndX = $qb->expr()->andX();
-        $globalCancelTaskAndX->add('t.cancelYearNumber = :queryYearNumber');
-        $globalCancelTaskAndX->add('t.cancelWeekNumber = :queryWeekNumber');
+        $conditionTwo = $qb->expr()->orX()
+            ->add('t.closeTimestamp IS NULL')
+            ->add($qb->expr()->orX()
+                ->add($qb->expr()->andX()
+                    ->add('t.closeYearNumber = :queryYearNumber')
+                    ->add('t.closeWeekNumber >= :queryWeekNumber'))
+                ->add('t.closeYearNumber > :queryYearNumber'));
+
+        $conditionThree = $qb->expr()->orX()
+            ->add('t.cancelTimestamp IS NULL')
+            ->add($qb->expr()->orX()
+                ->add($qb->expr()->andX()
+                    ->add('t.cancelYearNumber = :queryYearNumber')
+                    ->add('t.cancelWeekNumber >= :queryWeekNumber'))
+                ->add('t.cancelYearNumber > :queryYearNumber'));
 
         // Consolidate Conditions
-        $globalOrX = $qb->expr()->orX();
-        $globalOrX->add($globalOpenTaskAndX);
-        $globalOrX->add($globalCloseTaskAndX);
-        $globalOrX->add($globalCancelTaskAndX);
+        $allConditions = $qb->expr()->andX()
+            ->add($conditionOne)
+            ->add($conditionTwo)
+            ->add($conditionThree);
 
         $qb
             ->innerJoin('t.notebook', 'n')
             ->where('n.user = :userId')
-            ->andWhere($globalOrX)
+            ->andWhere($allConditions)
             ->setParameter('userId', $user->getUserId())
             ->setParameter('queryYearNumber', $week->getYear())
             ->setParameter('queryWeekNumber', $week->getWeek())
