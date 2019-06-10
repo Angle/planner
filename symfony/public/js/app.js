@@ -13,6 +13,7 @@ function loadModal(url) {
     });
 }
 
+/* ALERTS */
 function dismissAlert(e) {
     $(e).parent().parent().remove();
 }

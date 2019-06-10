@@ -60,9 +60,21 @@
                         <td class="tag">{{ task.notebook.name }}</td>
                         <td class="concept{% if task.strike(week, currentWeek) %} strike{% endif %}"
                         onclick="loadModal('{{ path('app_task_view', {'taskCode': task.code}) }}');">{{ task.concept }}</td>
-                        <td class="block option">&odot;</td>
-                        <td class="block option">&odash;</td>
-                        <td class="block option">&otimes;</td>
+                        <td class="block option">
+                            <form method="post" action="{{ path('app_task_reopen', {'taskCode': task.code}) }}">
+                                <button type="submit" class="plain">&odot;</button>
+                            </form>
+                        </td>
+                        <td class="block option">
+                            <form method="post" action="{{ path('app_task_close', {'taskCode': task.code}) }}">
+                                <button type="submit" class="plain">&otimes;</button>
+                            </form>
+                        </td>
+                        <td class="block option">
+                            <form method="post" action="{{ path('app_task_cancel', {'taskCode': task.code}) }}">
+                                <button type="submit" class="plain">&odash;</button>
+                            </form>
+                        </td>
                     </tr>
                 {% endfor %}
                 <tr class="task">
@@ -76,77 +88,18 @@
                 </tr>
                 </tbody>
             </table>
-
-            {#
-            <table class="task-list">
-                <tbody>
-                <tr class="task">
-                    <td class="block">·</td>
-                    <td class="block">!</td>
-                    <td class="tag">Personal</td>
-                    <td class="concept">Clean up the garage</td>
-                    <td class="block option">X</td>
-                    <td class="block option">Y</td>
-                    <td class="block option">Z</td>
-                </tr>
-                <tr class="task">
-                    <td class="block">-</td>
-                    <td class="block">·</td>
-                    <td class="tag">Work</td>
-                    <td class="concept">Program application ABC</td>
-                    <td class="block option">X</td>
-                    <td class="block option">Y</td>
-                    <td class="block option">Z</td>
-                </tr>
-                <tr class="task">
-                    <td class="block">&dash;</td>
-                    <td class="block">&gt;</td>
-                    <td class="tag">Work</td>
-                    <td class="concept">Implement integration XYZ</td>
-                    <td class="block option">&odot;</td>
-                    <td class="block option">&odash;</td>
-                    <td class="block option">&otimes;</td>
-                </tr>
-                <tr class="task">
-                    <td class="block">&times;</td>
-                    <td class="block">&rightarrow;</td>
-                    <td class="tag">Work</td>
-                    <td class="concept">Super super super long sentence. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris condimentum felis vel tellus vehicula, at finibus urna fermentum. Duis sed lacus posuere magna tempus accumsan.</td>
-                    <td class="block option">&odash;</td>
-                    <td class="block option">&check;</td>
-                    <td class="block option">&otimes;</td>
-                </tr>
-                <tr class="task">
-                    <td class="block">&bull;</td>
-                    <td class="block">&bull;</td>
-                    <td class="tag">Super long tag name! Even longer and longer!!</td>
-                    <td class="concept striked">Keep on working, finish the current sprint.</td>
-                    <td class="block option">x</td>
-                    <td class="block option">&times;</td>
-                    <td class="block option">&otimes;</td>
-                </tr>
-                <tr class="task">
-                    <td class="block">&nbsp;</td>
-                    <td class="block">&nbsp;</td>
-                    <td class="tag">&blacktriangledown;</td>
-                    <td class="concept" colspan="4">
-                        <input class="notebook-input" type="text" placeholder="Write new task.." autofocus>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            #}
         </div> <!-- ./ div.content -->
 
         <div class="sidebar">
             <div class="sidebar-content">
-                <a href="{{ path('app_logout') }}" class="btn-text-light logout">&otimes; logout</a>
                 <div class="profile">
                     <h2>{{ app.user.fullName }}</h2>
                     <span class="email">{{ app.user.email }}</span>
+                    <div class="account-options">
+                        <a href="#" class="btn-text-light">change my password</a> | <a href="{{ path('app_logout') }}" class="btn-text-light">&otimes; logout</a>
+                    </div>
                 </div>
 
-                <div class="spacer"></div>
                 <div class="spacer"></div>
 
                 <h2>Private Notebooks</h2>
@@ -173,6 +126,9 @@
                 {% if not hasAnyShared %}
                     <em>None shared.</em>
                 {% endif %}
+
+                <div class="spacer"></div>
+
             </div>
         </div> <!-- ./ div.sidebar -->
 

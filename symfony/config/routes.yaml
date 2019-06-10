@@ -26,6 +26,26 @@ app_task_view:
   path: /task/{taskCode}
   controller: App\Controller\TaskController:view
 
+app_task_close:
+  path: /task/{taskCode}/close
+  controller: App\Controller\TaskController:close
+  methods: POST
+
+app_task_cancel:
+  path: /task/{taskCode}/cancel
+  controller: App\Controller\TaskController:cancel
+  methods: POST
+
+app_task_reopen:
+  path: /task/{taskCode}/reopen
+  controller: App\Controller\TaskController:reopen
+  methods: POST
+
+app_task_delete:
+  path: /task/{taskCode}/delete
+  controller: App\Controller\TaskController:delete
+  methods: POST
+
 # Homepage
 app_home:
   path: /{weekCode}

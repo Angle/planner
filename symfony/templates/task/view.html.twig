@@ -26,7 +26,17 @@
 <p><em>Pending log..</em></p>
 
 <div class="action-buttons">
-    <a href="#" class="btn-outline">&odot; re-open</a>
-    <a href="#" class="btn-outline">&otimes; complete</a>
-    <a href="#" class="btn-outline">&odash; cancel</a>
+    <form method="post" action="{{ path('app_task_reopen', {'taskCode': task.code}) }}">
+        <button type="submit" class="btn-outline">&odot; re-open</button>
+    </form>
+    <form method="post" action="{{ path('app_task_close', {'taskCode': task.code}) }}">
+        <button type="submit" class="btn-outline">&otimes; complete (close)</button>
+    </form>
+    <form method="post" action="{{ path('app_task_cancel', {'taskCode': task.code}) }}">
+        <button type="submit" class="btn-outline">&odash; cancel</button>
+    </form>
+    <form method="post" action="{{ path('app_task_delete', {'taskCode': task.code}) }}"
+    onsubmit="return confirm('Are you sure you want to PERMANENTLY delete the task?');">
+        <button type="submit" class="btn-outline">! delete</button>
+    </form>
 </div>

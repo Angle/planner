@@ -351,10 +351,10 @@ class Task
     }
 
     /**
-     * @param int $closeWeekNumber
+     * @param int|null $closeWeekNumber
      * @return Task
      */
-    public function setCloseWeekNumber(int $closeWeekNumber): self
+    public function setCloseWeekNumber(int $closeWeekNumber = null): self
     {
         $this->closeWeekNumber = $closeWeekNumber;
         return $this;
@@ -369,10 +369,10 @@ class Task
     }
 
     /**
-     * @param int $closeYearNumber
+     * @param int|null $closeYearNumber
      * @return Task
      */
-    public function setCloseYearNumber(int $closeYearNumber): self
+    public function setCloseYearNumber(int $closeYearNumber = null): self
     {
         $this->closeYearNumber = $closeYearNumber;
         return $this;
@@ -387,10 +387,10 @@ class Task
     }
 
     /**
-     * @param int $cancelWeekNumber
+     * @param int|null $cancelWeekNumber
      * @return Task
      */
-    public function setCancelWeekNumber(int $cancelWeekNumber): self
+    public function setCancelWeekNumber(int $cancelWeekNumber = null): self
     {
         $this->cancelWeekNumber = $cancelWeekNumber;
         return $this;
@@ -405,10 +405,10 @@ class Task
     }
 
     /**
-     * @param int $cancelYearNumber
+     * @param int|null $cancelYearNumber
      * @return Task
      */
-    public function setCancelYearNumber(int $cancelYearNumber): self
+    public function setCancelYearNumber(int $cancelYearNumber = null): self
     {
         $this->cancelYearNumber = $cancelYearNumber;
         return $this;

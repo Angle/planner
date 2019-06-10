@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Util\Week;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
 
@@ -23,6 +24,8 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class TaskController extends AbstractController
 {
+    // TODO: Get user's timezone
+    const DEFAULT_TIMEZONE = 'America/Monterrey';
 
     /**
      * @deprecated
@@ -121,5 +124,200 @@ class TaskController extends AbstractController
         return $this->render('task/view.html.twig', [
             'task' => $task,
         ]);
+    }
+
+    /**
+     * @param string $taskCode
+     * @throws EntityNotFoundException
+     * @return Response
+     */
+    public function reopen(string $taskCode): Response
+    {
+        /** @var TaskRepository $taskRespository */
+        $taskRespository = $this->getDoctrine()->getRepository(Task::class);
+
+        /** @var Task $task */
+        $task = $taskRespository->findOneByCode($taskCode);
+
+        if (!$task) {
+            throw new EntityNotFoundException('Task code not found');
+        }
+
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $notebook = $task->getNotebook();
+
+        if (!$notebook->hasPermission($user)) {
+            throw new AccessDeniedException('Notebook is not shared with user');
+        }
+
+
+        // MODIFY THE TASK
+        // to RE-OPEN, we'll simply unset any cancel or close times
+        $task->setCancelWeekNumber(null);
+        $task->setCancelYearNumber(null);
+
+        $task->setCloseWeekNumber(null);
+        $task->setCloseYearNumber(null);
+
+        $em = $this->getDoctrine()->getManager();
+
+        try {
+            $em->flush();
+        }catch (\Exception $e) {
+            // TODO: WHAT TO DO ON ERROR
+            $this->addFlash(StatusCode::LABEL_ERROR, StatusCode::ERROR_DATABASE_INSERT);
+        }
+
+        return $this->redirectToRoute('app_home');
+    }
+
+    /**
+     * @param string $taskCode
+     * @throws EntityNotFoundException
+     * @return Response
+     */
+    public function close(string $taskCode): Response
+    {
+        /** @var TaskRepository $taskRespository */
+        $taskRespository = $this->getDoctrine()->getRepository(Task::class);
+
+        /** @var Task $task */
+        $task = $taskRespository->findOneByCode($taskCode);
+
+        if (!$task) {
+            throw new EntityNotFoundException('Task code not found');
+        }
+
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $notebook = $task->getNotebook();
+
+        if (!$notebook->hasPermission($user)) {
+            throw new AccessDeniedException('Notebook is not shared with user');
+        }
+
+
+        // MODIFY THE TASK
+        // to CLOSE, we'll set the current time as the Close Time
+        $tz = new \DateTimeZone(self::DEFAULT_TIMEZONE);
+        $now = new \DateTime('now', $tz);
+        $week = Week::newFromDateTime($now);
+
+        $task->setCloseWeekNumber($week->getWeek());
+        $task->setCloseYearNumber($week->getYear());
+
+        // we'll also unset any cancel time (if set)
+        $task->setCancelWeekNumber(null);
+        $task->setCancelYearNumber(null);
+
+        $em = $this->getDoctrine()->getManager();
+
+        try {
+            $em->flush();
+        }catch (\Exception $e) {
+            // TODO: WHAT TO DO ON ERROR
+            $this->addFlash(StatusCode::LABEL_ERROR, StatusCode::ERROR_DATABASE_INSERT);
+        }
+
+        return $this->redirectToRoute('app_home');
+    }
+
+    /**
+     * @param string $taskCode
+     * @throws EntityNotFoundException
+     * @return Response
+     */
+    public function cancel(string $taskCode): Response
+    {
+        /** @var TaskRepository $taskRespository */
+        $taskRespository = $this->getDoctrine()->getRepository(Task::class);
+
+        /** @var Task $task */
+        $task = $taskRespository->findOneByCode($taskCode);
+
+        if (!$task) {
+            throw new EntityNotFoundException('Task code not found');
+        }
+
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $notebook = $task->getNotebook();
+
+        if (!$notebook->hasPermission($user)) {
+            throw new AccessDeniedException('Notebook is not shared with user');
+        }
+
+
+        // MODIFY THE TASK
+        // to CANCEL, we'll set the current time as the Cancel Time
+        $tz = new \DateTimeZone(self::DEFAULT_TIMEZONE);
+        $now = new \DateTime('now', $tz);
+        $week = Week::newFromDateTime($now);
+
+        $task->setCancelWeekNumber($week->getWeek());
+        $task->setCancelYearNumber($week->getYear());
+
+        // we'll also unset any close time (if set)
+        $task->setCloseWeekNumber(null);
+        $task->setCloseYearNumber(null);
+
+
+        $em = $this->getDoctrine()->getManager();
+
+        try {
+            $em->flush();
+        }catch (\Exception $e) {
+            // TODO: WHAT TO DO ON ERROR
+            $this->addFlash(StatusCode::LABEL_ERROR, StatusCode::ERROR_DATABASE_INSERT);
+        }
+
+        return $this->redirectToRoute('app_home');
+    }
+
+    /**
+     * @param string $taskCode
+     * @throws EntityNotFoundException
+     * @return Response
+     */
+    public function delete(string $taskCode): Response
+    {
+        /** @var TaskRepository $taskRespository */
+        $taskRespository = $this->getDoctrine()->getRepository(Task::class);
+
+        /** @var Task $task */
+        $task = $taskRespository->findOneByCode($taskCode);
+
+        if (!$task) {
+            throw new EntityNotFoundException('Task code not found');
+        }
+
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $notebook = $task->getNotebook();
+
+        if (!$notebook->hasPermission($user)) {
+            throw new AccessDeniedException('Notebook is not shared with user');
+        }
+
+        // TODO: Check if it has any ActionLogs linked to it
+
+        // DELETE THE TASK
+        $em = $this->getDoctrine()->getManager();
+
+        $em->remove($task);
+
+        try {
+            $em->flush();
+        }catch (\Exception $e) {
+            // TODO: WHAT TO DO ON ERROR
+            $this->addFlash(StatusCode::LABEL_ERROR, StatusCode::ERROR_DATABASE_INSERT);
+        }
+
+        return $this->redirectToRoute('app_home');
     }
 }

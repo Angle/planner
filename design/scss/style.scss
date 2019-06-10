@@ -205,6 +205,20 @@ ul {
             text-decoration: line-through;
           }
         }
+
+        button.plain {
+          background: transparent;
+          border: none;
+          padding: 0;
+          margin: 0;
+
+          font-family: 'Patrick Hand', cursive;
+          font-size: 16px;
+
+          width: 100%;
+          height: 100%;
+          cursor: pointer;
+        }
       }
     }
 
@@ -253,16 +267,21 @@ ul {
     overflow: auto;
 
     .sidebar-content {
-      padding-top: 0.5 * $block-size;
+      padding-top: 1.5 * $block-size;
       padding-left: 4px;
 
-      .logout {
-        text-align: right;
-      }
+
 
       .profile {
-
+        .account-options {
+          a {
+            line-height: $block-size;
+            display: inline-block;
+          }
+        }
       }
+
+
 
       h2 {
         margin: 0;
@@ -274,6 +293,8 @@ ul {
         line-height: 1 * $block-size;
         display: block;
       }
+
+
 
       .spacer {
         display:block;
@@ -375,6 +396,10 @@ footer {
         width: 100%;
         text-align: center;
         padding: (1 * $block-size) 0;
+
+        form {
+          display: inline-block;
+        }
       }
     }
 
