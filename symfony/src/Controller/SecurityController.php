@@ -12,6 +12,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 
 use App\Entity\User;
+use App\Entity\Notebook;
 
 use App\Form\UserRegistrationType;
 use App\Form\UserPasswordChangeType;
@@ -59,6 +60,11 @@ class SecurityController extends AbstractController
             ));
 
             $em->persist($user);
+
+            // Create a new "Personal" notebook to the client
+            $personalNotebook = new Notebook();
+            $personalNotebook->setName('Personal');
+            $personalNotebook->setUser($user);
 
             try {
                 $em->flush();
