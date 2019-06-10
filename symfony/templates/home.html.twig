@@ -20,9 +20,9 @@
                     <h3>{% if week.equals(currentWeek) %}
                             <span class="present">Current</span>
                         {% elseif week.isOlderThanWeek(currentWeek) %}
-                            <span class="past">Past (-?? wk)</span>
+                            <span class="past">Past (-{{ week.distanceFromWeek(currentWeek) }} wk)</span>
                         {% elseif week.isNewerThanWeek(currentWeek) %}
-                            <span class="future">Future (+?? wk)</span>
+                            <span class="future">Future (+{{ week.distanceFromWeek(currentWeek) }} wk)</span>
                         {% endif %}
                     </h3>
                 </div>

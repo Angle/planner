@@ -119,7 +119,7 @@ class Task
         $this->code = Random::generateString(self::CODE_LENGTH);
 
         $tz = new \DateTimeZone(self::DEFAULT_TIMEZONE);
-        $this->setOpenWeekFromTimestamp(new \DateTime('now', $tz));
+        $this->calculateAndSetOpenWeekFromTimestamp(new \DateTime('now', $tz));
     }
 
 
@@ -169,32 +169,44 @@ class Task
 
     public function getBullet(Week $queryWeek, Week $currentWeek): int
     {
-        if ($this->getStatus() == self::STATUS_OPEN) {
-            // TASK IS STILL OPEN
-            // The task is not yet closed, we have to determine if we show a dot or an arrow
+        if ($this->getStatus() == self::STATUS_CLOSED) {
+            // If the task is now CLOSED there are only two valid bullets:
+            // a. if the query week is older than the actual close date, display an arrow
+            // b. if the query week is the same as the close date, display times
+            // c. unknown, the task should not be returned by the repository in the first place
+            if ($queryWeek->isOlderThanWeek($this->getCloseWeek())) {
+                return self::BULLET_ARROW;
+            } elseif ($queryWeek->equals($this->getCloseWeek())) {
+                return self::BULLET_TIMES;
+            } else {
+                return self::BULLET_UNKNOWN;
+            }
+        } elseif ($this->getStatus() == self::STATUS_CANCELLED) {
+            // If the task is now CANCELLED there are only two valid bullets:
+            // a. if the query week is older than the actual close date, display an arrow
+            // b. if the query week is the same as the close date, display a dash (and also strike it)
+            // c. unknown, the task should not be returned by the repository in the first place
+            if ($queryWeek->isOlderThanWeek($this->getCancelWeek())) {
+                return self::BULLET_ARROW;
+            } elseif ($queryWeek->equals($this->getCancelWeek())) {
+                return self::BULLET_DASH;
+            } else {
+                return self::BULLET_UNKNOWN;
+            }
+        } elseif ($this->getStatus() == self::STATUS_OPEN) {
+            // If the tag is still OPEN
+            // a. the query week is the same as the current week, or the query week is newer than the current week,
+            //    we must show a dot
+            // b. the query week is older than the current week, therefore the task has already been "kicked" and we
+            //    must show an arrow
             if ($queryWeek->equals($currentWeek) || $queryWeek->isNewerThanWeek($currentWeek)) {
                 return self::BULLET_DOT;
             } else {
                 return self::BULLET_ARROW;
             }
-        } elseif ($this->getStatus() == self::STATUS_CLOSED) {
-            // TASK HAS BEEN CLOSED
-            // the task has been closed, we have to determine if we show a times or an arrow
-            if ($queryWeek->equals($this->getCloseWeek())) {
-                return self::BULLET_TIMES;
-            } else {
-                return self::BULLET_ARROW;
-            }
-        } elseif ($this->getStatus() == self::STATUS_CANCELLED) {
-            // TASK HAS BEEN CANCELLED
-            // the task has been cancelled, we have to determine if we strike if or we show an arrow
-            if ($queryWeek->equals($this->getCancelWeek())) {
-                return self::BULLET_DASH;
-            } else {
-                return self::BULLET_ARROW;
-            }
         }
 
+        // Any other case or status shouldn't happen
         return self::BULLET_UNKNOWN;
     }
 
@@ -220,7 +232,7 @@ class Task
     }
 
 
-    public function setOpenWeekFromTimestamp(\DateTime $time)
+    public function calculateAndSetOpenWeekFromTimestamp(\DateTime $time)
     {
         $week = Week::newFromDateTime($time);
         $this->openWeekNumber = $week->getWeek();

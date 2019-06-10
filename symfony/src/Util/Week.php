@@ -126,6 +126,16 @@ class Week
         return (($this->year == $comparisonWeek->getYear()) && ($this->week == $comparisonWeek->getWeek()));
     }
 
+    public function distanceFromWeek(Week $comparisonWeek): int
+    {
+        $thisDate = $this->getStartDay();
+        $comparisonDate = $comparisonWeek->getStartDay();
+
+        $interval = $thisDate->diff($comparisonDate);
+
+        return ($interval->days / 7);
+    }
+
     // GETTERS AND SETTERS
     public function getCode(): string
     {
@@ -148,6 +158,7 @@ class Week
         // 1 Monday
         $date = new \DateTime('now', $tz);
         $date->setISODate($this->year, $this->week, 1);
+        $date->setTime(0, 0);
         return $date;
     }
 
@@ -157,6 +168,7 @@ class Week
         // 7 Sunday
         $date = new \DateTime('now', $tz);
         $date->setISODate($this->year, $this->week, 7);
+        $date->setTime(0, 0);
         return $date;
     }
 }
