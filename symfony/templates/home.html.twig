@@ -140,17 +140,39 @@
 
         <div class="sidebar">
             <div class="sidebar-content">
-                <h2>My Notebooks</h2>
+                <a href="{{ path('app_logout') }}" class="btn-text-light logout">&otimes; logout</a>
+                <div class="profile">
+                    <h2>Edmundo Fuentes</h2>
+                    <span class="email">efuentes@angle.mx</span>
+                </div>
+
+                <div class="spacer"></div>
+                <div class="spacer"></div>
+
+                <h2>Private Notebooks</h2>
                 {% for notebook in notebooks %}
-                <a href="#" class="btn-text" onclick="loadModal('{{ path('app_notebook_view', {'notebookCode': notebook.code}) }}');">
-                    {{ notebook.name }}
-                </a>
+                    {% if not notebook.isShared %}
+                        <a href="#" class="btn-text" onclick="loadModal('{{ path('app_notebook_view', {'notebookCode': notebook.code}) }}');">
+                            {{ notebook.name }}
+                        </a>
+                    {% endif %}
                 {% endfor %}
                 <a href="#" class="btn-text-light" onclick="loadModal('{{ path('app_notebook_new') }}');">&plus; New Notebook</a>
 
                 <div class="spacer"></div>
                 <h2>Shared Notebooks</h2>
-                <p><em>Pending</em></p>
+                {% set hasAnyShared = false %}
+                {% for notebook in notebooks %}
+                    {% if notebook.isShared %}
+                        <a href="#" class="btn-text" onclick="loadModal('{{ path('app_notebook_view', {'notebookCode': notebook.code}) }}');">
+                            {{ notebook.name }}
+                        </a>
+                    {% set hasAnyShared = true %}
+                    {% endif %}
+                {% endfor %}
+                {% if not hasAnyShared %}
+                    <em>None shared.</em>
+                {% endif %}
             </div>
         </div> <!-- ./ div.sidebar -->
 

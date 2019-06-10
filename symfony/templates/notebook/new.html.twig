@@ -7,10 +7,14 @@
     <h1>New Notebook</h1>
 </div>
 
-<div class="details">
-    {{ form(form) }}
+<div class="form">
+    <input type="text" class="input-big" name="" placeholder="Write notebook name..">
+
+    <div class="action-buttons">
+        <button type="submit" class="btn-outline">&check; save</button>
+    </div>
 </div>
 
-<div class="action-buttons">
-    <a href="#" class="btn-outline">&check; save</a>
+<div class="details">
+    {{ form(form) }}
 </div>

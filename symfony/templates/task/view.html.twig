@@ -8,16 +8,22 @@
     <h2>{{ task.concept }}</h2>
 </div>
 <div class="details">
-    <p>
-        lorem ipsum, dolor sunt dolors
-    </p>
+    {% if task.details %}
+        {{ task.details|markdown }}
+    {% else %}
+        <p><em>Add details.. (pending)</em></p>
+    {% endif %}
 </div>
+
+{#
 <div class="log">
     <ul class="dashed">
         <li>created on 2019-01-23 15:43 by Edmundo Fuentes</li>
         <li>closed on 2019-01-23 17:51 by Edmundo Fuentes</li>
     </ul>
 </div>
+#}
+<p><em>Pending log..</em></p>
 
 <div class="action-buttons">
     <a href="#" class="btn-outline">&odot; re-open</a>

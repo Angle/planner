@@ -6,17 +6,33 @@
 <div class="title">
     <h1>New Task</h1>
 </div>
-<div class="details">
-    {{ form(form) }}
-</div>
-<div class="metadata">
-    <p>
-        created on week 2018-12 by Edmundo Fuentes
-    </p>
+
+
+<div class="form">
+    <div class="form-header">
+        <div class="form-notebook">
+            <select>
+                <option>Angle</option>
+                <option>Dummy</option>
+            </select>
+        </div>
+        <div class="form-week">
+            <input type="number" min="1000" max="3000" step="1">
+            <input type="number" min="0" max="53" step="1">
+        </div>
+    </div>
+    <input type="text" class="input-big" name="" placeholder="Write task concept..">
+
+    <div class="action-buttons">
+        <button type="submit" class="btn-outline">&check; save</button>
+    </div>
 </div>
 
 <div class="action-buttons">
-    <a href="#" class="btn-outline">&odot; re-open</a>
-    <a href="#" class="btn-outline">&otimes; complete</a>
-    <a href="#" class="btn-outline">&odash; cancel</a>
+    <a href="#" class="btn-outline">&check; save</a>
+</div>
+
+
+<div class="details">
+    {{ form(form) }}
 </div>

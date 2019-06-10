@@ -253,8 +253,16 @@ ul {
     overflow: auto;
 
     .sidebar-content {
-      padding-top: 1.5 * $block-size;
+      padding-top: 0.5 * $block-size;
       padding-left: 4px;
+
+      .logout {
+        text-align: right;
+      }
+
+      .profile {
+
+      }
 
       h2 {
         margin: 0;
@@ -440,6 +448,36 @@ footer {
 
 }
 
+/* FORM */
+.form {
+  .input-big {
+    background-color: transparent;
+    border: none;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 16px;
+    color: $color-text;
+
+    border-bottom: 1px dashed $color-text-lighter;
+    width: 100%;
+
+    /*
+    &:focus {
+      outline: none;
+    }
+    */
+  }
+
+  .form-header {
+    width: 100%;
+    .form-notebook {
+
+    }
+    .form-week {
+      float: right;
+    }
+  }
+}
+
 
 /* HELPERS */
 .text-center {
@@ -449,11 +487,21 @@ footer {
 .btn-outline {
   &, &:hover, &:visited, &:active {
     color: $color-text;
+
+    font-family: 'Patrick Hand', cursive;
+    font-size: 16px;
+
     text-decoration: none;
     border: 1px solid $color-text;
+    background-color: transparent;
     padding: 4px 8px;
     border-radius: 0.25 * $block-size;
     margin: 0 10px;
+    cursor: pointer;
+  }
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.075);
   }
 }
 

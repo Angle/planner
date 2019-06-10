@@ -19,6 +19,7 @@ use App\Form\TaskType;
 use App\Preset\StatusCode;
 use App\Repository\NotebookRepository;
 use App\Repository\TaskRepository;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class TaskController extends AbstractController
 {
@@ -111,7 +112,11 @@ class TaskController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
 
-        // TODO: Check user permissions
+        $notebook = $task->getNotebook();
+
+        if (!$notebook->hasPermission($user)) {
+            throw new AccessDeniedException('Notebook is not shared with user');
+        }
 
         return $this->render('task/view.html.twig', [
             'task' => $task,

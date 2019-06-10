@@ -82,7 +82,25 @@ class Notebook
     ##   SPECIAL METHODS   ##
     #########################
 
-    // nothing for now...
+    public function hasPermission(User $user): bool
+    {
+        if ($this->getUser()->getUserId() == $user->getUserId()) {
+            return true;
+        }
+
+        foreach ($this->getShareMaps() as $map) {
+            if ($map->getUser()->getUserId() == $user->getUserId()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function isShared(): bool
+    {
+        return (count($this->getShareMaps()) > 0);
+    }
 
 
     #########################

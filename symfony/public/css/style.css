@@ -144,8 +144,10 @@ ul {
     height: 100%;
     overflow: auto; }
     .notebook .sidebar .sidebar-content {
-      padding-top: 36px;
+      padding-top: 12px;
       padding-left: 4px; }
+      .notebook .sidebar .sidebar-content .logout {
+        text-align: right; }
       .notebook .sidebar .sidebar-content h2 {
         margin: 0;
         padding: 0;
@@ -275,17 +277,44 @@ footer {
     color: white;
     text-decoration: none; }
 
+/* FORM */
+.form .input-big {
+  background-color: transparent;
+  border: none;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 16px;
+  color: #282723;
+  border-bottom: 1px dashed #4b4a46;
+  width: 100%;
+  /*
+    &:focus {
+      outline: none;
+    }
+    */ }
+
+.form .form-header {
+  width: 100%; }
+  .form .form-header .form-week {
+    float: right; }
+
 /* HELPERS */
 .text-center {
   text-align: center; }
 
 .btn-outline, .btn-outline:hover, .btn-outline:visited, .btn-outline:active {
   color: #282723;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 16px;
   text-decoration: none;
   border: 1px solid #282723;
+  background-color: transparent;
   padding: 4px 8px;
   border-radius: 6px;
-  margin: 0 10px; }
+  margin: 0 10px;
+  cursor: pointer; }
+
+.btn-outline:hover {
+  background-color: rgba(0, 0, 0, 0.075); }
 
 .btn-new-task, .btn-new-task:hover, .btn-new-task:visited, .btn-new-task:active {
   color: #777;

@@ -96,7 +96,9 @@ class NotebookController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
 
-        // TODO: Check user permissions
+        if (!$notebook->hasPermission($user)) {
+            throw new AccessDeniedException('Notebook is not shared with user');
+        }
 
         return $this->render('notebook/view.html.twig', [
             'notebook' => $notebook,
