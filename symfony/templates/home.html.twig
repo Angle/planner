@@ -116,7 +116,7 @@
                 {% set printSubtitle = true %}
                 {% for notebook in notebooks %}
                     {% if notebook.isShared %}
-                        {% if firstNotebook %}
+                        {% if printSubtitle %}
                             <div class="spacer"></div>
                             <h2>Shared Notebooks</h2>
                             {% set printSubtitle = false %}
@@ -131,15 +131,21 @@
 
                 {% set printSubtitle = true %}
                 {% for map in pendingRequests %}
-                    {% if firstNotebook %}
+                    {% if printSubtitle %}
                         <div class="spacer"></div>
                         <h2>Pending Requests</h2>
                         {% set printSubtitle = false %}
                     {% endif %}
 
-                    <a href="#" class="btn-text">
+                    <p>
                         {{ map.notebook.name }}
-                    </a>
+                        <form method="post" action="">
+                            <button type="submit" class="btn-outline">&check;</button>
+                        </form>
+                        <form method="post" action="">
+                            <button type="submit" class="btn-outline">&times;</button>
+                        </form>
+                    </p>
                 {% endfor %}
 
                 <div class="spacer"></div>
