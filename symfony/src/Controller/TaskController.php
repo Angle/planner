@@ -2,6 +2,14 @@
 
 namespace App\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityNotFoundException;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PropertyAccess\Exception\AccessException;
+
 use App\Entity\Notebook;
 use App\Entity\Task;
 use App\Entity\User;
@@ -11,13 +19,6 @@ use App\Form\TaskType;
 use App\Preset\StatusCode;
 use App\Repository\NotebookRepository;
 use App\Repository\TaskRepository;
-
-use Doctrine\ORM\EntityManagerInterface;
-
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PropertyAccess\Exception\AccessException;
 
 class TaskController extends AbstractController
 {
@@ -78,7 +79,7 @@ class TaskController extends AbstractController
             try {
                 $entityManager->flush();
             }catch (\Exception $e) {
-                // TODO WHAT TO DO ON ERROR
+                // TODO: WHAT TO DO ON ERROR
                 $this->addFlash(StatusCode::LABEL_ERROR, StatusCode::ERROR_DATABASE_INSERT);
             }
 
@@ -91,12 +92,29 @@ class TaskController extends AbstractController
     }
 
     /**
+     * @param string $taskCode
+     * @throws EntityNotFoundException
      * @return Response
      */
     public function view(string $taskCode): Response
     {
+        /** @var TaskRepository $taskRespository */
+        $taskRespository = $this->getDoctrine()->getRepository(Task::class);
+
+        /** @var Task $task */
+        $task = $taskRespository->findOneByCode($taskCode);
+
+        if (!$task) {
+            throw new EntityNotFoundException('Task code not found');
+        }
+
+        /** @var User $user */
+        $user = $this->getUser();
+
+        // TODO: Check user permissions
+
         return $this->render('task/view.html.twig', [
-            // none.
+            'task' => $task,
         ]);
     }
 }

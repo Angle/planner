@@ -2,6 +2,12 @@
 
 namespace App\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityNotFoundException;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
 use App\Entity\Notebook;
 use App\Entity\User;
 
@@ -9,11 +15,7 @@ use App\Form\NotebookType;
 
 use App\Repository\NotebookRepository;
 
-use Doctrine\ORM\EntityManagerInterface;
-
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use App\Preset\StatusCode;
 
 class NotebookController extends AbstractController
 {
@@ -63,6 +65,7 @@ class NotebookController extends AbstractController
                 $entityManager->flush();
             }catch (\Exception $e) {
                 // TODO WHAT TO DO ON ERROR
+                $this->addFlash(StatusCode::LABEL_ERROR, StatusCode::ERROR_DATABASE_INSERT);
             }
 
             return $this->redirectToRoute('app_home');
@@ -74,12 +77,29 @@ class NotebookController extends AbstractController
     }
 
     /**
+     * @param string $notebookCode
+     * @throws EntityNotFoundException
      * @return Response
      */
-    public function view(): Response
+    public function view(string $notebookCode): Response
     {
+        /** @var NotebookRepository $notebookRepository */
+        $notebookRepository = $this->getDoctrine()->getRepository(Notebook::class);
+
+        /** @var Notebook $notebook */
+        $notebook = $notebookRepository->findOneByCode($notebookCode);
+
+        if (!$notebook) {
+            throw new EntityNotFoundException('Notebook code not found');
+        }
+
+        /** @var User $user */
+        $user = $this->getUser();
+
+        // TODO: Check user permissions
+
         return $this->render('notebook/view.html.twig', [
-            // none.
+            'notebook' => $notebook,
         ]);
     }
 }

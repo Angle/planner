@@ -43,6 +43,24 @@ h1, h2, h3, h4, h5, h6 {
   font-family: 'Patrick Hand SC', cursive;
 }
 
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+
+  &.dashed {
+    li {
+      //text-indent: -1 * $block-size;
+      &:before {
+        content: "\2013\a0";
+        text-indent: -1 * $block-size;
+      }
+    }
+  }
+
+
+}
+
 .wrapper {
   max-width: $page-width;
   width: 100%;
@@ -181,7 +199,9 @@ h1, h2, h3, h4, h5, h6 {
           //overflow: hidden;
           //text-overflow: ellipsis;
 
-          &.striked {
+          cursor: pointer;
+
+          &.strike {
             text-decoration: line-through;
           }
         }

@@ -3,16 +3,24 @@
 <div class="top-buttons">
     <a href="#" onclick="closeModal();">&times; close</a>
 </div>
+
 <div class="title">
-    <h3>{{ notebook.name }}</h3>
+    <h3>Notebook:</h3>
+    <h1>{{ notebook.name }}</h1>
 </div>
+
 <div class="share">
     <h4>Shared With</h4>
-    <ul>
-        <li>Edmundo Fuentes &lt;efuentes@angle.mx&gt;</li>
+    <ul class="dashed">
+        <li>{{ notebook.user.fullName }} &lt;{{ notebook.user.email }}&gt; <small>OWNER</small></li>
+        {% for map in notebook.shareMaps %}
+            <li>{{ map.user.fullName }} &lt;{{ map.user.email }}&gt;</li>
+        {% endfor %}
     </ul>
 </div>
 
+{#
 <div class="action-buttons">
     <a href="#" class="btn-outline">&odash; delete</a>
 </div>
+#}
