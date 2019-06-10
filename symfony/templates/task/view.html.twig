@@ -1,21 +1,22 @@
 {# this view opens inside a modal #}
 
 <div class="top-buttons">
-    <a href="#">&times; close</a>
+    <a href="#" onclick="closeModal();">&times; close</a>
 </div>
 <div class="title">
-    <h3>Notebook name</h3>
-    <h2>Task title: do this and that</h2>
+    <h3>{{ task.notebook.name }}</h3>
+    <h2>{{ task.concept }}</h2>
 </div>
 <div class="details">
     <p>
         lorem ipsum, dolor sunt dolors
     </p>
 </div>
-<div class="metadata">
-    <p>
-        created on week 2018-12 by Edmundo Fuentes
-    </p>
+<div class="log">
+    <ul class="dashed">
+        <li>created on 2019-01-23 15:43 by Edmundo Fuentes</li>
+        <li>closed on 2019-01-23 17:51 by Edmundo Fuentes</li>
+    </ul>
 </div>
 
 <div class="action-buttons">

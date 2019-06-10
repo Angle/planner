@@ -14,6 +14,14 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Patrick Hand SC', cursive; }
 
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0; }
+  ul.dashed li:before {
+    content: "\2013\a0";
+    text-indent: -24px; }
+
 .wrapper {
   max-width: 1080px;
   width: 100%;
@@ -98,8 +106,9 @@ h1, h2, h3, h4, h5, h6 {
           text-align: left; }
         .notebook .content .task-list .task .concept {
           height: 24px;
-          text-align: left; }
-          .notebook .content .task-list .task .concept.striked {
+          text-align: left;
+          cursor: pointer; }
+          .notebook .content .task-list .task .concept.strike {
             text-decoration: line-through; }
     .notebook .content .notebook-input {
       background-color: transparent;

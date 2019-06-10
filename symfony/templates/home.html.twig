@@ -58,7 +58,8 @@
                             {% endif %}
                         </td>
                         <td class="tag">{{ task.notebook.name }}</td>
-                        <td class="concept">{{ task.concept }}</td>
+                        <td class="concept{% if task.strike(week, currentWeek) %} strike{% endif %}"
+                        onclick="loadModal('{{ path('app_task_view', {'taskCode': task.code}) }}');">{{ task.concept }}</td>
                         <td class="block option">&odot;</td>
                         <td class="block option">&odash;</td>
                         <td class="block option">&otimes;</td>
