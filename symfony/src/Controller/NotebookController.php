@@ -131,6 +131,8 @@ class NotebookController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         /** @var NotebookRepository $notebookRepository */
         $notebookRepository = $this->getDoctrine()->getRepository(Notebook::class);
+        /** @var ShareMapRepository $shareMapRepository */
+        $shareMapRepository = $this->getDoctrine()->getRepository(ShareMap::class);
 
         /** @var Notebook $notebook */
         $notebook = $notebookRepository->findOneByCode($notebookCode);
@@ -159,15 +161,26 @@ class NotebookController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $error = false;
 
-            $em->persist($shareMap);
+            // Check for a previous ShareMap by inviteEmail
+            $maps = $shareMapRepository->findByNotebookAndEmail($notebook, $shareMap->getInviteEmail());
 
-            try {
-                $em->flush();
-            } catch (\Exception $e) {
-                $error = true;
+            if (count($maps) > 0) {
                 $this->addFlash(StatusCode::LABEL_ERROR, StatusCode::ERROR_NOTEBOOK_SHARE);
+                $error = true;
             }
 
+            if(!$error) {
+
+                $em->persist($shareMap);
+
+                try {
+                    $em->flush();
+                } catch (\Exception $e) {
+                    $error = true;
+                    $this->addFlash(StatusCode::LABEL_ERROR, StatusCode::ERROR_NOTEBOOK_SHARE);
+                }
+
+            }
             if (!$error) $this->addFlash(StatusCode::LABEL_SUCCESS, StatusCode::SUCCESS_NOTEBOOK_SHARE);
         }
 
