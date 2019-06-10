@@ -115,10 +115,10 @@ class ShareMap
     }
 
     /**
-     * @param string $inviteEmail
+     * @param string|null $inviteEmail
      * @return ShareMap
      */
-    public function setInviteEmail(string $inviteEmail): self
+    public function setInviteEmail(string $inviteEmail = null): self
     {
         $this->inviteEmail = $inviteEmail;
         return $this;
@@ -139,10 +139,10 @@ class ShareMap
     }
 
     /**
-     * @param User $user
+     * @param User|null $user
      * @return ShareMap
      */
-    public function setUser(User $user): self
+    public function setUser(User $user = null): self
     {
         $this->user = $user;
         return $this;
