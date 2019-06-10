@@ -32,10 +32,9 @@
 
 <div class="action-buttons">
     <h3>Share to Another User</h3>
-    <form class="form" action="{{ path('app_notebook_share', {'notebookCode': notebook.code}) }}" method="post">
-        <input type="email" name="notebook[name]" required="required" class="input-big" placeholder="Write notebook name...">
+    {{ form_start(form) }}
+        {{ form_widget(form.inviteEmail) }}
         <div class="spacer"></div>
         <button type="submit" class="btn-outline">share</button>
-    </form>
-    {#<a href="#" class="btn-outline">&odash; delete</a>#}
+    {{ form_end(form) }}
 </div>
