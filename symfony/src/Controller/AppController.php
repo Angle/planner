@@ -60,9 +60,7 @@ class AppController extends AbstractController
         /** @var Notebook[] $notebooks */
         $notebooks = $notebookRepository->findByUser($user);
 
-        /** @var Task[] $tasks *
-        $tasks = $taskRepository->findByNotebook($notebooks);
-         * */
+        /** @var Task[] $tasks */
         $tasks = $taskRepository->findAllByUserAndWeek($user, $week);
 
         return $this->render('home.html.twig', [

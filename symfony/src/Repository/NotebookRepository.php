@@ -29,10 +29,10 @@ class NotebookRepository extends ServiceEntityRepository
      */
     public function findByUser($user)
     {
-        return $this->createQueryBuilder('n')
-            ->innerJoin('n.shareMaps', 'm')
-            ->where('n.user = :userId')
-            ->orWhere('m.user = :userId')
+        return $this->createQueryBuilder('notebook')
+            ->leftJoin('notebook.shareMaps', 'map', 'WITH', 'map.user = :userId')
+            ->where('notebook.user = :userId')
+            ->orWhere('map.user = :userId')
             ->setParameter('userId', $user->getUserId())
             ->distinct()
             ->getQuery()
