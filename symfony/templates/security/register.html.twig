@@ -14,16 +14,15 @@
                 </div>
 
                 <div class="login-box">
-                    <form method="post">
-                        <input class="login-control" type="text" name="firstName" placeholder="first name" value="">
-                        <input class="login-control" type="text" name="lastName" placeholder="last name" value="">
-                        <input class="login-control" type="email" name="email" placeholder="email" value="">
-                        <input class="login-control" type="password" name="password" placeholder="password">
-                        <input class="login-control" type="password" name="password" placeholder="re-type passoword">
-                        <button type="submit" class="login-control">Register</button>
+                    {{ form_start(form) }}
+                        {{ form_widget(form.firstName) }}
+                        {{ form_widget(form.lastName) }}
+                        {{ form_widget(form.email) }}
+                        {{ form_widget(form.password) }}
+                        {{ form_widget(form.checkPassword) }}
 
-                        <input type="hidden" name="_csrf_token" value="">
-                    </form>
+                        <button type="submit" class="login-control">Register</button>
+                    {{ form_end(form) }}
 
                     <div class="links">
                         <a href="{{ path('app_login') }}" class="btn-text dashed">I already have an account</a>

@@ -11,7 +11,7 @@ app_logout:
 app_register:
   path: /register
   controller: App\Controller\SecurityController::register
-  methods: GET
+  methods: GET|POST
 
 app_change_password:
   path: /change-password
