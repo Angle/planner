@@ -288,6 +288,16 @@ ul {
         }
       }
 
+      .share-list {
+        li {
+          line-height: $block-size;
+          button {
+            display: inline-block;
+            float: right;
+          }
+        }
+      }
+
 
 
       h2 {

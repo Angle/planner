@@ -163,6 +163,11 @@ ul {
       .notebook .sidebar .sidebar-content .profile .account-options a {
         line-height: 24px;
         display: inline-block; }
+      .notebook .sidebar .sidebar-content .share-list li {
+        line-height: 24px; }
+        .notebook .sidebar .sidebar-content .share-list li button {
+          display: inline-block;
+          float: right; }
       .notebook .sidebar .sidebar-content h2 {
         margin: 0;
         padding: 0;

@@ -78,4 +78,13 @@ class SecurityController extends AbstractController
             'form'  => $form->createView()
         ]);
     }
+
+    /**
+     * @return Response
+     */
+    public function changePassword(): Response
+    {
+        return $this->render('security/change-password.html.twig', [
+        ]);
+    }
 }
