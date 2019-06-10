@@ -9,20 +9,23 @@
                 <div class="header login">
                     <div class="title">
                         <h1>Angle Planner</h1>
-                        <h3>Please login</h3>
+                        <h3>Sign up</h3>
                     </div>
                 </div>
 
                 <div class="login-box">
                     <form method="post">
-                        <input class="login-control" type="email" name="email" placeholder="email" value="{{ last_username }}">
+                        <input class="login-control" type="text" name="firstName" placeholder="first name" value="">
+                        <input class="login-control" type="text" name="lastName" placeholder="last name" value="">
+                        <input class="login-control" type="email" name="email" placeholder="email" value="">
                         <input class="login-control" type="password" name="password" placeholder="password">
-                        <button type="submit" class="login-control">Log in</button>
+                        <input class="login-control" type="password" name="password" placeholder="re-type passoword">
+                        <button type="submit" class="login-control">Register</button>
 
-                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                        <input type="hidden" name="_csrf_token" value="">
                     </form>
 
-                    <a href="{{ path('app_register') }}">Sign up</a>
+                    <a href="{{ path('app_login') }}">I already have an account</a>
                 </div>
 
             </div>

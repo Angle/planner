@@ -8,6 +8,16 @@ app_logout:
   path: /logout
   methods: GET
 
+app_register:
+  path: /register
+  controller: App\Controller\SecurityController::register
+  methods: GET
+
+app_change_password:
+  path: /change-password
+  controller: App\Controller\SecurityController::changePassword
+  methods: GET|OPTIONS
+
 # Notebook
 app_notebook_new:
   path: /notebook/new
