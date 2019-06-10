@@ -2,11 +2,12 @@
 
 namespace App\Repository;
 
-use App\Entity\ShareMap;
-
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 use Symfony\Bridge\Doctrine\RegistryInterface;
+
+use App\Entity\ShareMap;
+use App\Entity\User;
 
 /**
  * @method ShareMap|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,5 +20,19 @@ class ShareMapRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, ShareMap::class);
+    }
+
+    /**
+     * @param User $user
+     * @return ShareMap[] Returns an array of Notebook objects
+     */
+    public function findByUser(User $user)
+    {
+        return $this->createQueryBuilder('m')
+            ->andWhere('m.user = :userId')
+            ->setParameter('userId', $user->getUserId())
+            ->getQuery()
+            ->getResult()
+            ;
     }
 }

@@ -35,6 +35,11 @@ class ShareMap
      */
     private $code;
 
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $inviteEmail;
+
 
     #########################
     ## OBJECT RELATIONSHIP ##
@@ -42,7 +47,7 @@ class ShareMap
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="shareMaps")
-     * @ORM\JoinColumn(referencedColumnName="user_id", nullable=false)
+     * @ORM\JoinColumn(referencedColumnName="user_id", nullable=true)
      */
     private $user;
 
@@ -99,6 +104,25 @@ class ShareMap
         $this->code = $code;
         return $this;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getInviteEmail(): ?string
+    {
+        return $this->inviteEmail;
+    }
+
+    /**
+     * @param string $inviteEmail
+     * @return ShareMap
+     */
+    public function setInviteEmail(string $inviteEmail): self
+    {
+        $this->inviteEmail = $inviteEmail;
+        return $this;
+    }
+
 
 
     #########################

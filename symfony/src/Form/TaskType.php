@@ -47,8 +47,11 @@ class TaskType extends AbstractType
                 'required'      => true,
                 'query_builder' => function (EntityRepository $er) use ($user) {
                     return $er->createQueryBuilder('n')
-                        ->andWhere('n.user = :userId')
-                        ->setParameter('userId', $user->getUserId());
+                        ->innerJoin('n.shareMaps', 'm')
+                        ->where('n.user = :userId')
+                        ->orWhere('m.user = :userId')
+                        ->setParameter('userId', $user->getUserId())
+                        ->distinct();
                 },
             ])
             ->add('concept', TextType::class, [

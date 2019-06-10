@@ -30,8 +30,11 @@ class NotebookRepository extends ServiceEntityRepository
     public function findByUser($user)
     {
         return $this->createQueryBuilder('n')
-            ->andWhere('n.user = :userId')
+            ->innerJoin('n.shareMaps', 'm')
+            ->where('n.user = :userId')
+            ->orWhere('m.user = :userId')
             ->setParameter('userId', $user->getUserId())
+            ->distinct()
             ->getQuery()
             ->getResult()
             ;
