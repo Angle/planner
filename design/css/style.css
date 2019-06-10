@@ -292,9 +292,53 @@ footer {
     }
     */ }
 
+.form .input-small {
+  background-color: transparent;
+  border: none;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 16px;
+  color: #4b4a46;
+  border-bottom: 1px dashed #4b4a46;
+  /*
+    &:focus {
+      outline: none;
+    }
+    */ }
+
 .form .form-header {
-  width: 100%; }
+  width: 100%;
+  padding-bottom: 24px; }
+  .form .form-header .form-notebook {
+    display: inline-block;
+    /* CAUTION: IE hackery ahead */
+    /* target Internet Explorer 9 to undo the custom arrow */ }
+    .form .form-header .form-notebook select {
+      min-width: 150px;
+      padding: 0 24px 0 8px;
+      font-family: 'Patrick Hand', cursive;
+      font-size: 16px;
+      height: 24px;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background-image: url("../img/down-arrow.png");
+      background-size: 12px;
+      background-repeat: no-repeat;
+      background-position: top 6px right 6px;
+      background-color: transparent;
+      border: none;
+      border-radius: 0;
+      border-bottom: 1px dashed #4b4a46;
+      /*border: 1px solid #ccc;*/ }
+    .form .form-header .form-notebook select::-ms-expand {
+      display: none;
+      /* remove default arrow on ie10 and ie11 */ }
+    @media screen and (min-width: 0\0) {
+      .form .form-header .form-notebook select {
+        background: none\9;
+        padding: 5px\9; } }
   .form .form-header .form-week {
+    color: #4b4a46;
     float: right; }
 
 /* HELPERS */

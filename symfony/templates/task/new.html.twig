@@ -11,14 +11,16 @@
 <div class="form">
     <div class="form-header">
         <div class="form-notebook">
-            <select>
+            <label for="notebook">Notebook: </label>
+            <select id="notebook">
                 <option>Angle</option>
                 <option>Dummy</option>
             </select>
         </div>
         <div class="form-week">
-            <input type="number" min="1000" max="3000" step="1">
-            <input type="number" min="0" max="53" step="1">
+            Week:
+            <input type="number" min="1000" max="3000" step="1" class="input-small" placeholder="YYYY">
+            <input type="number" min="0" max="53" step="1" class="input-small" placeholder="WW">
         </div>
     </div>
     <input type="text" class="input-big" name="" placeholder="Write task concept..">

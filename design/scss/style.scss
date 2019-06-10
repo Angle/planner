@@ -467,12 +467,72 @@ footer {
     */
   }
 
+  .input-small {
+    background-color: transparent;
+    border: none;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 16px;
+    color: $color-text-lighter;
+
+    border-bottom: 1px dashed $color-text-lighter;
+
+    /*
+    &:focus {
+      outline: none;
+    }
+    */
+  }
+
   .form-header {
     width: 100%;
+    padding-bottom: 1 * $block-size;
+
     .form-notebook {
 
+      display: inline-block;
+
+      select {
+        min-width: 150px;
+        padding: 0 $block-size 0 8px;
+        font-family: 'Patrick Hand', cursive;
+        font-size: 16px;
+
+
+        height: 1* $block-size;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+
+        background-image: url('../img/down-arrow.png');
+        background-size: 0.5 * $block-size;
+        background-repeat: no-repeat;
+        background-position: top 6px right 6px;
+        background-color: transparent;
+
+        border: none;
+        border-radius: 0;
+        border-bottom: 1px dashed $color-text-lighter;
+
+        /*border: 1px solid #ccc;*/
+      }
+
+      /* CAUTION: IE hackery ahead */
+      select::-ms-expand {
+        display: none; /* remove default arrow on ie10 and ie11 */
+      }
+
+      /* target Internet Explorer 9 to undo the custom arrow */
+      @media screen and (min-width:0\0) {
+        select {
+          background:none\9;
+          padding: 5px\9;
+        }
+      }
+
     }
+
     .form-week {
+      color: $color-text-lighter;
       float: right;
     }
   }
