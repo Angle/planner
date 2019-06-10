@@ -22,6 +22,9 @@ class Task
     ##        PRESETS      ##
     #########################
 
+    // TODO: Dynamic timezones per user
+    const DEFAULT_TIMEZONE = 'America/Monterrey';
+
     const CODE_LENGTH = 32;
 
     const STATUS_OPEN = 1;
@@ -114,6 +117,9 @@ class Task
     public function __construct()
     {
         $this->code = Random::generateString(self::CODE_LENGTH);
+
+        $tz = new \DateTimeZone(self::DEFAULT_TIMEZONE);
+        $this->setOpenWeekFromTimestamp(new \DateTime('now', $tz));
     }
 
 

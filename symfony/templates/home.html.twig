@@ -18,7 +18,7 @@
                     <h3 class="hide-mobile">{{ week.startDay|date('F jS, Y') }} - {{ week.endDay|date('F jS, Y') }}</h3>
                     <h3 class="mobile-only-inline">{{ week.startDay|date('M jS') }} - {{ week.endDay|date('M jS') }}</h3>
                     <h3>{% if week.equals(currentWeek) %}
-                            <span class="present">Present</span>
+                            <span class="present">Current</span>
                         {% elseif week.isOlderThanWeek(currentWeek) %}
                             <span class="past">Past (-?? wk)</span>
                         {% elseif week.isNewerThanWeek(currentWeek) %}

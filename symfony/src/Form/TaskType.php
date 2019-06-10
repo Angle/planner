@@ -2,11 +2,6 @@
 
 namespace App\Form;
 
-use App\Entity\Notebook;
-use App\Entity\Task;
-use App\Entity\User;
-use App\Repository\NotebookRepository;
-
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,7 +12,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Security\Core\Security;
 
-
+use App\Entity\Notebook;
+use App\Entity\Task;
+use App\Entity\User;
 
 class TaskType extends AbstractType
 {

@@ -74,7 +74,9 @@ class TaskRepository extends ServiceEntityRepository
             ->add('t.openYearNumber < :queryYearNumber');
 
         $conditionTwo = $qb->expr()->orX()
-            ->add('t.closeTimestamp IS NULL')
+            ->add($qb->expr()->orX()
+                ->add('t.closeYearNumber IS NULL')
+                ->add('t.closeWeekNumber IS NULL'))
             ->add($qb->expr()->orX()
                 ->add($qb->expr()->andX()
                     ->add('t.closeYearNumber = :queryYearNumber')
@@ -82,7 +84,9 @@ class TaskRepository extends ServiceEntityRepository
                 ->add('t.closeYearNumber > :queryYearNumber'));
 
         $conditionThree = $qb->expr()->orX()
-            ->add('t.cancelTimestamp IS NULL')
+            ->add($qb->expr()->orX()
+                ->add('t.cancelYearNumber IS NULL')
+                ->add('t.cancelWeekNumber IS NULL'))
             ->add($qb->expr()->orX()
                 ->add($qb->expr()->andX()
                     ->add('t.cancelYearNumber = :queryYearNumber')
