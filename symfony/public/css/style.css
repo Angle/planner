@@ -144,6 +144,10 @@ ul {
         border: 1px solid #4b4a46;
         border-radius: 10px;
         background-color: white; }
+      .notebook .content .login-box .links {
+        text-align: center; }
+        .notebook .content .login-box .links a {
+          line-height: 24px; }
   .notebook .sidebar {
     margin: 0;
     padding: 0;
@@ -384,6 +388,9 @@ footer {
 .btn-text, .btn-text:hover, .btn-text:visited, .btn-text:active {
   color: #282723;
   text-decoration: none; }
+
+.btn-text.dashed {
+  border-bottom: 1px dashed #282723; }
 
 /* RESPONSIVE */
 .mobile-only, .mobile-only-inline {

@@ -22,7 +22,10 @@
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                     </form>
 
-                    <a href="{{ path('app_register') }}">Sign up</a>
+
+                    <div class="links">
+                        <a href="{{ path('app_register') }}" class="btn-text dashed">Sign up</a>
+                    </div>
                 </div>
 
             </div>

@@ -252,6 +252,13 @@ ul {
         border-radius: 10px;
         background-color: white;
       }
+
+      .links {
+        text-align: center;
+        a {
+          line-height: $block-size;
+        }
+      }
     }
   }
 
@@ -608,6 +615,10 @@ footer {
   &, &:hover, &:visited, &:active {
     color: $color-text;
     text-decoration: none;
+  }
+
+  &.dashed {
+    border-bottom: 1px dashed $color-text;
   }
 }
 
