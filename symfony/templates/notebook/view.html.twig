@@ -20,7 +20,7 @@
 
                     {% if notebook.user.userId == app.user.userId %}
                         <small><form method="post" action="{{ path('app_notebook_share_remove', {'shareMapCode': map.code}) }}">
-                                <button type="submit" class="btn-text-as-text-small">REMOVE</button>
+                                <button type="submit" class="btn-as-text-small">REMOVE</button>
                             </form></small>
                     {% endif %}
                 </li>
