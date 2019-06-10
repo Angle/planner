@@ -142,8 +142,8 @@
             <div class="sidebar-content">
                 <a href="{{ path('app_logout') }}" class="btn-text-light logout">&otimes; logout</a>
                 <div class="profile">
-                    <h2>Edmundo Fuentes</h2>
-                    <span class="email">efuentes@angle.mx</span>
+                    <h2>{{ app.user.fullName }}</h2>
+                    <span class="email">{{ app.user.email }}</span>
                 </div>
 
                 <div class="spacer"></div>
