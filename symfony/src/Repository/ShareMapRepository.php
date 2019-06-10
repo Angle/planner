@@ -50,27 +50,4 @@ class ShareMapRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
-
-    /**
-     * @param Notebook $notebook
-     * @param string $email
-     * @return ShareMap[] Returns an array of Notebook objects
-     */
-    public function findByNotebookAndEmail(Notebook $notebook, string $email)
-    {
-        $qb = $this->createQueryBuilder('m');
-
-        $qb
-            ->innerJoin('m.user', 'u')
-            ->where('m.notebook = :notebookId')
-            ->andWhere($qb->expr()->orX()
-                ->add('m.inviteEmail = :email')
-                ->add('u.email = :email')
-            )
-            ->setParameter('notebookId', $notebook->getNotebookId())
-            ->setParameter('email', $email)
-        ;
-
-        return $qb->getQuery()->getResult();
-    }
 }

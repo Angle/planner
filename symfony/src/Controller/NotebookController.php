@@ -161,18 +161,20 @@ class NotebookController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $error = false;
 
-            // Check for a previous ShareMap by inviteEmail
-            $maps = $shareMapRepository->findByNotebookAndEmail($notebook, $shareMap->getInviteEmail());
-
-            if (count($maps) > 0) {
-                $this->addFlash(StatusCode::LABEL_ERROR, StatusCode::ERROR_NOTEBOOK_SHARE);
-                $error = true;
+            foreach ($notebook->getShareMaps() as $map) {
+                if ($map->getUser() && $map->getUser()->getEmail() == $shareMap->getInviteEmail()) {
+                    // ERROR: An invited user is already registered with the same email
+                    $this->addFlash(StatusCode::LABEL_ERROR, StatusCode::ERROR_NOTEBOOK_SHARE);
+                    $error = true;
+                } elseif (!$map->getUser() && $map->getInviteEmail() == $shareMap->getInviteEmail()) {
+                    // ERROR: The email is already "pending" on the ShareMaps of the notebooks
+                    $this->addFlash(StatusCode::LABEL_ERROR, StatusCode::ERROR_NOTEBOOK_SHARE);
+                    $error = true;
+                }
             }
 
-            if(!$error) {
-
+            if (!$error) {
                 $em->persist($shareMap);
-
                 try {
                     $em->flush();
                 } catch (\Exception $e) {
@@ -181,6 +183,7 @@ class NotebookController extends AbstractController
                 }
 
             }
+
             if (!$error) $this->addFlash(StatusCode::LABEL_SUCCESS, StatusCode::SUCCESS_NOTEBOOK_SHARE);
         }
 
