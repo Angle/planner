@@ -35,4 +35,18 @@ class ShareMapRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
+
+    /**
+     * @param string $email
+     * @return ShareMap[] Returns an array of Notebook objects
+     */
+    public function findByInviteEmail(string $email)
+    {
+        return $this->createQueryBuilder('m')
+            ->andWhere('m.inviteEmail = :email')
+            ->setParameter('email', $email)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }
