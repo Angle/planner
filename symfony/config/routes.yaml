@@ -16,7 +16,7 @@ app_register:
 app_change_password:
   path: /change-password
   controller: App\Controller\SecurityController::changePassword
-  methods: GET|OPTIONS
+  methods: GET|POST
 
 # Notebook
 app_notebook_new:

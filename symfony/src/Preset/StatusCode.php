@@ -13,6 +13,8 @@ class StatusCode
     const ERROR_ENTITY_NOT_FOUND = 200;
     const ERROR_DATABASE_INSERT = 201;
     const ERROR_NOTEBOOK_SHARE = 202;
+    const ERROR_OLD_PASSWORD_NO_MATCH = 203;
+    const ERROR_PASSWORD_NO_MATCH = 204;
 
 
     /** @var string $label */

@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Preset\StatusCode;
 use Doctrine\ORM\EntityManagerInterface;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,7 +12,11 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 
 use App\Entity\User;
+
 use App\Form\UserRegistrationType;
+use App\Form\UserPasswordChangeType;
+
+use App\Preset\StatusCode;
 
 use App\Security\LoginFormAuthenticator;
 
@@ -80,11 +83,63 @@ class SecurityController extends AbstractController
     }
 
     /**
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $passwordEncoder
      * @return Response
      */
-    public function changePassword(): Response
+    public function changePassword(Request $request,UserPasswordEncoderInterface $passwordEncoder): Response
     {
+        /** @var EntityManagerInterface $em */
+        $em = $this->getDoctrine()->getManager();
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $form = $this->createForm(UserPasswordChangeType::class, null, [
+            'action'    => $this->generateUrl('app_change_password'),
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $error = false;
+
+            $oldPassword = $form->get('oldPassword')->getData();
+            $newPassword = $form->get('newPassword')->getData();
+            $checkPassword = $form->get('checkPassword')->getData();
+
+            if(!$passwordEncoder->isPasswordValid($user, $oldPassword)) {
+                $this->addFlash(StatusCode::LABEL_ERROR, StatusCode::ERROR_OLD_PASSWORD_NO_MATCH);
+                $error = true;
+            }
+
+            if ($newPassword !== $checkPassword) {
+                $this->addFlash(StatusCode::LABEL_ERROR, StatusCode::ERROR_PASSWORD_NO_MATCH);
+                $error = true;
+            }
+
+            if (!$error) {
+                $newEncodedPassword = $passwordEncoder->encodePassword(
+                    $user,
+                    $newPassword
+                );
+                $user->setPassword($newEncodedPassword);
+            }
+
+            try {
+                $em->flush();
+            }catch (\Exception $e) {
+                $error = true;
+                $this->addFlash(StatusCode::LABEL_ERROR, StatusCode::ERROR_DATABASE_INSERT);
+            }
+
+            if (!$error) $this->addFlash(StatusCode::LABEL_SUCCESS, StatusCode::SUCCESS_OK);
+
+            return $this->redirectToRoute('app_home');
+        }
+
         return $this->render('security/change-password.html.twig', [
+            'form'  => $form->createView()
         ]);
     }
 }

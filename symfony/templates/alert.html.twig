@@ -25,6 +25,10 @@
                 <p><strong>Woah!</strong> Cannot save to database</p>
             {% elseif message == constant('App\\Preset\\StatusCode::ERROR_NOTEBOOK_SHARE') %}
                 <p><strong>Woah!</strong> The notebook could not be shared</p>
+            {% elseif message == constant('App\\Preset\\StatusCode::ERROR_OLD_PASSWORD_NO_MATCH') %}
+                <p><strong>Woah!</strong> The old password did not match</p>
+            {% elseif message == constant('App\\Preset\\StatusCode::ERROR_PASSWORD_NO_MATCH') %}
+                <p><strong>Woah!</strong> The passwords did not match</p>
             {% else %}
                 <p><strong>Woah!</strong> An unknown error occurred</p>
             {% endif %}
