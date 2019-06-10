@@ -289,11 +289,34 @@ ul {
       }
 
       .share-list {
+        form {
+          display: inline-block;
+          float: right;
+        }
         li {
           line-height: $block-size;
           button {
-            display: inline-block;
-            float: right;
+            &, &:hover, &:visited, &:active {
+              color: $color-text;
+
+              font-family: 'Patrick Hand', cursive;
+              font-size: 16px;
+
+              text-decoration: none;
+              border: 1px solid $color-text;
+              background-color: transparent;
+              border-radius: 0.25 * $block-size;
+              margin: 0;
+              padding: 0;
+              cursor: pointer;
+
+              width: $block-size;
+              height: $block-size;
+            }
+
+            &:hover {
+              background-color: rgba(0, 0, 0, 0.075);
+            }
           }
         }
       }

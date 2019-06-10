@@ -137,13 +137,15 @@
 
                     <ul class="share-list">
                         <li>
-                        {{ map.notebook.name }}
-                        <form method="post" action="">
-                            <button type="submit" class="btn-outline">&check;</button>
-                        </form>
-                        <form method="post" action="">
-                            <button type="submit" class="btn-outline">&times;</button>
-                        </form>
+                            {{ map.notebook.name }}
+
+                            <form method="post" action="">
+                                <button type="submit">&times;</button>
+                            </form>
+
+                            <form method="post" action="">
+                                <button type="submit">&check;</button>
+                            </form>
                         </li>
                     </ul>
                 {% endfor %}

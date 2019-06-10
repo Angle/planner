@@ -163,11 +163,26 @@ ul {
       .notebook .sidebar .sidebar-content .profile .account-options a {
         line-height: 24px;
         display: inline-block; }
+      .notebook .sidebar .sidebar-content .share-list form {
+        display: inline-block;
+        float: right; }
       .notebook .sidebar .sidebar-content .share-list li {
         line-height: 24px; }
-        .notebook .sidebar .sidebar-content .share-list li button {
-          display: inline-block;
-          float: right; }
+        .notebook .sidebar .sidebar-content .share-list li button, .notebook .sidebar .sidebar-content .share-list li button:hover, .notebook .sidebar .sidebar-content .share-list li button:visited, .notebook .sidebar .sidebar-content .share-list li button:active {
+          color: #282723;
+          font-family: 'Patrick Hand', cursive;
+          font-size: 16px;
+          text-decoration: none;
+          border: 1px solid #282723;
+          background-color: transparent;
+          border-radius: 6px;
+          margin: 0 0 0 24px;
+          padding: 0;
+          cursor: pointer;
+          width: 24px;
+          height: 24px; }
+        .notebook .sidebar .sidebar-content .share-list li button:hover {
+          background-color: rgba(0, 0, 0, 0.075); }
       .notebook .sidebar .sidebar-content h2 {
         margin: 0;
         padding: 0;
