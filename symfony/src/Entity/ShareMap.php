@@ -5,10 +5,11 @@ namespace App\Entity;
 use Angle\Common\Utilities\Random\Random;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Index;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ShareMapRepository")
- * @ORM\Table(name="ShareMaps")
+ * @ORM\Table(name="ShareMaps", indexes={@Index(name="email_idx", columns={"invite_email"})})
  */
 class ShareMap
 {
