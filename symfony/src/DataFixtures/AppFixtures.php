@@ -43,6 +43,17 @@ class AppFixtures extends Fixture
         $test2->setRoles(['ROLE_SUPER_ADMIN']);
         $manager->persist($test2);
 
+        $test3 = new User();
+        $test3->setEmail("test3@angle.mx");
+        $test3->setFirstName("Angle");
+        $test3->setLastName("Webmaster");
+        $test3->setPassword($this->passwordEncoder->encodePassword(
+            $test3,
+            'angleroot'
+        ));
+        $test3->setRoles(['ROLE_SUPER_ADMIN']);
+        $manager->persist($test3);
+
         $testNotebook = new Notebook();
         $testNotebook->setUser($test1);
         $testNotebook->setName('Test Notebook');
@@ -53,6 +64,12 @@ class AppFixtures extends Fixture
         $testShareMap->setNotebook($testNotebook);
         $testShareMap->setInviteEmail($test2->getEmail());
         $manager->persist($testShareMap);
+
+        $testShareMap2 = new ShareMap();
+        $testShareMap2->setUser($test3);
+        $testShareMap2->setNotebook($testNotebook);
+        $testShareMap2->setInviteEmail($test3->getEmail());
+        $manager->persist($testShareMap2);
 
         $manager->flush();
     }

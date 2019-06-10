@@ -25,10 +25,8 @@ class NotebookType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => "Name"
-            ])
-            ->add('save', SubmitType::class, [
-                'label' => "Save"
+                'label'         => false,
+                'attr'          => ['class' => 'input-big', 'placeholder' => 'Write notebook name...']
             ])
         ;
     }

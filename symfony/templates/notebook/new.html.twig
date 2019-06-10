@@ -8,13 +8,10 @@
 </div>
 
 <div class="form">
-    <input type="text" class="input-big" name="" placeholder="Write notebook name..">
-
+    {{ form_start(form) }}
+    {{ form_widget(form.name) }}
     <div class="action-buttons">
         <button type="submit" class="btn-outline">&check; save</button>
     </div>
-</div>
-
-<div class="details">
-    {{ form(form) }}
+    {{ form_end(form) }}
 </div>
