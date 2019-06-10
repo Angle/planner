@@ -34,12 +34,17 @@ app_notebook_share:
 
 app_notebook_share_accept:
   path: /notebook-share/{shareMapCode}/accept
-  controller: App\Controller\NotebookController:share
+  controller: App\Controller\NotebookController:shareAccept
   methods: POST
 
 app_notebook_share_reject:
   path: /notebook-share/{shareMapCode}/reject
-  controller: App\Controller\NotebookController:share
+  controller: App\Controller\NotebookController:shareReject
+  methods: POST
+
+app_notebook_share_remove:
+  path: /notebook-share/{shareMapCode}/remove
+  controller: App\Controller\NotebookController:shareRemove
   methods: POST
 
 # Task

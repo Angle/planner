@@ -16,6 +16,7 @@ use App\Form\NotebookType;
 use App\Form\ShareMapType;
 
 use App\Repository\NotebookRepository;
+use App\Repository\ShareMapRepository;
 
 use App\Preset\StatusCode;
 
@@ -171,5 +172,115 @@ class NotebookController extends AbstractController
         }
 
         return $this->redirectToRoute('app_home');
+    }
+
+    public function shareAccept(string $shareMapCode): Response
+    {
+        /** @var ShareMapRepository $shareMapRepository */
+        $shareMapRepository = $this->getDoctrine()->getRepository(ShareMap::class);
+
+        /** @var ShareMap $map */
+        $map = $shareMapRepository->findOneByCode($shareMapCode);
+
+        if (!$map) {
+            throw new EntityNotFoundException('ShareMap code not found');
+        }
+
+        // Check that the current user is the invitee
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if ($map->getInviteEmail() != $user->getEmail()) {
+            throw new AccessDeniedException('ShareMap is not meant for this user');
+        }
+
+        // All good, proceed to ACCEPT the invite
+        $map->setInviteEmail(null);
+        $map->setUser($user);
+
+        $em = $this->getDoctrine()->getManager();
+
+        try {
+            $em->flush();
+            $this->addFlash(StatusCode::LABEL_SUCCESS, StatusCode::SUCCESS_OK);
+        } catch (\Exception $e) {
+            $this->addFlash(StatusCode::LABEL_ERROR, StatusCode::ERROR_UNKNOWN);
+        }
+
+
+        return $this->redirectToRoute('app_home');
+    }
+
+    public function shareReject(string $shareMapCode): Response
+    {
+        /** @var ShareMapRepository $shareMapRepository */
+        $shareMapRepository = $this->getDoctrine()->getRepository(ShareMap::class);
+
+        /** @var ShareMap $map */
+        $map = $shareMapRepository->findOneByCode($shareMapCode);
+
+        if (!$map) {
+            throw new EntityNotFoundException('ShareMap code not found');
+        }
+
+        // Check that the current user is the invitee
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if ($map->getInviteEmail() != $user->getEmail()) {
+            throw new AccessDeniedException('ShareMap is not meant for this user');
+        }
+
+        // All good, proceed to REJECT the invite
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($map);
+
+        try {
+            $em->flush();
+            $this->addFlash(StatusCode::LABEL_SUCCESS, StatusCode::SUCCESS_OK);
+        } catch (\Exception $e) {
+            $this->addFlash(StatusCode::LABEL_ERROR, StatusCode::ERROR_UNKNOWN);
+        }
+
+
+        return $this->redirectToRoute('app_home');
+    }
+
+    public function shareRemove(string $shareMapCode): Response
+    {
+
+        /** @var ShareMapRepository $shareMapRepository */
+        $shareMapRepository = $this->getDoctrine()->getRepository(ShareMap::class);
+
+        /** @var ShareMap $map */
+        $map = $shareMapRepository->findOneByCode($shareMapCode);
+
+        if (!$map) {
+            throw new EntityNotFoundException('ShareMap code not found');
+        }
+
+        // Only the Notebook owner can kick/remove a user
+        /** @var User $user */
+        $user = $this->getUser();
+        $notebook = $map->getNotebook();
+
+        if ($notebook->getUser()->getUserId() != $user->getUserId()) {
+            throw new AccessDeniedException('ShareMap can only be removed by owner');
+        }
+
+        // All good, proceed to REMOVE the share
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($map);
+
+        try {
+            $em->flush();
+            $this->addFlash(StatusCode::LABEL_SUCCESS, StatusCode::SUCCESS_OK);
+        } catch (\Exception $e) {
+            $this->addFlash(StatusCode::LABEL_ERROR, StatusCode::ERROR_UNKNOWN);
+        }
+
+
+        return $this->redirectToRoute('app_home');
+
     }
 }

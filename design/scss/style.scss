@@ -436,6 +436,34 @@ footer {
         h3 {
           margin-bottom: 0;
         }
+
+        form {
+          display: inline-block;
+
+          .btn-as-text-small {
+            &, &:hover, &:visited, &:active {
+              color: $color-text;
+
+              display: inline-block;
+
+              font-family: 'Patrick Hand', cursive;
+              font-size: 13px;
+
+              text-decoration: none;
+              border: 0;
+              border-radius: 0;
+              border-bottom: 1px dashed $color-text;
+              background-color: transparent;
+              cursor: pointer;
+              padding: 0;
+              margin-left: 10px;
+            }
+
+            &:hover {
+              background-color: rgba(0, 0, 0, 0.075);
+            }
+          }
+        }
       }
 
       .action-buttons {

@@ -139,11 +139,11 @@
                         <li>
                             {{ map.notebook.name }}
 
-                            <form method="post" action="">
+                            <form method="post" action="{{ path('app_notebook_share_reject', {'shareMapCode': map.code}) }}">
                                 <button type="submit">&times;</button>
                             </form>
 
-                            <form method="post" action="">
+                            <form method="post" action="{{ path('app_notebook_share_accept', {'shareMapCode': map.code}) }}">
                                 <button type="submit">&check;</button>
                             </form>
                         </li>

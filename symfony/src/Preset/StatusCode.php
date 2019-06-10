@@ -10,11 +10,12 @@ class StatusCode
     const SUCCESS_OK = 100;
     const SUCCESS_NOTEBOOK_SHARE = 101;
 
-    const ERROR_ENTITY_NOT_FOUND = 200;
-    const ERROR_DATABASE_INSERT = 201;
-    const ERROR_NOTEBOOK_SHARE = 202;
-    const ERROR_OLD_PASSWORD_NO_MATCH = 203;
-    const ERROR_PASSWORD_NO_MATCH = 204;
+    const ERROR_UNKNOWN = 200;
+    const ERROR_ENTITY_NOT_FOUND = 201;
+    const ERROR_DATABASE_INSERT = 202;
+    const ERROR_NOTEBOOK_SHARE = 203;
+    const ERROR_OLD_PASSWORD_NO_MATCH = 204;
+    const ERROR_PASSWORD_NO_MATCH = 205;
 
 
     /** @var string $label */

@@ -19,11 +19,21 @@
                     {{ map.user.fullName }} &lt;{{ map.user.email }}&gt;
 
                     {% if notebook.user.userId == app.user.userId %}
-                        <small><a href="#">REMOVE</a></small>
+                        <small><form method="post" action="{{ path('app_notebook_share_remove', {'shareMapCode': map.code}) }}">
+                                <button type="submit" class="btn-text-as-text-small">REMOVE</button>
+                            </form></small>
                     {% endif %}
                 </li>
             {% else %}
-                <li>&lt;{{ map.inviteEmail }}&gt; <small>PENDING</small></li>
+                <li>&lt;{{ map.inviteEmail }}&gt; <small>PENDING</small>
+
+                    {% if notebook.user.userId == app.user.userId %}
+                        <small>
+                            <form method="post" action="{{ path('app_notebook_share_remove', {'shareMapCode': map.code}) }}">
+                                <button type="submit" class="btn-as-text-small">REMOVE</button>
+                            </form></small>
+                    {% endif %}
+                </li>
             {% endif %}
         {% endfor %}
     </ul>
