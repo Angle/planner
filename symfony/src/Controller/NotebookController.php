@@ -80,11 +80,10 @@ class NotebookController extends AbstractController
 
     /**
      * @param string $notebookCode
-     * @param Request $request
      * @throws EntityNotFoundException
      * @return Response
      */
-    public function view(string $notebookCode, Request $request): Response
+    public function view(string $notebookCode): Response
     {
         /** @var EntityManagerInterface $entityManager */
         $em = $this->getDoctrine()->getManager();
@@ -109,25 +108,9 @@ class NotebookController extends AbstractController
         $shareMap->setNotebook($notebook);
 
         $form = $this->createForm(ShareMapType::class, $shareMap, [
-            'action'    => $this->generateUrl('app_notebook_view', ['notebookCode' => $notebook->getCode()]),
+            'action'    => $this->generateUrl('app_notebook_share', ['notebookCode' => $notebook->getCode()]),
             'attr'      => ['class' => 'form'],
         ]);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            
-            $em->persist($shareMap);
-
-            try {
-                $em->flush();
-            } catch (\Exception $e) {
-                // TODO WHAT TO DO ON ERROR
-                $this->addFlash(StatusCode::LABEL_ERROR, StatusCode::ERROR_DATABASE_INSERT);
-            }
-
-            return $this->redirectToRoute('app_home');
-        }
 
         return $this->render('notebook/view.html.twig', [
             'notebook'  => $notebook,
@@ -137,11 +120,14 @@ class NotebookController extends AbstractController
 
     /**
      * @param string $notebookCode
+     * @param Request $request
      * @throws EntityNotFoundException
      * @return Response
      */
-    public function share(string $notebookCode): Response
+    public function share(string $notebookCode, Request $request): Response
     {
+        /** @var EntityManagerInterface $entityManager */
+        $em = $this->getDoctrine()->getManager();
         /** @var NotebookRepository $notebookRepository */
         $notebookRepository = $this->getDoctrine()->getRepository(Notebook::class);
 
@@ -159,11 +145,29 @@ class NotebookController extends AbstractController
             throw new AccessDeniedException('Notebook is not shared with user');
         }
 
-        try {
-            $this->addFlash(StatusCode::LABEL_SUCCESS, StatusCode::SUCCESS_NOTEBOOK_SHARE);
-        } catch (\Exception $e) {
-            // TODO WHAT TO DO ON ERROR
-            $this->addFlash(StatusCode::LABEL_ERROR, StatusCode::ERROR_NOTEBOOK_SHARE);
+        $shareMap = new ShareMap();
+        $shareMap->setNotebook($notebook);
+
+        $form = $this->createForm(ShareMapType::class, $shareMap, [
+            'action'    => $this->generateUrl('app_notebook_share', ['notebookCode' => $notebook->getCode()]),
+            'attr'      => ['class' => 'form'],
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $error = false;
+
+            $em->persist($shareMap);
+
+            try {
+                $em->flush();
+            } catch (\Exception $e) {
+                $error = true;
+                $this->addFlash(StatusCode::LABEL_ERROR, StatusCode::ERROR_NOTEBOOK_SHARE);
+            }
+
+            if (!$error) $this->addFlash(StatusCode::LABEL_SUCCESS, StatusCode::SUCCESS_NOTEBOOK_SHARE);
         }
 
         return $this->redirectToRoute('app_home');
