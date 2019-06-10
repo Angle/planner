@@ -19,6 +19,8 @@ use App\Entity\Notebook;
 use App\Repository\TaskRepository;
 use App\Entity\Task;
 
+use App\Repository\ShareMapRepository;
+use App\Entity\ShareMap;
 
 class AppController extends AbstractController
 {
@@ -63,11 +65,19 @@ class AppController extends AbstractController
         /** @var Task[] $tasks */
         $tasks = $taskRepository->findAllByUserAndWeek($user, $week);
 
+        // Load pending share requests for the user
+        /** @var ShareMapRepository $shareMapRepository */
+        $shareMapRepository = $this->getDoctrine()->getRepository(ShareMap::class);
+
+        /** @var ShareMap[] $pendingRequests */
+        $pendingRequests = $shareMapRepository->findByInviteEmail($user->getEmail());
+
         return $this->render('home.html.twig', [
             'notebooks' => $notebooks,
             'tasks'     => $tasks,
             'week'      => $week,
             'currentWeek' => $currentWeek,
+            'pendingRequests' => $pendingRequests,
         ]);
     }
 }
