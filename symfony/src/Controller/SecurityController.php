@@ -66,6 +66,8 @@ class SecurityController extends AbstractController
             $personalNotebook->setName('Personal');
             $personalNotebook->setUser($user);
 
+            $em->persist($personalNotebook);
+
             try {
                 $em->flush();
             }catch (\Exception $e) {
