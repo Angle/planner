@@ -96,7 +96,9 @@
                     <h2>{{ app.user.fullName }}</h2>
                     <span class="email">{{ app.user.email }}</span>
                     <div class="account-options">
-                        <a href="#" onclick="loadModal('{{ path('app_change_password') }}');" class="btn-text-light">change my password</a> | <a href="{{ path('app_logout') }}" class="btn-text-light">&otimes; logout</a>
+                        <a href="#" onclick="loadModal('{{ path('app_change_password') }}');" class="btn-text-light">change my password</a>
+                        |
+                        <a href="{{ path('app_logout') }}" class="btn-text-light">{#&otimes; #}logout</a>
                     </div>
                 </div>
 
@@ -110,7 +112,7 @@
                         </a>
                     {% endif %}
                 {% endfor %}
-                <a href="#" class="btn-text-light" loadModal('{{ path('app_notebook_new') }}');>&plus; New Notebook</a>
+                <a href="#" class="btn-text-light" onclick="loadModal('{{ path('app_notebook_new') }}');">&plus; New Notebook</a>
 
 
                 {% set printSubtitle = true %}
