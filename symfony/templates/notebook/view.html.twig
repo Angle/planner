@@ -10,17 +10,32 @@
 </div>
 
 <div class="share">
-    <h4>Shared With</h4>
+    <h3>Access Control</h3>
     <ul class="dashed">
         <li>{{ notebook.user.fullName }} &lt;{{ notebook.user.email }}&gt; <small>OWNER</small></li>
         {% for map in notebook.shareMaps %}
-            <li>{{ map.user.fullName }} &lt;{{ map.user.email }}&gt;</li>
+            {% if map.user is not null %}
+                <li>
+                    {{ map.user.fullName }} &lt;{{ map.user.email }}&gt;
+
+                    {% if notebook.user.userId == app.user.userId %}
+                        <small><a href="#">REMOVE</a></small>
+                    {% endif %}
+                </li>
+            {% else %}
+                <li>&lt;{{ map.inviteEmail }}&gt; <small>PENDING</small></li>
+            {% endif %}
         {% endfor %}
     </ul>
 </div>
 
-{#
+
 <div class="action-buttons">
-    <a href="#" class="btn-outline">&odash; delete</a>
+    <h3>Share to Another User</h3>
+    <form class="form" action="{{ path('app_notebook_share', {'notebookCode': notebook.code}) }}" method="post">
+        <input type="email" name="notebook[name]" required="required" class="input-big" placeholder="Write notebook name...">
+        <div class="spacer"></div>
+        <button type="submit" class="btn-outline">share</button>
+    </form>
+    {#<a href="#" class="btn-outline">&odash; delete</a>#}
 </div>
-#}

@@ -1,9 +1,17 @@
 function openModal() {
-    $('body').addClass('open-modal');
+    var body = $('body');
+
+    if (!body.hasClass('open-modal')) {
+        body.addClass('open-modal');
+    }
 }
 
 function closeModal() {
-    $('body').removeClass('open-modal');
+    var body = $('body');
+
+    if (body.hasClass('open-modal')) {
+        body.removeClass('open-modal');
+    }
 }
 
 function loadModal(url) {

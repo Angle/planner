@@ -112,20 +112,21 @@
                 {% endfor %}
                 <a href="#" class="btn-text-light" onclick="loadModal('{{ path('app_notebook_new') }}');">&plus; New Notebook</a>
 
-                <div class="spacer"></div>
-                <h2>Shared Notebooks</h2>
-                {% set hasAnyShared = false %}
+
+                {% set printSubtitle = true %}
                 {% for notebook in notebooks %}
                     {% if notebook.isShared %}
+                        {% if firstNotebook %}
+                            <div class="spacer"></div>
+                            <h2>Shared Notebooks</h2>
+                            {% set printSubtitle = false %}
+                        {% endif %}
+
                         <a href="#" class="btn-text" onclick="loadModal('{{ path('app_notebook_view', {'notebookCode': notebook.code}) }}');">
                             {{ notebook.name }}
                         </a>
-                    {% set hasAnyShared = true %}
                     {% endif %}
                 {% endfor %}
-                {% if not hasAnyShared %}
-                    <em>None shared.</em>
-                {% endif %}
 
                 <div class="spacer"></div>
 

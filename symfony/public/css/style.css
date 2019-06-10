@@ -235,6 +235,8 @@ footer {
         margin-bottom: 24px; }
         .modal-overlay .modal-wrapper .modal-content .title h1, .modal-overlay .modal-wrapper .modal-content .title h2, .modal-overlay .modal-wrapper .modal-content .title h3, .modal-overlay .modal-wrapper .modal-content .title h4 {
           margin: 0; }
+      .modal-overlay .modal-wrapper .modal-content .share h3 {
+        margin-bottom: 0; }
       .modal-overlay .modal-wrapper .modal-content .action-buttons {
         width: 100%;
         text-align: center;
@@ -321,6 +323,10 @@ footer {
       outline: none;
     }
     */ }
+
+.form .spacer {
+  display: block;
+  height: 24px; }
 
 .form .form-header {
   width: 100%;

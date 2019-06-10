@@ -27,6 +27,21 @@ app_notebook_view:
   path: /notebook/{notebookCode}
   controller: App\Controller\NotebookController:view
 
+app_notebook_share:
+  path: /notebook/{notebookCode}/share
+  controller: App\Controller\NotebookController:share
+  methods: POST
+
+app_notebook_share_accept:
+  path: /notebook-share/{shareMapCode}/accept
+  controller: App\Controller\NotebookController:share
+  methods: POST
+
+app_notebook_share_reject:
+  path: /notebook-share/{shareMapCode}/reject
+  controller: App\Controller\NotebookController:share
+  methods: POST
+
 # Task
 app_task_new:
   path: /task/new

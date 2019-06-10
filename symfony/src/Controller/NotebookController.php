@@ -63,7 +63,7 @@ class NotebookController extends AbstractController
 
             try {
                 $entityManager->flush();
-            }catch (\Exception $e) {
+            } catch (\Exception $e) {
                 // TODO WHAT TO DO ON ERROR
                 $this->addFlash(StatusCode::LABEL_ERROR, StatusCode::ERROR_DATABASE_INSERT);
             }
@@ -103,5 +103,39 @@ class NotebookController extends AbstractController
         return $this->render('notebook/view.html.twig', [
             'notebook' => $notebook,
         ]);
+    }
+
+    /**
+     * @param string $notebookCode
+     * @throws EntityNotFoundException
+     * @return Response
+     */
+    public function share(string $notebookCode): Response
+    {
+        /** @var NotebookRepository $notebookRepository */
+        $notebookRepository = $this->getDoctrine()->getRepository(Notebook::class);
+
+        /** @var Notebook $notebook */
+        $notebook = $notebookRepository->findOneByCode($notebookCode);
+
+        if (!$notebook) {
+            throw new EntityNotFoundException('Notebook code not found');
+        }
+
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if (!$notebook->hasPermission($user)) {
+            throw new AccessDeniedException('Notebook is not shared with user');
+        }
+
+        try {
+            $this->addFlash(StatusCode::LABEL_SUCCESS, StatusCode::SUCCESS_NOTEBOOK_SHARE);
+        } catch (\Exception $e) {
+            // TODO WHAT TO DO ON ERROR
+            $this->addFlash(StatusCode::LABEL_ERROR, StatusCode::ERROR_NOTEBOOK_SHARE);
+        }
+
+        return $this->redirectToRoute('app_home');
     }
 }

@@ -1,35 +1,35 @@
-{% for label, messages in app.flashes('success') %}
-    {% for message in messages %}
+{% for label, message in app.flashes('success') %}
     <div class="alert success">
         <div class="alert-content">
 
             {% if message == constant('App\\Preset\\StatusCode::SUCCESS_OK') %}
                 <p><strong>Woohoo!</strong> The operation was successful</p>
+            {% elseif message == constant('App\\Preset\\StatusCode::SUCCESS_NOTEBOOK_SHARE') %}
+                <p><strong>Woohoo!</strong> The notebook was shared</p>
             {% else %}
-                <p><strong>Woohoo!</strong> Success! (??)</p>
+                <p><strong>Woohoo!</strong> Success! (?? unknown status)</p>
             {% endif %}
 
             <a href="#" onclick="dismissAlert(this);" class="alert-close">x</a>
         </div>
     </div>
-    {% endfor %}
 {% endfor %}
 
-{% for label, messages in app.flashes('error') %}
-    {% for message in messages %}
-        <div class="alert danger">
-            <div class="alert-content">
+{% for label, message in app.flashes('error') %}
+    <div class="alert danger">
+        <div class="alert-content">
 
-                {% if message == constant('App\\Preset\\StatusCode::ERROR_ENTITY_NOT_FOUND') %}
-                    <p><strong>Woah!</strong> Entity not found</p>
-                {% elseif message == constant('App\\Preset\\StatusCode::ERROR_DATABASE_INSERT') %}
-                    <p><strong>Woah!</strong> Cannot save to database</p>
-                {% else %}
-                    <p><strong>Woah!</strong> An unknown error occurred</p>
-                {% endif %}
+            {% if message == constant('App\\Preset\\StatusCode::ERROR_ENTITY_NOT_FOUND') %}
+                <p><strong>Woah!</strong> Entity not found</p>
+            {% elseif message == constant('App\\Preset\\StatusCode::ERROR_DATABASE_INSERT') %}
+                <p><strong>Woah!</strong> Cannot save to database</p>
+            {% elseif message == constant('App\\Preset\\StatusCode::ERROR_NOTEBOOK_SHARE') %}
+                <p><strong>Woah!</strong> The notebook could not be shared</p>
+            {% else %}
+                <p><strong>Woah!</strong> An unknown error occurred</p>
+            {% endif %}
 
-                <a href="#" onclick="dismissAlert(this);" class="alert-close">x</a>
-            </div>
+            <a href="#" onclick="dismissAlert(this);" class="alert-close">x</a>
         </div>
-    {% endfor %}
+    </div>
 {% endfor %}
