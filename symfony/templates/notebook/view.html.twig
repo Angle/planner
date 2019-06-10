@@ -15,8 +15,7 @@
         <li>{{ notebook.user.fullName }} &lt;{{ notebook.user.email }}&gt; <small>OWNER</small></li>
         {% for map in notebook.shareMaps %}
             {% if map.user is not null %}
-                <li>
-                    {{ map.user.fullName }} &lt;{{ map.user.email }}&gt;
+                <li>{{ map.user.fullName }} &lt;{{ map.user.email }}&gt;
 
                     {% if notebook.user.userId == app.user.userId %}
                         <small><form method="post" action="{{ path('app_notebook_share_remove', {'shareMapCode': map.code}) }}">

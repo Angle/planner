@@ -44,10 +44,55 @@ class TaskRepository extends ServiceEntityRepository
      * @param Week $week
      * @return Task[] Returns an array of Task objects
      */
-    public function findAllByUserAndWeek(User $user, Week $week)
+    public function findAllByOwnerUserAndWeek(User $user, Week $week)
     {
         $qb = $this->createQueryBuilder('t');
 
+        $allConditions = $this->taskTimeConditions();
+
+        $qb
+            ->innerJoin('t.notebook', 'n')
+            ->where('n.user = :userId')
+            ->andWhere($allConditions)
+            ->setParameter('userId', $user->getUserId())
+            ->setParameter('queryYearNumber', $week->getYear())
+            ->setParameter('queryWeekNumber', $week->getWeek())
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @param Notebook[] $notebooks
+     * @param Week $week
+     * @return Task[] Returns an array of Task objects
+     */
+    public function findAllInNotebooksByWeek(array $notebooks, Week $week)
+    {
+        $qb = $this->createQueryBuilder('t');
+
+        $allConditions = $this->taskTimeConditions();
+
+        $notebookList = [];
+
+        foreach ($notebooks as $n) {
+            $notebookList[] = $n->getNotebookId();
+        }
+
+        $qb
+            ->where('t.notebook IN (:notebookList)')
+            ->andWhere($allConditions)
+            ->setParameter('notebookList', $notebookList)
+            ->setParameter('queryYearNumber', $week->getYear())
+            ->setParameter('queryWeekNumber', $week->getWeek())
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    private function taskTimeConditions()
+    {
+        $qb = $this->createQueryBuilder('t');
 
         // Conditions:
         // 1. The task must have been opened on the same week or before than the query week
@@ -99,15 +144,6 @@ class TaskRepository extends ServiceEntityRepository
             ->add($conditionTwo)
             ->add($conditionThree);
 
-        $qb
-            ->innerJoin('t.notebook', 'n')
-            ->where('n.user = :userId')
-            ->andWhere($allConditions)
-            ->setParameter('userId', $user->getUserId())
-            ->setParameter('queryYearNumber', $week->getYear())
-            ->setParameter('queryWeekNumber', $week->getWeek())
-        ;
-
-        return $qb->getQuery()->getResult();
+        return $allConditions;
     }
 }

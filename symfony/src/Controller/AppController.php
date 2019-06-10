@@ -63,7 +63,7 @@ class AppController extends AbstractController
         $notebooks = $notebookRepository->findByUser($user);
 
         /** @var Task[] $tasks */
-        $tasks = $taskRepository->findAllByUserAndWeek($user, $week);
+        $tasks = $taskRepository->findAllInNotebooksByWeek($notebooks, $week);
 
         // Load pending share requests for the user
         /** @var ShareMapRepository $shareMapRepository */
