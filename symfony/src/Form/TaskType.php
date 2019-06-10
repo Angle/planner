@@ -40,31 +40,46 @@ class TaskType extends AbstractType
 
         $builder
             ->add('notebook', EntityType::class, [
-                'label'         => 'Notebook',
+                'label'         => false,
                 'class'         => Notebook::class,
                 'choice_label'  => 'name',
                 'placeholder'   => false,
                 'required'      => true,
                 'query_builder' => function (EntityRepository $er) use ($user) {
-                    return $er->createQueryBuilder('n')
-                        ->innerJoin('n.shareMaps', 'm')
-                        ->where('n.user = :userId')
-                        ->orWhere('m.user = :userId')
+                    return $er->createQueryBuilder('notebook')
+                        ->leftJoin('notebook.shareMaps', 'map', 'WITH', 'map.user = :userId')
+                        ->where('notebook.user = :userId')
+                        ->orWhere('map.user = :userId')
                         ->setParameter('userId', $user->getUserId())
                         ->distinct();
                 },
             ])
             ->add('concept', TextType::class, [
-                'label' => 'Concept'
-            ])
-            ->add('openWeekNumber', IntegerType::class, [
-                'label' => 'Week #'
+                'label' => false,
+                'attr'  => [
+                    'class'         => 'input-big',
+                    'placeholder'   => 'Write task concept..',
+                ]
             ])
             ->add('openYearNumber', IntegerType::class, [
-                'label' => 'Year'
+                'label' => false,
+                'attr'  => [
+                    'placeholder' => 'YYYY',
+                    'class' => 'input-small',
+                    'min'   => '1000',
+                    'max'   => '3000',
+                    'step'  => '1'
+                ]
             ])
-            ->add('save', SubmitType::class, [
-                'label' => 'Save'
+            ->add('openWeekNumber', IntegerType::class, [
+                'label' => false,
+                'attr'  => [
+                    'placeholder' => 'WW',
+                    'class' => 'input-small',
+                    'min'   => '0',
+                    'max'   => '53',
+                    'step'  => '1'
+                ]
             ])
         ;
     }
