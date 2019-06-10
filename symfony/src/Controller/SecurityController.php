@@ -95,7 +95,7 @@ class SecurityController extends AbstractController
      * @param UserPasswordEncoderInterface $passwordEncoder
      * @return Response
      */
-    public function changePassword(Request $request,UserPasswordEncoderInterface $passwordEncoder): Response
+    public function changePassword(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         /** @var EntityManagerInterface $em */
         $em = $this->getDoctrine()->getManager();
