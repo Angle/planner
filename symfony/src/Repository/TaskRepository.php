@@ -81,10 +81,13 @@ class TaskRepository extends ServiceEntityRepository
 
         $qb
             ->where('t.notebook IN (:notebookList)')
+            ->innerJoin('t.notebook', 'n')
             ->andWhere($allConditions)
             ->setParameter('notebookList', $notebookList)
             ->setParameter('queryYearNumber', $week->getYear())
             ->setParameter('queryWeekNumber', $week->getWeek())
+            ->orderBy('n.name', 'ASC')
+            ->addOrderBy('t.concept', 'ASC')
         ;
 
         return $qb->getQuery()->getResult();
