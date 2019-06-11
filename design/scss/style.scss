@@ -220,6 +220,10 @@ ul {
           cursor: pointer;
         }
       }
+
+      tr.text-light {
+        color: $color-text-lighter !important;
+      }
     }
 
     .notebook-input {

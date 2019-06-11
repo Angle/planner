@@ -35,6 +35,7 @@ class NotebookRepository extends ServiceEntityRepository
             ->orWhere('map.user = :userId')
             ->setParameter('userId', $user->getUserId())
             ->distinct()
+            ->orderBy('notebook.name', 'ASC')
             ->getQuery()
             ->getResult()
             ;

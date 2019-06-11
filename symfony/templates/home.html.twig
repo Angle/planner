@@ -34,7 +34,7 @@
             <table class="task-list">
                 <tbody>
                 {% for task in tasks %}
-                    <tr class="task">
+                    <tr class="task{% if task.status != constant('App\\Entity\\Task::STATUS_OPEN') %} text-light{% endif %}">
                         <td class="block">
                             {% if task.flag(week, currentWeek) == constant('App\\Entity\\Task::FLAG_NONE') %}
                                 &nbsp;
