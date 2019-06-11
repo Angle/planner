@@ -121,7 +121,7 @@ ul {
           height: 100%;
           cursor: pointer; }
       .notebook .content .task-list tr.text-light {
-        color: #4b4a46 !important; }
+        color: #777 !important; }
     .notebook .content .notebook-input {
       background-color: transparent;
       border: none;
