@@ -111,6 +111,9 @@
     "egulias/email-validator": {
         "version": "2.1.8"
     },
+    "erusev/parsedown": {
+        "version": "1.7.3"
+    },
     "facebook/webdriver": {
         "version": "1.6.0"
     },
@@ -195,9 +198,6 @@
             "bin/console",
             "config/bootstrap.php"
         ]
-    },
-    "symfony/contracts": {
-        "version": "v1.1.0"
     },
     "symfony/css-selector": {
         "version": "v4.3.1"
