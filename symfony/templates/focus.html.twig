@@ -8,26 +8,14 @@
     <div class="notebook">
         <div class="content">
 
-            <div class="header">
-                <div class="arrow">
-                    <a href="{{ path('app_home', {'weekCode': week.previousWeek.code}) }}">&lt;</a>
-                </div>
+            <a href="{{ path('app_home') }}" class="exit-focus-mode btn-text">
+                &times; Exit focus mode
+            </a>
+
+            <div class="header short">
                 <div class="title">
-                    <h1>Week {{ week.code }}</h1>
-                    {#<h3 class="hide-mobile">{{ week.startDay|date('D F jS, Y') }} - {{ week.endDay|date('D F jS, Y') }}</h3>#}
-                    <h3 class="hide-mobile">{{ week.startDay|date('F jS, Y') }} - {{ week.endDay|date('F jS, Y') }}</h3>
-                    <h3 class="mobile-only-inline">{{ week.startDay|date('M jS') }} - {{ week.endDay|date('M jS') }}</h3>
-                    <h3>{% if week.equals(currentWeek) %}
-                            <span class="present">Current</span>
-                        {% elseif week.isOlderThanWeek(currentWeek) %}
-                            <span class="past">Past (-{{ week.distanceFromWeek(currentWeek) }} wk)</span>
-                        {% elseif week.isNewerThanWeek(currentWeek) %}
-                            <span class="future">Future (+{{ week.distanceFromWeek(currentWeek) }} wk)</span>
-                        {% endif %}
-                    </h3>
-                </div>
-                <div class="arrow">
-                    <a href="{{ path('app_home', {'weekCode': week.nextWeek.code}) }}">&gt;</a>
+                    <h1>Focus Mode</h1>
+                    <h3>{{ focus|date('F jS, Y') }}</h3>
                 </div>
             </div>
 
@@ -35,6 +23,7 @@
                 <tbody>
                 {% for task in tasks %}
                     <tr class="task{% if task.status != constant('App\\Entity\\Task::STATUS_OPEN') %} text-light{% endif %}">
+                        {#
                         <td class="block">
                             {% if task.flag(week, currentWeek) == constant('App\\Entity\\Task::FLAG_NONE') %}
                                 &nbsp;
@@ -44,6 +33,7 @@
                                 ?
                             {% endif %}
                         </td>
+                        #}
                         <td class="block">
                             {% if task.bullet(week, currentWeek) == constant('App\\Entity\\Task::BULLET_DOT') %}
                                 &bull;
@@ -61,14 +51,6 @@
                         <td class="concept{% if task.strike(week, currentWeek) %} strike{% endif %}"
                         onclick="loadModal('{{ path('app_task_view', {'taskCode': task.code}) }}');">{{ task.concept }}</td>
 
-                        <td class="focus{% if task.focusToday %} active{% endif %}">
-                            {% if task.focusDate %}
-                                {{ task.focusDate|date('M jS') }}
-                            {% else %}
-                                &nbsp;
-                            {% endif %}
-                        </td>
-
                         <td class="block option">
                             <form method="post" action="{{ path('app_task_reopen', {'taskCode': task.code}) }}">
                                 <button type="submit" class="plain">&odot;</button>
@@ -85,20 +67,21 @@
                             </form>
                         </td>
                     </tr>
+                {% else %}
+                    <tr class="task text-light">
+                        {#
+                        <td class="block">&nbsp;</td>
+                        #}
+                        <td class="block">&nbsp;</td>
+                        <td class="tag">&nbsp;</td>
+                        <td class="concept">
+                            No tasks found!
+                        </td>
+                        <td class="block option">&nbsp;</td>
+                        <td class="block option">&nbsp;</td>
+                        <td class="block option">&nbsp;</td>
+                    </tr>
                 {% endfor %}
-                <tr class="task">
-                    <td class="block">&nbsp;</td>
-                    <td class="block">&nbsp;</td>
-                    <td class="tag">&nbsp;</td>
-                    <td class="concept">
-                        <a href="#" class="btn-new-task" onclick="loadModal('{{ path('app_task_new') }}');">Write a new task..</a>
-                        {#<input class="notebook-input" type="text" placeholder="Write new task.." autofocus>#}
-                    </td>
-                    <td class="focus">&nbsp;</td>
-                    <td class="block option">&nbsp;</td>
-                    <td class="block option">&nbsp;</td>
-                    <td class="block option">&nbsp;</td>
-                </tr>
                 </tbody>
             </table>
         </div> <!-- ./ div.content -->
@@ -117,16 +100,6 @@
 
                 <div class="spacer"></div>
 
-                <h2>Focus Mode</h2>
-                <div class="focus-mode-form">
-                    <input class="focus-date-input" type="date" name="focusDateInput" id="focusDateInput" value="{{ 'now'|date('Y-m-d') }}">
-                    <button class="focus-date-button btn-outline" type="button" onclick="rewriteFocusMode('{{ path('app_home_focus', {'focusDate': '--FOCUS--'}) }}');">
-                        Enter
-                    </button>
-                </div>
-
-                <div class="spacer"></div>
-
                 <h2>Private Notebooks</h2>
                 {% for notebook in notebooks %}
                     {% if not notebook.isShared %}
@@ -135,8 +108,6 @@
                         </a>
                     {% endif %}
                 {% endfor %}
-                <a href="#" class="btn-text-light" onclick="loadModal('{{ path('app_notebook_new') }}');">&plus; New Notebook</a>
-
 
                 {% set printSubtitle = true %}
                 {% for notebook in notebooks %}
@@ -153,27 +124,6 @@
                     {% endif %}
                 {% endfor %}
 
-
-                {% for map in pendingRequests %}
-                    {% if loop.first %}
-                        <div class="spacer"></div>
-                        <h2>Pending Requests</h2>
-                    {% endif %}
-
-                    <ul class="share-list">
-                        <li>
-                            {{ map.notebook.name }}
-
-                            <form method="post" action="{{ path('app_notebook_share_reject', {'shareMapCode': map.code}) }}">
-                                <button type="submit">&times;</button>
-                            </form>
-
-                            <form method="post" action="{{ path('app_notebook_share_accept', {'shareMapCode': map.code}) }}">
-                                <button type="submit">&check;</button>
-                            </form>
-                        </li>
-                    </ul>
-                {% endfor %}
 
                 <div class="spacer"></div>
 

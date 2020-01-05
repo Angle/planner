@@ -23,7 +23,28 @@
     </ul>
 </div>
 #}
-<p><em>Pending log..</em></p>
+
+
+<div class="focus-date">
+    <h3>Focus Date:</h3>
+    {% if not task.focusDate %}
+        <p><em>Not set</em></p>
+        <form method="post" action="{{ path('app_task_focus_set', {'taskCode': task.code}) }}">
+            <button type="submit" class="btn-outline btn-as-text-small">&check; set for today</button>
+        </form>
+    {% else %}
+        <p>{{ task.focusDate|date('M jS') }}</p>
+        <form method="post" action="{{ path('app_task_focus_unset', {'taskCode': task.code}) }}">
+            <button type="submit" class="btn-outline btn-as-text-small">&times; unset</button>
+        </form>
+    {% endif %}
+</div>
+
+
+<div class="task-log">
+    <h3>Log</h3>
+    <p><em>Pending log..</em></p>
+</div>
 
 <div class="action-buttons">
     <form method="post" action="{{ path('app_task_reopen', {'taskCode': task.code}) }}">

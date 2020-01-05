@@ -25,3 +25,19 @@ function loadModal(url) {
 function dismissAlert(e) {
     $(e).parent().parent().remove();
 }
+
+/* FORM REWRITE */
+function rewriteFocusMode(path) {
+    var focusDate = document.getElementById('focusDateInput').value;
+
+    if (!focusDate) {
+        alert('Please specify a valid date to enter Focus Mode');
+        return false;
+    }
+
+    console.log(focusDate);
+    path = path.replace('--FOCUS--', focusDate);
+    console.log(path);
+
+    window.location = path;
+}

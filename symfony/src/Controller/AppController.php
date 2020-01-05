@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use DateTime;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,12 +43,12 @@ class AppController extends AbstractController
             $week = Week::newFromWeekCode($weekCode);
         } else {
             // Default to today's week
-            $now = new \DateTime('now', $tz);
+            $now = new DateTime('now', $tz);
             $week = Week::newFromDateTime($now);
         }
 
         // Build today's current week
-        $now = new \DateTime('now', $tz);
+        $now = new DateTime('now', $tz);
         $currentWeek = Week::newFromDateTime($now);
 
         /** @var NotebookRepository $notebookRepository */
@@ -73,11 +75,58 @@ class AppController extends AbstractController
         $pendingRequests = $shareMapRepository->findByInviteEmail($user->getEmail());
 
         return $this->render('home.html.twig', [
-            'notebooks' => $notebooks,
-            'tasks'     => $tasks,
-            'week'      => $week,
-            'currentWeek' => $currentWeek,
-            'pendingRequests' => $pendingRequests,
+            'notebooks'         => $notebooks,
+            'tasks'             => $tasks,
+            'week'              => $week,
+            'currentWeek'       => $currentWeek,
+            'pendingRequests'   => $pendingRequests,
+        ]);
+    }
+
+
+    /**
+     * Display the main screen
+     * @param string|null $focusDate
+     * @return Response
+     */
+    public function focus(string $focusDate): Response
+    {
+        // TODO: Default timezone, this should be later set on the User's preferences
+        $tz = new \DateTimeZone('America/Monterrey');
+
+        // Default to today's week
+        $now = new DateTime('now', $tz);
+        $week = Week::newFromDateTime($now);
+        $currentWeek = clone $week;
+
+        $focus = DateTime::createFromFormat('!Y-m-d', $focusDate, $tz);
+
+        if (!$focus) {
+            throw new BadRequestHttpException('Malformed Focus Date');
+        }
+
+        /** @var NotebookRepository $notebookRepository */
+        $notebookRepository = $this->getDoctrine()->getRepository(Notebook::class);
+
+        /** @var TaskRepository $taskRepository */
+        $taskRepository = $this->getDoctrine()->getRepository(Task::class);
+
+        /** @var User $user */
+        $user = $this->getUser();
+
+        // Load notebook first
+        /** @var Notebook[] $notebooks */
+        $notebooks = $notebookRepository->findByUser($user);
+
+        /** @var Task[] $tasks */
+        $tasks = $taskRepository->findAllInNotebooksByFocusDate($notebooks, $focus);
+
+        return $this->render('focus.html.twig', [
+            'notebooks'     => $notebooks,
+            'tasks'         => $tasks,
+            'focus'         => $focus,
+            'week'          => $week,
+            'currentWeek'   => $currentWeek,
         ]);
     }
 }

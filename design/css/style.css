@@ -110,6 +110,11 @@ ul {
           cursor: pointer; }
           .notebook .content .task-list .task .concept.strike {
             text-decoration: line-through; }
+        .notebook .content .task-list .task .focus {
+          height: 24px;
+          width: 120px;
+          /* responsive, see below */
+          text-align: left; }
         .notebook .content .task-list .task button.plain {
           background: transparent;
           border: none;

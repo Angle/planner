@@ -2,6 +2,10 @@
 
 namespace App\Repository;
 
+use DateTime;
+use DateTimeZone;
+use DateInterval;
+
 use App\Entity\Notebook;
 use App\Entity\Task;
 use App\Entity\User;
@@ -10,7 +14,7 @@ use App\Util\Week;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Task|null find($id, $lockMode = null, $lockVersion = null)
@@ -20,7 +24,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class TaskRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Task::class);
     }
@@ -86,6 +90,47 @@ class TaskRepository extends ServiceEntityRepository
             ->setParameter('notebookList', $notebookList)
             ->setParameter('queryYearNumber', $week->getYear())
             ->setParameter('queryWeekNumber', $week->getWeek())
+            ->orderBy('n.name', 'ASC')
+            ->addOrderBy('t.concept', 'ASC')
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @param Notebook[] $notebooks
+     * @param DateTime $focusDate
+     * @return Task[] Returns an array of Task objects
+     */
+    public function findAllInNotebooksByFocusDate(array $notebooks, DateTime $focusDate)
+    {
+        $utc = new DateTimeZone('UTC');
+        $qb = $this->createQueryBuilder('t');
+
+        $focusStart = clone $focusDate;
+        $focusStart = $focusStart->setTime(0,0,0);
+        $focusStart = $focusStart->setTimezone($utc);
+
+        $focusEnd = clone $focusDate;
+        $focusEnd = $focusEnd->setTime(0,0,0);
+        $focusEnd = $focusEnd->add(new DateInterval('P1D'));
+        $focusEnd = $focusEnd->setTimezone($utc);
+
+        $notebookList = [];
+
+        foreach ($notebooks as $n) {
+            $notebookList[] = $n->getNotebookId();
+        }
+
+        $qb
+            ->where('t.notebook IN (:notebookList)')
+            ->innerJoin('t.notebook', 'n')
+            ->andWhere('t.focusDate IS NOT NULL')
+            ->andWhere('t.focusDate >= :focusStart')
+            ->andWhere('t.focusDate < :focusEnd')
+            ->setParameter('notebookList', $notebookList)
+            ->setParameter('focusStart', $focusStart->format('Y-m-d H:i:s'))
+            ->setParameter('focusEnd', $focusEnd->format('Y-m-d H:i:s'))
             ->orderBy('n.name', 'ASC')
             ->addOrderBy('t.concept', 'ASC')
         ;

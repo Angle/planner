@@ -3,7 +3,9 @@
 namespace App\Entity;
 
 use DateTime;
+use DateTimeZone;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 use Angle\Common\Utilities\Random\Random;
@@ -98,6 +100,11 @@ class Task
      */
     private $cancelYearNumber;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $focusDate;
+
 
     #########################
     ## OBJECT RELATIONSHIP ##
@@ -109,6 +116,11 @@ class Task
      */
     private $notebook;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\TaskLog", mappedBy="task", orphanRemoval=true)
+     */
+    private $taskLogs;
+
 
     #########################
     ##     CONSTRUCTOR     ##
@@ -118,8 +130,10 @@ class Task
     {
         $this->code = Random::generateString(self::CODE_LENGTH);
 
-        $tz = new \DateTimeZone(self::DEFAULT_TIMEZONE);
-        $this->calculateAndSetOpenWeekFromTimestamp(new \DateTime('now', $tz));
+        $tz = new DateTimeZone(self::DEFAULT_TIMEZONE);
+        $this->calculateAndSetOpenWeekFromTimestamp(new DateTime('now', $tz));
+
+        $this->taskLogs = new ArrayCollection();
     }
 
 
@@ -237,6 +251,30 @@ class Task
         $week = Week::newFromDateTime($time);
         $this->openWeekNumber = $week->getWeek();
         $this->openYearNumber = $week->getYear();
+    }
+
+    public function getFocusToday()
+    {
+        if (!$this->focusDate) {
+            return false;
+        }
+
+        if ($this->getStatus() != self::STATUS_OPEN) {
+            return false;
+        }
+
+        $tz = new DateTimeZone(self::DEFAULT_TIMEZONE);
+        $today = new DateTime('now', $tz);
+        $today->setTime(0, 0, 0);
+
+        $focus = $this->getFocusDate();
+        $focus->setTimezone($tz);
+
+        if ($focus->format('Y-m-d') === $today->format('Y-m-d')) {
+            return true;
+        }
+
+        return false;
     }
 
 
@@ -414,6 +452,24 @@ class Task
         return $this;
     }
 
+    /**
+     * @return DateTime|null
+     */
+    public function getFocusDate(): ?DateTime
+    {
+        return $this->focusDate;
+    }
+
+    /**
+     * @param DateTime|null $focusDate
+     * @return Task
+     */
+    public function setFocusDate(?DateTime $focusDate): self
+    {
+        $this->focusDate = $focusDate;
+        return $this;
+    }
+
 
     #########################
     ##  OBJECT REL: G & S  ##
@@ -434,6 +490,37 @@ class Task
     public function setNotebook(Notebook $notebook): self
     {
         $this->notebook = $notebook;
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection|TaskLog[]
+     */
+    public function getTaskLogs(): ArrayCollection
+    {
+        return $this->taskLogs;
+    }
+
+    public function addTaskLog(TaskLog $taskLog): self
+    {
+        if (!$this->taskLogs->contains($taskLog)) {
+            $this->taskLogs[] = $taskLog;
+            $taskLog->setTask($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTaskLog(TaskLog $taskLog): self
+    {
+        if ($this->taskLogs->contains($taskLog)) {
+            $this->taskLogs->removeElement($taskLog);
+            // set the owning side to null (unless already changed)
+            if ($taskLog->getTask() === $this) {
+                $taskLog->setTask(null);
+            }
+        }
+
         return $this;
     }
 }

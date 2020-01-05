@@ -54,6 +54,8 @@ ul {
       height: 96px;
       width: 100%;
       margin-bottom: 24px; }
+      .notebook .content .header.short {
+        height: 72px; }
       .notebook .content .header.login {
         margin-top: 96px;
         margin-bottom: 24px;
@@ -110,6 +112,14 @@ ul {
           cursor: pointer; }
           .notebook .content .task-list .task .concept.strike {
             text-decoration: line-through; }
+        .notebook .content .task-list .task .focus {
+          height: 24px;
+          width: 72px;
+          /* responsive, see below */
+          text-align: center;
+          color: #777; }
+          .notebook .content .task-list .task .focus.active {
+            color: #282723; }
         .notebook .content .task-list .task button.plain {
           background: transparent;
           border: none;
@@ -150,6 +160,9 @@ ul {
         text-align: center; }
         .notebook .content .login-box .links a {
           line-height: 24px; }
+    .notebook .content .exit-focus-mode {
+      position: absolute;
+      font-weight: bold; }
   .notebook .sidebar {
     margin: 0;
     padding: 0;
@@ -165,6 +178,25 @@ ul {
       .notebook .sidebar .sidebar-content .profile .account-options a {
         line-height: 24px;
         display: inline-block; }
+      .notebook .sidebar .sidebar-content .focus-mode-form .focus-date-input {
+        font-family: 'Patrick Hand', cursive;
+        font-size: 13px;
+        border: 1px solid #282723;
+        background: transparent;
+        border-radius: 6px;
+        padding: 0 0 0 3px;
+        height: 24px;
+        margin: 0; }
+      .notebook .sidebar .sidebar-content .focus-mode-form .focus-date-button {
+        border: 1px solid #282723;
+        background: transparent;
+        border-radius: 6px;
+        padding: 0 3px;
+        height: 24px;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        margin: 0;
+        font-size: 13px; }
       .notebook .sidebar .sidebar-content .share-list form {
         display: inline-block;
         float: right; }
@@ -274,6 +306,13 @@ footer {
         margin-bottom: 24px; }
         .modal-overlay .modal-wrapper .modal-content .title h1, .modal-overlay .modal-wrapper .modal-content .title h2, .modal-overlay .modal-wrapper .modal-content .title h3, .modal-overlay .modal-wrapper .modal-content .title h4 {
           margin: 0; }
+      .modal-overlay .modal-wrapper .modal-content .focus-date h3 {
+        margin: 0;
+        display: inline; }
+      .modal-overlay .modal-wrapper .modal-content .focus-date p {
+        display: inline; }
+      .modal-overlay .modal-wrapper .modal-content .focus-date form {
+        display: inline; }
       .modal-overlay .modal-wrapper .modal-content .share h3 {
         margin-bottom: 0; }
       .modal-overlay .modal-wrapper .modal-content .share form {

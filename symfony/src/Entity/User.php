@@ -79,6 +79,11 @@ class User implements UserInterface
      */
     private $shareMaps;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\TaskLog", mappedBy="user", orphanRemoval=true)
+     */
+    private $taskLogs;
+
 
     #########################
     ##     CONSTRUCTOR     ##
@@ -88,6 +93,7 @@ class User implements UserInterface
     {
         $this->notebooks = new ArrayCollection();
         $this->shareMaps = new ArrayCollection();
+        $this->taskLogs = new ArrayCollection();
     }
 
 
@@ -323,4 +329,34 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @return Collection|TaskLog[]
+     */
+    public function getTaskLogs(): Collection
+    {
+        return $this->taskLogs;
+    }
+
+    public function addTaskLog(TaskLog $taskLog): self
+    {
+        if (!$this->taskLogs->contains($taskLog)) {
+            $this->taskLogs[] = $taskLog;
+            $taskLog->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTaskLog(TaskLog $taskLog): self
+    {
+        if ($this->taskLogs->contains($taskLog)) {
+            $this->taskLogs->removeElement($taskLog);
+            // set the owning side to null (unless already changed)
+            if ($taskLog->getUser() === $this) {
+                $taskLog->setUser(null);
+            }
+        }
+
+        return $this;
+    }
 }

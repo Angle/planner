@@ -76,7 +76,21 @@ app_task_delete:
   controller: App\Controller\TaskController:delete
   methods: POST
 
+app_task_focus_set:
+  path: /task/{taskCode}/focus/set
+  controller: App\Controller\TaskController:focusSet
+  methods: POST
+
+app_task_focus_unset:
+  path: /task/{taskCode}/focus/unset
+  controller: App\Controller\TaskController:focusUnset
+  methods: POST
+
 # Homepage
+app_home_focus:
+  path: /focus/{focusDate}
+  controller: App\Controller\AppController:focus
+
 app_home:
   path: /{weekCode}
   controller: App\Controller\AppController:home

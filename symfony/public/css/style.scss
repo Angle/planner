@@ -14,7 +14,7 @@ $modal-width: $modal-width-blocks * $block-size;
 $page-min-height-blocks: 34; // about 816px with block size 18px
 $page-min-height: $page-min-height-blocks * $block-size;
 
-// Color pallete: https://encycolorpedia.com/f2eecb
+// Color palette: https://encycolorpedia.com/f2eecb
 $color-notebook: #f2eecb;
 $color-text: #282723;
 $color-text-lighter: #4b4a46;
@@ -104,6 +104,10 @@ ul {
       height: 4 * $block-size;
       width: 100%;
       margin-bottom: 1 * $block-size;
+
+      &.short {
+        height: 3 * $block-size;
+      }
 
       &.login {
         margin-top: 4 * $block-size;
@@ -208,12 +212,18 @@ ul {
 
         .focus {
           height: $block-size;
-          width: 5 * $block-size; /* responsive, see below */
-          text-align: left;
+          width: 3 * $block-size; /* responsive, see below */
+          text-align: center;
 
           //white-space: nowrap;
           //overflow: hidden;
           //text-overflow: ellipsis;
+
+          color: $color-text-even-lighter;
+
+          &.active {
+            color: $color-text;
+          }
         }
 
         button.plain {
@@ -274,6 +284,11 @@ ul {
         }
       }
     }
+
+    .exit-focus-mode {
+      position: absolute;
+      font-weight: bold;
+    }
   }
 
   .sidebar {
@@ -299,6 +314,30 @@ ul {
             line-height: $block-size;
             display: inline-block;
           }
+        }
+      }
+
+      .focus-mode-form {
+        .focus-date-input {
+          font-family: 'Patrick Hand', cursive;
+          font-size: 13px;
+          border: 1px solid $color-text;
+          background: transparent;
+          border-radius: 0.25 * $block-size;
+          padding: 0 0 0 3px;
+          height: $block-size;
+          margin: 0;
+        }
+
+        .focus-date-button {
+          border: 1px solid $color-text;
+          background: transparent;
+          border-radius: 0.25 * $block-size;
+          padding: 0 3px;
+          height: $block-size;
+          box-sizing: border-box;
+          margin: 0;
+          font-size: 13px;
         }
       }
 
@@ -469,6 +508,21 @@ footer {
         margin-bottom: 1 * $block-size;
         h1, h2, h3, h4 {
           margin: 0;
+        }
+      }
+
+      .focus-date {
+        h3 {
+          margin: 0;
+          display: inline;
+        }
+
+        p {
+          display: inline;
+        }
+
+        form {
+          display: inline;
         }
       }
 

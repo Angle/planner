@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use DateTime;
+use DateTimeZone;
+
 use App\Util\Week;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
@@ -127,11 +130,12 @@ class TaskController extends AbstractController
     }
 
     /**
+     * @param Request $request
      * @param string $taskCode
      * @throws EntityNotFoundException
      * @return Response
      */
-    public function reopen(string $taskCode): Response
+    public function reopen(Request $request, string $taskCode): Response
     {
         /** @var TaskRepository $taskRespository */
         $taskRespository = $this->getDoctrine()->getRepository(Task::class);
@@ -170,15 +174,23 @@ class TaskController extends AbstractController
             $this->addFlash(StatusCode::LABEL_ERROR, StatusCode::ERROR_DATABASE_INSERT);
         }
 
-        return $this->redirectToRoute('app_home');
+        // Attempt to return to the refererer
+        $referer = $request->headers->get('referer');
+
+        if ($referer) {
+            return $this->redirect($referer);
+        } else {
+            return $this->redirectToRoute('app_home');
+        }
     }
 
     /**
+     * @param Request $request
      * @param string $taskCode
      * @throws EntityNotFoundException
      * @return Response
      */
-    public function close(string $taskCode): Response
+    public function close(Request $request, string $taskCode): Response
     {
         /** @var TaskRepository $taskRespository */
         $taskRespository = $this->getDoctrine()->getRepository(Task::class);
@@ -222,15 +234,23 @@ class TaskController extends AbstractController
             $this->addFlash(StatusCode::LABEL_ERROR, StatusCode::ERROR_DATABASE_INSERT);
         }
 
-        return $this->redirectToRoute('app_home');
+        // Attempt to return to the refererer
+        $referer = $request->headers->get('referer');
+
+        if ($referer) {
+            return $this->redirect($referer);
+        } else {
+            return $this->redirectToRoute('app_home');
+        }
     }
 
     /**
+     * @param Request $request
      * @param string $taskCode
      * @throws EntityNotFoundException
      * @return Response
      */
-    public function cancel(string $taskCode): Response
+    public function cancel(Request $request, string $taskCode): Response
     {
         /** @var TaskRepository $taskRespository */
         $taskRespository = $this->getDoctrine()->getRepository(Task::class);
@@ -275,15 +295,23 @@ class TaskController extends AbstractController
             $this->addFlash(StatusCode::LABEL_ERROR, StatusCode::ERROR_DATABASE_INSERT);
         }
 
-        return $this->redirectToRoute('app_home');
+        // Attempt to return to the refererer
+        $referer = $request->headers->get('referer');
+
+        if ($referer) {
+            return $this->redirect($referer);
+        } else {
+            return $this->redirectToRoute('app_home');
+        }
     }
 
     /**
+     * @param Request $request
      * @param string $taskCode
      * @throws EntityNotFoundException
      * @return Response
      */
-    public function delete(string $taskCode): Response
+    public function delete(Request $request, string $taskCode): Response
     {
         /** @var TaskRepository $taskRespository */
         $taskRespository = $this->getDoctrine()->getRepository(Task::class);
@@ -318,6 +346,118 @@ class TaskController extends AbstractController
             $this->addFlash(StatusCode::LABEL_ERROR, StatusCode::ERROR_DATABASE_INSERT);
         }
 
-        return $this->redirectToRoute('app_home');
+        // Attempt to return to the refererer
+        $referer = $request->headers->get('referer');
+
+        if ($referer) {
+            return $this->redirect($referer);
+        } else {
+            return $this->redirectToRoute('app_home');
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @param string $taskCode
+     * @throws EntityNotFoundException
+     * @return Response
+     */
+    public function focusSet(Request $request, string $taskCode): Response
+    {
+        /** @var TaskRepository $taskRespository */
+        $taskRespository = $this->getDoctrine()->getRepository(Task::class);
+
+        /** @var Task $task */
+        $task = $taskRespository->findOneByCode($taskCode);
+
+        if (!$task) {
+            throw new EntityNotFoundException('Task code not found');
+        }
+
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $notebook = $task->getNotebook();
+
+        if (!$notebook->hasPermission($user)) {
+            throw new AccessDeniedException('Notebook is not shared with user');
+        }
+
+        // TODO: Check if it has any ActionLogs linked to it
+
+        // SET THE FOCUS TO TODAY
+        $tz = new DateTimeZone(self::DEFAULT_TIMEZONE);
+        $focusDate = new DateTime('now', $tz);
+
+        $task->setFocusDate($focusDate);
+
+        $em = $this->getDoctrine()->getManager();
+
+        try {
+            $em->flush();
+        } catch (\Exception $e) {
+            // TODO: WHAT TO DO ON ERROR
+            $this->addFlash(StatusCode::LABEL_ERROR, StatusCode::ERROR_DATABASE_INSERT);
+        }
+
+        // Attempt to return to the refererer
+        $referer = $request->headers->get('referer');
+
+        if ($referer) {
+            return $this->redirect($referer);
+        } else {
+            return $this->redirectToRoute('app_home');
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @param string $taskCode
+     * @throws EntityNotFoundException
+     * @return Response
+     */
+    public function focusUnset(Request $request, string $taskCode): Response
+    {
+        /** @var TaskRepository $taskRespository */
+        $taskRespository = $this->getDoctrine()->getRepository(Task::class);
+
+        /** @var Task $task */
+        $task = $taskRespository->findOneByCode($taskCode);
+
+        if (!$task) {
+            throw new EntityNotFoundException('Task code not found');
+        }
+
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $notebook = $task->getNotebook();
+
+        if (!$notebook->hasPermission($user)) {
+            throw new AccessDeniedException('Notebook is not shared with user');
+        }
+
+        // TODO: Check if it has any ActionLogs linked to it
+
+        // UNSET THE FOCUS DATE
+        $task->setFocusDate(null);
+
+        $em = $this->getDoctrine()->getManager();
+
+        try {
+            $em->flush();
+        } catch (\Exception $e) {
+            // TODO: WHAT TO DO ON ERROR
+            $this->addFlash(StatusCode::LABEL_ERROR, StatusCode::ERROR_DATABASE_INSERT);
+        }
+
+        // Attempt to return to the refererer
+        $referer = $request->headers->get('referer');
+
+        if ($referer) {
+            return $this->redirect($referer);
+        } else {
+            return $this->redirectToRoute('app_home');
+        }
     }
 }

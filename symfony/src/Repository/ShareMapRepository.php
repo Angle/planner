@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 use App\Entity\Notebook;
 use App\Entity\ShareMap;
@@ -18,7 +18,7 @@ use App\Entity\User;
  */
 class ShareMapRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, ShareMap::class);
     }
