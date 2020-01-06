@@ -50,6 +50,7 @@ class TaskType extends AbstractType
                         ->leftJoin('notebook.shareMaps', 'map', 'WITH', 'map.user = :userId')
                         ->where('notebook.user = :userId')
                         ->orWhere('map.user = :userId')
+                        ->addOrderBy('notebook.name', 'ASC')
                         ->setParameter('userId', $user->getUserId())
                         ->distinct();
                 },
