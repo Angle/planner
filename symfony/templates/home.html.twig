@@ -119,7 +119,7 @@
 
                 <h2>Focus Mode</h2>
                 <div class="focus-mode-form">
-                    <input class="focus-date-input" type="date" name="focusDateInput" id="focusDateInput" value="{{ 'now'|date('Y-m-d') }}">
+                    <input class="focus-date-input" type="date" name="focusDateInput" id="focusDateInput" value="{{ 'now'|date('Y-m-d', 'America/Monterrey') }}">
                     <button class="focus-date-button btn-outline" type="button" onclick="rewriteFocusMode('{{ path('app_home_focus', {'focusDate': '--FOCUS--'}) }}');">
                         Enter
                     </button>
