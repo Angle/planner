@@ -36,9 +36,11 @@
         </form>
     {% endif %}
 
+    {% if not task.focusToday %}
     <form method="post" action="{{ path('app_task_focus_set', {'taskCode': task.code}) }}">
         <button type="submit" class="btn-outline btn-as-text-small">&check; set for today</button>
     </form>
+    {% endif %}
 </div>
 
 
