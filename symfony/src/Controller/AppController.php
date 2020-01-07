@@ -28,10 +28,11 @@ class AppController extends AbstractController
 {
     /**
      * Display the main screen
+     * @param Request $request
      * @param string $weekCode
      * @return Response
      */
-    public function home(string $weekCode): Response
+    public function home(Request $request, string $weekCode): Response
     {
         // TODO: Default timezone, this should be later set on the User's preferences
         $tz = new \DateTimeZone('America/Monterrey');
@@ -67,6 +68,16 @@ class AppController extends AbstractController
         /** @var Task[] $tasks */
         $tasks = $taskRepository->findAllInNotebooksByWeek($notebooks, $week);
 
+        // check if we have the special query parameter to show only open tasks
+        if ($request->query->has('only-open')) {
+            foreach ($tasks as $k => $t) {
+                if ($t->getStatus() != Task::STATUS_OPEN) {
+                    // if the task is not in status open, remove it from the list.
+                    unset($tasks[$k]);
+                }
+            }
+        }
+
         // Load pending share requests for the user
         /** @var ShareMapRepository $shareMapRepository */
         $shareMapRepository = $this->getDoctrine()->getRepository(ShareMap::class);
@@ -86,10 +97,11 @@ class AppController extends AbstractController
 
     /**
      * Display the main screen
+     * @param Request $request
      * @param string|null $focusDate
      * @return Response
      */
-    public function focus(string $focusDate): Response
+    public function focus(Request $request, string $focusDate): Response
     {
         // TODO: Default timezone, this should be later set on the User's preferences
         $tz = new \DateTimeZone('America/Monterrey');
