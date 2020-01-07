@@ -289,6 +289,7 @@ class Task
 
         $focus = $this->getFocusDate();
         $focus->setTimezone($tz);
+        $focus->setTime(0,0,0);
 
         if ($this->getStatus() == self::STATUS_OPEN && $focus > $today) {
             return true;
