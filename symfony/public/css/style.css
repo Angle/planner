@@ -118,8 +118,10 @@ ul {
           /* responsive, see below */
           text-align: center;
           color: #777; }
-          .notebook .content .task-list .task .focus.active {
+          .notebook .content .task-list .task .focus.today {
             color: #282723; }
+          .notebook .content .task-list .task .focus.overdue {
+            color: #dd4b39; }
         .notebook .content .task-list .task button.plain {
           background: transparent;
           border: none;

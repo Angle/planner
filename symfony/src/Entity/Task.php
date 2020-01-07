@@ -277,6 +277,26 @@ class Task
         return false;
     }
 
+    public function getFocusOverdue()
+    {
+        if (!$this->focusDate) {
+            return false;
+        }
+
+        $tz = new DateTimeZone(self::DEFAULT_TIMEZONE);
+        $today = new DateTime('now', $tz);
+        $today->setTime(0, 0, 0);
+
+        $focus = $this->getFocusDate();
+        $focus->setTimezone($tz);
+
+        if ($this->getStatus() == self::STATUS_OPEN && $focus > $today) {
+            return true;
+        }
+
+        return false;
+    }
+
 
     #########################
     ## GETTERS AND SETTERS ##

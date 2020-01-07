@@ -21,6 +21,9 @@ $color-text-lighter: #4b4a46;
 $color-text-even-lighter: #777;
 $color-background: #f1f1f1;
 
+$color-highlight-green: #00a65a;
+$color-highlight-red: #dd4b39;
+
 $sidebar-width-blocks: 8;
 
 
@@ -221,8 +224,12 @@ ul {
 
           color: $color-text-even-lighter;
 
-          &.active {
+          &.today {
             color: $color-text;
+          }
+
+          &.overdue {
+            color: $color-highlight-red;
           }
         }
 
@@ -615,12 +622,12 @@ footer {
   z-index: 100;
 
   &.success {
-    background-color: #00a65a; // from AdminLTE
+    background-color: $color-highlight-green; // from AdminLTE
     color: white;
   }
 
   &.danger {
-    background-color: #dd4b39; // from AdminLTE
+    background-color: $color-highlight-red; // from AdminLTE
     color: white;
   }
 
