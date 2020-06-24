@@ -41,3 +41,26 @@ function rewriteFocusMode(path) {
 
     window.location = path;
 }
+
+
+$( document ).ready(function() {
+
+    // Disable auto-complete system wide
+    $('form').each(function() {
+        var f = $(this);
+
+        var autocomplete = $(this).attr('autocomplete');
+
+        // For some browsers, `attr` is undefined; for others,
+        // `attr` is false.  Check for both.
+        if (typeof autocomplete !== typeof undefined && autocomplete !== false) {
+            // has an autocomplete declaration
+            // we'll leave it as is
+        } else {
+            // doesn't have an autocomplete declaration
+            // disable autocomplete
+            f.attr('autocomplete', 'off');
+        }
+    });
+
+});
